@@ -29,7 +29,7 @@ const defineModuleName = (packageName = '') => {
   if (!packageName) return 'ModuleName';
 
   const chunckNames = packageName.split('-').map((chunck) => {
-    return chunck[0].toUpperCase() + chunck.slice(0);
+    return chunck[0].toUpperCase() + chunck.slice(1);
   });
 
   return chunckNames.join('');
@@ -80,12 +80,12 @@ const defineES = (packageName = '') => ({
  * @returns
  */
 const defineTypeTS = (packageName = '') => ({
-  input: `${DIR_OUTPUT}/types/main.d.ts`,
+  input: `${DIR_OUTPUT}/types/src/main.d.ts`,
   output: { file: `${DIR_OUTPUT}/${packageName}.d.ts` },
   plugins: [dtsPlugin()],
 });
 
-const PACKAGE_NAME = definePackageName(process.env.npm_package_name || '');
+const PACKAGE_NAME = definePackageName(process.env['npm_package_name'] || '');
 const MODULE_NAME = defineModuleName(PACKAGE_NAME);
 
 export default [

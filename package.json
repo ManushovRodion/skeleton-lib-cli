@@ -25,7 +25,9 @@
     "skeleton-lib-cli": "./bin/cli.js"
   },
   "scripts": {
-    "build": "rimraf dist && rollup --c rollup.config.ts --configPlugin typescript && rimraf dist/types"
+    "build": "rimraf dist && rollup --c rollup.config.ts --configPlugin typescript && rimraf dist/types",
+    "lint": "eslint --ignore-path .eslintignore --ext .ts .",
+    "lint:format": "prettier --ignore-path .gitignore --write ."
   },
   "repository": {
     "type": "git",
@@ -43,10 +45,21 @@
     "@rollup/plugin-terser": "0.3.0",
     "@rollup/plugin-typescript": "11.0.0",
     "@types/node": "16.18.11",
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@typescript-eslint/parser": "^5.48.0",
+    "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.6.0",
+    "husky": "^8.0.3",
+    "prettier": "^2.8.2",
     "rimraf": "3.0.2",
     "rollup": "3.9.1",
     "rollup-plugin-dts": "5.1.1",
     "tslib": "2.4.1",
-    "typescript": "4.9.4"
+    "typescript": "*"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint:format && yarn lint --fix"
+    }
   }
 }
