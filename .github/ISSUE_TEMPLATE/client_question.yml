@@ -1,0 +1,14 @@
+name: Client Question
+description: '[Пользователю] Если появился вопрос по приложению, то вам сюда'
+labels: ['client', 'question']
+title: '[Question]: '
+body:
+  - type: textarea
+    attributes:
+      label: '# Вопрос'
+      description: Четкое и краткое описание того, что вы хотите спросить
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: 'Спасибо!'

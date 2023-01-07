@@ -1,0 +1,59 @@
+name: Client Bug Report
+description: '[Пользователю] Создание отчета по найденой ошибке'
+labels: ['client', 'bug']
+title: '[Bug]: '
+body:
+  - type: textarea
+    attributes:
+      label: '# Описание ошибки'
+      description: Четкое и краткое описание ошибки
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: '# Шаги воспроизведения'
+      description: Шаги, по которым вы дошли до ошибки
+      value: |
+        1.
+        2.
+        3.
+        ...
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: '# Ожидаемый результат'
+      description: Четкое и краткое описание того, что вы ожидали
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: '# Скриншоты и Видео'
+      description: Если есть возможность, то добавьте скриншоты или видео, чтобы наглядно посмотреть на вашу проблему..
+    validations:
+      required: false
+  - type: input
+    attributes:
+      label: '# Устройство'
+      description: Устройство и ОС, с которого поймали проблему
+      placeholder: PC; Windows 10
+      value: PC; Windows 10
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: '# Браузер'
+      description: Браузер и его версия, с которого поймали проблему
+      placeholder: Google Chrome; version 106.0.5249.103
+      value: Google Chrome;
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: '# Прочее'
+      description: Здесь можно указать ту информацию, про которую не спросили, но вы хотите об этом сказать, чтобы решить проблему
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: 'Спасибо, что нашли время создать данный отчет!'
