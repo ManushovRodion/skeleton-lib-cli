@@ -1,7 +1,7 @@
 import tsPlugin from '@rollup/plugin-typescript';
 import jsonPlugin from '@rollup/plugin-json';
 import dtsPlugin from 'rollup-plugin-dts';
-import { terser as terserPlugin } from 'rollup-plugin-terser';
+import terserPlugin from '@rollup/plugin-terser';
 
 const DIR_OUTPUT = './dist';
 const INPUT_FILE = 'src/main.ts';
