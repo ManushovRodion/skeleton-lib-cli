@@ -1,0 +1,51 @@
+{
+  "name": "skeleton-lib-cli",
+  "version": "1.0.0",
+  "description": "[RU]Интерфейс командной строки, который инициализирует скелет библиотеки.[EN]Command line interface that invokes skeleton libraries",
+  "keywords": [
+    "skeleton-lib",
+    "skeleton",
+    "template",
+    "base",
+    "lib",
+    "library",
+    "node",
+    "cli",
+    "rollup"
+  ],
+  "files": [
+    "dist"
+  ],
+  "main": "dist/skeleton-lib-cli.common.js",
+  "unpkg": "dist/skeleton-lib-cli.umd.js",
+  "module": "dist/skeleton-lib-cli.esm.js",
+  "types": "dist/types/skeleton-lib-cli.d.ts",
+  "typings": "dist/types/skeleton-lib-cli.d.ts",
+  "bin": {
+    "skeleton-lib-cli": "./bin/cli.js"
+  },
+  "scripts": {
+    "build": "rimraf dist && rollup --c rollup.config.ts --configPlugin typescript && rimraf dist/types"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ManushovRodion/skeleton-lib-cli.git"
+  },
+  "author": "ManushovRodion <rodion-krox@mauil.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ManushovRodion/skeleton-lib-cli/issues"
+  },
+  "homepage": "https://github.com/ManushovRodion/skeleton-lib-cli#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-typescript": "11.0.0",
+    "@types/node": "^18.11.18",
+    "rimraf": "^3.0.2",
+    "rollup": "3.9.1",
+    "rollup-plugin-dts": "^5.1.1",
+    "tslib": "^2.4.1",
+    "typescript": "4.9.4"
+  }
+}
