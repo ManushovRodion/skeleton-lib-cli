@@ -40,7 +40,7 @@
   "bugs": {
     "url": "https://github.com/ManushovRodion/skeleton-lib-cli/issues"
   },
-  "homepage": "https://github.com/ManushovRodion/skeleton-lib-cli#readme",
+  "homepage": "https://github.com/ManushovRodion/skeleton-lib-cli#README.md",
   "dependencies": {},
   "devDependencies": {
     "@rollup/plugin-json": "6.0.0",
