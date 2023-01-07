@@ -1,6 +1,7 @@
 import tsPlugin from '@rollup/plugin-typescript';
 import jsonPlugin from '@rollup/plugin-json';
 import dtsPlugin from 'rollup-plugin-dts';
+import { terser as terserPlugin } from 'rollup-plugin-terser';
 
 const DIR_OUTPUT = './dist';
 const INPUT_FILE = 'src/main.ts';
@@ -43,7 +44,7 @@ const defineModuleName = (packageName = '') => {
 const defineCJS = (packageName = '') => ({
   input: INPUT_FILE,
   output: [{ file: `${DIR_OUTPUT}/${packageName}.cjs.js`, format: 'cjs' }],
-  plugins: [jsonPlugin(), tsPlugin()],
+  plugins: [jsonPlugin(), tsPlugin(), terserPlugin()],
 });
 
 /**
@@ -57,7 +58,7 @@ const defineUMD = (packageName = '', name = '') => ({
   output: [
     { file: `${DIR_OUTPUT}/${packageName}.umd.js`, format: 'umd', name },
   ],
-  plugins: [jsonPlugin(), tsPlugin()],
+  plugins: [jsonPlugin(), tsPlugin(), terserPlugin()],
 });
 
 /**
@@ -69,7 +70,7 @@ const defineUMD = (packageName = '', name = '') => ({
 const defineES = (packageName = '') => ({
   input: INPUT_FILE,
   output: [{ file: `${DIR_OUTPUT}/${packageName}.es.js`, format: 'es' }],
-  plugins: [jsonPlugin(), tsPlugin()],
+  plugins: [jsonPlugin(), tsPlugin(), terserPlugin()],
 });
 
 /**
