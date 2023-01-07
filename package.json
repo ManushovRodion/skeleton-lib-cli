@@ -16,7 +16,7 @@
   "files": [
     "dist"
   ],
-  "main": "dist/skeleton-lib-cli.common.js",
+  "main": "dist/skeleton-lib-cli.cjs.js",
   "unpkg": "dist/skeleton-lib-cli.umd.js",
   "module": "dist/skeleton-lib-cli.esm.js",
   "types": "dist/skeleton-lib-cli.d.ts",
@@ -28,7 +28,8 @@
     "build": "rimraf dist && rollup --c rollup.config.ts --configPlugin typescript && rimraf dist/types",
     "lint": "eslint --ignore-path .gitignore .",
     "lint:format": "prettier --ignore-path .gitignore --write .",
-    "test": "jest"
+    "test": "jest",
+    "demo:cli": "node bin/cli.js"
   },
   "repository": {
     "type": "git",
