@@ -34,10 +34,10 @@ npx skeleton-lib-cli -outDir DIR_PROJECT
 npx skeleton-lib-cli -outDir DIR_PROJECT -lang en
 ```
 
-| Option                | Type                   | Default | Description                                                                                                                                              |
-| --------------------- | ---------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <nobr>--lang</nobr>   | <nobr>en \| ru </nobr> | ru      | What language should the UI cli be in?                                                                                                                   |
-| <nobr>--outDir</nobr> | string                 | ---     | The path where to unload the library skeleton. If the -outDir parameter is not set, then it is unloaded to the folder from the value of the project name |
+| Option                | Type                   | Default | Description                            |
+| --------------------- | ---------------------- | ------- | -------------------------------------- |
+| <nobr>--lang</nobr>   | <nobr>en \| ru </nobr> | ru      | What language should the UI cli be in? |
+| <nobr>--outDir</nobr> | string                 | ---     | Path where to create the project       |
 
 ## # Questions/Answers
 
