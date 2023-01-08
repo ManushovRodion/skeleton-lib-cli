@@ -2,11 +2,6 @@ name: UpdateLabels
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - 'master'
-    paths:
-      - '.github/labels.yml'
 
 jobs:
   labeler:
@@ -20,7 +15,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           yaml-file: .github/labels.yml
-          skip-delete: false
+          skip-delete: true
           dry-run: false
           exclude: |
             help*
