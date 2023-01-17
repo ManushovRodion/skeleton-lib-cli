@@ -83,7 +83,6 @@ const defineTypeTS = (packageName = '') => ({
   input: `${DIR_OUTPUT}/types/src/main.d.ts`,
   output: { file: `${DIR_OUTPUT}/${packageName}.d.ts` },
   plugins: [dtsPlugin()],
-  external: ['moment'],
 });
 
 const PACKAGE_NAME = definePackageName(process.env['npm_package_name'] || '');
@@ -91,7 +90,7 @@ const PACKAGE_NAME = definePackageName(process.env['npm_package_name'] || '');
 
 const defineCJSProxy = (packageName = '') => ({
   ...defineCJS(packageName),
-  external: ['i18next', 'prompts'],
+  external: ['i18next', 'prompts', 'node:fs/promises', 'prettier'],
 });
 
 export default [

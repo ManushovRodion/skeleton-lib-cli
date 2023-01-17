@@ -28,7 +28,7 @@
     "lint": "eslint --ignore-path .gitignore .",
     "lint:format": "prettier --ignore-path .gitignore --write .",
     "test": "jest",
-    "demo:cli": "node bin/cli.js"
+    "demo:cli": "node bin/cli.js --outDir demo"
   },
   "repository": {
     "type": "git",
@@ -43,7 +43,8 @@
   "dependencies": {
     "@types/prompts": "2.4.2",
     "i18next": "22.4.8",
-    "prompts": "2.4.2"
+    "prompts": "2.4.2",
+    "prettier": "2.8.2"
   },
   "devDependencies": {
     "@rollup/plugin-json": "6.0.0",

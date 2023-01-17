@@ -21,3 +21,6 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Project
+demo
