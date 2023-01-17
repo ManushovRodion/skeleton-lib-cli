@@ -25,15 +25,15 @@ const definePackageName = (npmName = '') => {
  * @param packageName
  * @returns
  */
-const defineModuleName = (packageName = '') => {
-  if (!packageName) return 'ModuleName';
+// const defineModuleName = (packageName = '') => {
+//   if (!packageName) return 'ModuleName';
 
-  const chunckNames = packageName.split('-').map((chunck) => {
-    return chunck[0].toUpperCase() + chunck.slice(1);
-  });
+//   const chunckNames = packageName.split('-').map((chunck) => {
+//     return chunck[0].toUpperCase() + chunck.slice(1);
+//   });
 
-  return chunckNames.join('');
-};
+//   return chunckNames.join('');
+// };
 
 /**
  * [RU] Конфиг создания CJS модуля. Подходит для серверных библиотек
@@ -53,13 +53,13 @@ const defineCJS = (packageName = '') => ({
  * @param packageName
  * @returns
  */
-const defineUMD = (packageName = '', name = '') => ({
-  input: INPUT_FILE,
-  output: [
-    { file: `${DIR_OUTPUT}/${packageName}.umd.js`, format: 'umd', name },
-  ],
-  plugins: [jsonPlugin(), tsPlugin(), terserPlugin()],
-});
+// const defineUMD = (packageName = '', name = '') => ({
+//   input: INPUT_FILE,
+//   output: [
+//     { file: `${DIR_OUTPUT}/${packageName}.umd.js`, format: 'umd', name },
+//   ],
+//   plugins: [jsonPlugin(), tsPlugin(), terserPlugin()],
+// });
 
 /**
  * [RU] Конфиг создания ES модуля. Современный подход, который подходит для новых браузеров, которые поддерживают ES6
@@ -67,11 +67,11 @@ const defineUMD = (packageName = '', name = '') => ({
  * @param packageName
  * @returns
  */
-const defineES = (packageName = '') => ({
-  input: INPUT_FILE,
-  output: [{ file: `${DIR_OUTPUT}/${packageName}.es.js`, format: 'es' }],
-  plugins: [jsonPlugin(), tsPlugin(), terserPlugin()],
-});
+// const defineES = (packageName = '') => ({
+//   input: INPUT_FILE,
+//   output: [{ file: `${DIR_OUTPUT}/${packageName}.es.js`, format: 'es' }],
+//   plugins: [jsonPlugin(), tsPlugin(), terserPlugin()],
+// });
 
 /**
  * [RU] Создает на базе ранее созданных *.d.ts единый файл типов.
@@ -83,14 +83,21 @@ const defineTypeTS = (packageName = '') => ({
   input: `${DIR_OUTPUT}/types/src/main.d.ts`,
   output: { file: `${DIR_OUTPUT}/${packageName}.d.ts` },
   plugins: [dtsPlugin()],
+  external: ['moment'],
 });
 
 const PACKAGE_NAME = definePackageName(process.env['npm_package_name'] || '');
-const MODULE_NAME = defineModuleName(PACKAGE_NAME);
+//const MODULE_NAME = defineModuleName(PACKAGE_NAME);
+
+const defineCJSProxy = (packageName = '') => ({
+  ...defineCJS(packageName),
+  external: ['i18next', 'prompts'],
+});
 
 export default [
-  defineCJS(PACKAGE_NAME),
-  defineUMD(PACKAGE_NAME, MODULE_NAME),
-  defineES(PACKAGE_NAME),
+  defineCJSProxy(PACKAGE_NAME),
+  //defineCJS(PACKAGE_NAME),
+  //defineUMD(PACKAGE_NAME, MODULE_NAME),
+  //defineES(PACKAGE_NAME),
   defineTypeTS(PACKAGE_NAME),
 ];

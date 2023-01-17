@@ -20,7 +20,6 @@
   "unpkg": "dist/skeleton-lib-cli.umd.js",
   "module": "dist/skeleton-lib-cli.esm.js",
   "types": "dist/skeleton-lib-cli.d.ts",
-  "typings": "dist/skeleton-lib-cli.d.ts",
   "bin": {
     "skeleton-lib-cli": "./bin/cli.js"
   },
@@ -41,7 +40,11 @@
     "url": "https://github.com/ManushovRodion/skeleton-lib-cli/issues"
   },
   "homepage": "https://github.com/ManushovRodion/skeleton-lib-cli#README.md",
-  "dependencies": {},
+  "dependencies": {
+    "@types/prompts": "2.4.2",
+    "i18next": "22.4.8",
+    "prompts": "2.4.2"
+  },
   "devDependencies": {
     "@rollup/plugin-json": "6.0.0",
     "@rollup/plugin-terser": "0.3.0",
