@@ -42,6 +42,9 @@
       },
       "codeTest": {
         "message": "Нужны тесты?"
+      },
+      "cli": {
+        "message": "Нужен исполняемый файл bin?"
       }
     },
     "readme": {

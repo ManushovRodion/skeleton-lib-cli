@@ -12,6 +12,7 @@ import { questionUrlRepository } from './questions/questionUrlRepository';
 import { questionСopyright } from './questions/questionСopyright';
 import { questionСodeStyle } from './questions/questionСodeStyle';
 import { questionСodeTest } from './questions/questionСodeTest';
+import { questionСli } from './questions/questionCli';
 
 import { createFileLicense } from './creates/baseFiles/createFileLicense';
 import { createFilePackage } from './creates/baseFiles/createFilePackage';
@@ -27,8 +28,9 @@ import { createFilePretter } from './creates/codeStyleFiles/createFilePretter';
 import { createFileTsConfigESLint } from './creates/codeStyleFiles/createFileTsConfigESLint';
 import { createFileEslintrc } from './creates/codeStyleFiles/createFileEslintrc';
 
-import { createFileJestConfig } from './creates/codeTest/createFileJestConfig';
-import { createFileSrcTestMain } from './creates/codeTest/createFileSrcTestMain';
+import { createFileJestConfig } from './creates/codeTestFiles/createFileJestConfig';
+import { createFileSrcTestMain } from './creates/codeTestFiles/createFileSrcTestMain';
+import { createFileBinCli } from './creates/cliFiles/createFileBinCli';
 
 export interface Options {
   rootDir: string;
@@ -47,11 +49,13 @@ export async function runCreate({ outDir, rootDir }: Options) {
   const copyright = await questionСopyright(author);
   const codeStyle = await questionСodeStyle();
   const codeTest = await questionСodeTest();
+  const cli = await questionСli();
 
   const projectDir = outDir ? outDir : `${rootDir}/${name}`;
   const isESLint = codeStyle === 'ESLINT' || codeStyle === 'FULL';
   const isPretter = codeStyle === 'PRETTER' || codeStyle === 'FULL';
   const isJest = codeTest === 'JEST';
+  const isCli = cli === 'TRUE';
 
   try {
     await mkdir(projectDir, { recursive: true });
@@ -79,6 +83,7 @@ export async function runCreate({ outDir, rootDir }: Options) {
         isESLint,
         isPretter,
         isJest,
+        isCli,
       }
     ),
     createFileLicense({ copyright }, { projectDir }),
@@ -111,5 +116,9 @@ export async function runCreate({ outDir, rootDir }: Options) {
       createFileJestConfig({ projectDir }),
       createFileSrcTestMain({ projectDir }),
     ]);
+  }
+
+  if (isCli) {
+    await createFileBinCli({ name }, { projectDir });
   }
 }

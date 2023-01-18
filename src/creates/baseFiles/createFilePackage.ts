@@ -16,6 +16,7 @@ export interface Params {
   isESLint: boolean;
   isPretter: boolean;
   isJest: boolean;
+  isCli: boolean;
 }
 
 export type MapObject = { [key: string]: string };
@@ -41,9 +42,11 @@ export function createFilePackage(data: Data, params: Params) {
     types: `dist/${data.name}.d.ts`,
   };
 
-  // const bin = {
-  //   [data.name]: './bin/cli.js',
-  // };
+  const cli: { bin?: MapObject } = {};
+  if (params.isCli) {
+    cli['bin'] = {};
+    cli.bin[data.name] = './bin/cli.js';
+  }
 
   const scripts: MapObject = {
     build:
@@ -140,7 +143,7 @@ export function createFilePackage(data: Data, params: Params) {
     ...meta,
     author,
     ...dist,
-    //bin,
+    ...cli,
     repository,
     bugs,
     scripts,
