@@ -28,7 +28,7 @@
     "lint": "eslint --ignore-path .gitignore .",
     "lint:format": "prettier --ignore-path .gitignore --write .",
     "test": "jest",
-    "demo:cli": "node bin/cli.js --outDir demo"
+    "demo:cli": "rimraf demo && node bin/cli.js --outDir demo"
   },
   "repository": {
     "type": "git",
