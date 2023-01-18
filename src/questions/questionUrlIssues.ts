@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import prompts from 'prompts';
 
-export async function questionUrlIssues(defValue: string = '') {
+export async function questionUrlIssues(defValue = '') {
   const postfix = defValue ? ` (${defValue}):` : ':';
   const message = i18next.t('questions.urlIssue.message') + postfix;
 

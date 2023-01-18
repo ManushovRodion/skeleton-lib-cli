@@ -1,6 +1,8 @@
 {
   "translation": {
     "NotImplemented": "Не реализовано!",
+    "not": "Нет",
+    "yes": "Да",
     "error": {
       "NotCreatedProject": "Данная папка под проект уже создана!"
     },
@@ -34,6 +36,9 @@
       },
       "copyright": {
         "message": "Копирайт автора/команды"
+      },
+      "codeStyle": {
+        "message": "Нужна поддержка code style?"
       }
     },
     "readme": {

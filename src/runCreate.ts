@@ -10,6 +10,7 @@ import { questionUrlHome } from './questions/questionUrlHome';
 import { questionUrlIssues } from './questions/questionUrlIssues';
 import { questionUrlRepository } from './questions/questionUrlRepository';
 import { questionСopyright } from './questions/questionСopyright';
+import { questionСodeStyle } from './questions/questionСodeStyle';
 
 import { createFileLicense } from './creates/baseFiles/createFileLicense';
 import { createFilePackage } from './creates/baseFiles/createFilePackage';
@@ -20,6 +21,10 @@ import { createFileTsConfig } from './creates/baseFiles/createFileTsConfig';
 import { createFileReadme } from './creates/baseFiles/createFileReadme';
 import { createFileChangelog } from './creates/baseFiles/createFileChangelog';
 import { createFileSrcMain } from './creates/baseFiles/createFileSrcMain';
+
+import { createFilePretter } from './creates/codeStyleFiles/createFilePretter';
+import { createFileTsConfigESLint } from './creates/codeStyleFiles/createFileTsConfigESLint';
+import { createFileEslintrc } from './creates/codeStyleFiles/createFileEslintrc';
 
 export interface Options {
   rootDir: string;
@@ -36,8 +41,11 @@ export async function runCreate({ outDir, rootDir }: Options) {
   const authorEmail = await questionAuthorEmail();
   const authorUrl = await questionAuthorUrl();
   const copyright = await questionСopyright(author);
+  const codeStyle = await questionСodeStyle();
 
   const projectDir = outDir ? outDir : `${rootDir}/${name}`;
+  const isESLint = codeStyle === 'ESLINT' || codeStyle === 'FULL';
+  const isPretter = codeStyle === 'PRETTER' || codeStyle === 'FULL';
 
   try {
     await mkdir(projectDir, { recursive: true });
@@ -62,6 +70,8 @@ export async function runCreate({ outDir, rootDir }: Options) {
       },
       {
         projectDir,
+        isESLint,
+        isPretter,
       }
     ),
     createFileLicense({ copyright }, { projectDir }),
@@ -77,4 +87,15 @@ export async function runCreate({ outDir, rootDir }: Options) {
 
     createFileSrcMain({ projectDir }),
   ]);
+
+  if (isPretter) {
+    await createFilePretter({ projectDir });
+  }
+
+  if (isESLint) {
+    await Promise.all([
+      createFileTsConfigESLint({ projectDir }),
+      createFileEslintrc({ projectDir, isPretter }),
+    ]);
+  }
 }

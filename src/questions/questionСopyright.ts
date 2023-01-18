@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import prompts from 'prompts';
 
-export async function questionСopyright(defValue: string = '') {
+export async function questionСopyright(defValue = '') {
   const year = new Date().getFullYear();
   const value = defValue ? `${year} ${defValue}` : year;
 

@@ -13,7 +13,11 @@ export interface Data {
 }
 export interface Params {
   projectDir: string;
+  isESLint: boolean;
+  isPretter: boolean;
 }
+
+export type MapObject = { [key: string]: string };
 
 export function createFilePackage(data: Data, params: Params) {
   const meta: { [key: string]: string | [] } = {
@@ -40,15 +44,21 @@ export function createFilePackage(data: Data, params: Params) {
   //   [data.name]: './bin/cli.js',
   // };
 
-  const scripts = {
+  const scripts: MapObject = {
     build:
       'rimraf dist && rollup --c rollup.config.ts --configPlugin typescript && rimraf dist/types',
-    //lint: 'eslint --ignore-path .gitignore .',
-    //'lint:format': 'prettier --ignore-path .gitignore --write .',
     //test: 'jest',
   };
 
-  const author: { [key: string]: string } = {
+  if (params.isESLint) {
+    scripts['lint'] = 'eslint --ignore-path .gitignore .';
+  }
+
+  if (params.isPretter) {
+    scripts['lint:format'] = 'prettier --ignore-path .gitignore --write .';
+  }
+
+  const author: MapObject = {
     name: data.author,
   };
 
@@ -69,27 +79,15 @@ export function createFilePackage(data: Data, params: Params) {
     url: data.urlIssues,
   };
 
-  // const husky = {
-  //   hooks: {
-  //     'pre-commit': 'yarn lint:format && yarn lint --fix && yarn test',
-  //   },
-  // };
-
   const dependencies = {};
 
-  const devDependencies = {
+  const devDependencies: MapObject = {
     '@rollup/plugin-json': '6.0.0',
     '@rollup/plugin-terser': '0.3.0',
     '@rollup/plugin-typescript': '11.0.0',
     //'@types/jest': '29.2.5',
     '@types/node': '16.18.11',
-    //'@typescript-eslint/eslint-plugin': '5.48.0',
-    // '@typescript-eslint/parser': '5.48.0',
-    // eslint: '8.31.0',
-    //'eslint-config-prettier': '8.6.0',
-    //husky: '8.0.3',
     //jest: '29.3.1',
-    //prettier: '2.8.2',
     rimraf: '3.0.2',
     rollup: '3.9.1',
     'rollup-plugin-dts': '5.1.1',
@@ -97,6 +95,35 @@ export function createFilePackage(data: Data, params: Params) {
     tslib: '2.4.1',
     typescript: '4.9.4',
   };
+
+  const husky: { husky?: unknown; 'lint-staged'?: MapObject } = {};
+
+  if (params.isESLint || params.isPretter) {
+    devDependencies['husky'] = '8.0.3';
+    devDependencies['lint-staged'] = '13.1.0';
+
+    husky['husky'] = {
+      hooks: { 'pre-commit': 'lint-staged' },
+    };
+
+    husky['lint-staged'] = {};
+    if (params.isPretter) husky['lint-staged']['*.*'] = 'yarn lint:format';
+    if (params.isESLint) husky['lint-staged']['*.ts'] = 'yarn lint';
+  }
+
+  if (params.isESLint) {
+    devDependencies['eslint'] = '8.31.0';
+    devDependencies['@typescript-eslint/eslint-plugin'] = '5.48.0';
+    devDependencies['@typescript-eslint/parser'] = '5.48.0';
+  }
+
+  if (params.isPretter) {
+    devDependencies['prettier'] = '2.8.2';
+  }
+
+  if (params.isESLint && params.isPretter) {
+    devDependencies['eslint-config-prettier'] = '8.6.0';
+  }
 
   const context: { [key: string]: unknown } = {
     ...meta,
@@ -108,7 +135,7 @@ export function createFilePackage(data: Data, params: Params) {
     scripts,
     dependencies,
     devDependencies,
-    //husky,
+    ...husky,
   };
 
   const path = `${params.projectDir}/package.json`;
