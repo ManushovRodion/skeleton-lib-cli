@@ -39,6 +39,8 @@ npx skeleton-lib-cli -outDir DIR_PROJECT -lang en
 | <nobr>--lang</nobr>   | <nobr>en \| ru </nobr> | ru      | What language should the UI cli be in? |
 | <nobr>--outDir</nobr> | string                 | ---     | Path where to create the project       |
 
+After installation, you need to go to the project folder and install the dependency via NPM or YARN.
+
 ## # Questions/Answers
 
 1. Question:<br>
