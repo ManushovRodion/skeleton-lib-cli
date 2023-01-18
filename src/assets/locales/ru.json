@@ -39,6 +39,9 @@
       },
       "codeStyle": {
         "message": "Нужна поддержка code style?"
+      },
+      "codeTest": {
+        "message": "Нужны тесты?"
       }
     },
     "readme": {

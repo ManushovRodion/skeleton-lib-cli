@@ -15,6 +15,7 @@ export interface Params {
   projectDir: string;
   isESLint: boolean;
   isPretter: boolean;
+  isJest: boolean;
 }
 
 export type MapObject = { [key: string]: string };
@@ -47,7 +48,6 @@ export function createFilePackage(data: Data, params: Params) {
   const scripts: MapObject = {
     build:
       'rimraf dist && rollup --c rollup.config.ts --configPlugin typescript && rimraf dist/types',
-    //test: 'jest',
   };
 
   if (params.isESLint) {
@@ -56,6 +56,10 @@ export function createFilePackage(data: Data, params: Params) {
 
   if (params.isPretter) {
     scripts['lint:format'] = 'prettier --ignore-path .gitignore --write .';
+  }
+
+  if (params.isJest) {
+    scripts['test'] = 'jest';
   }
 
   const author: MapObject = {
@@ -85,18 +89,15 @@ export function createFilePackage(data: Data, params: Params) {
     '@rollup/plugin-json': '6.0.0',
     '@rollup/plugin-terser': '0.3.0',
     '@rollup/plugin-typescript': '11.0.0',
-    //'@types/jest': '29.2.5',
     '@types/node': '16.18.11',
-    //jest: '29.3.1',
     rimraf: '3.0.2',
     rollup: '3.9.1',
     'rollup-plugin-dts': '5.1.1',
-    //'ts-jest': '29.0.3',
     tslib: '2.4.1',
     typescript: '4.9.4',
   };
 
-  const husky: { husky?: unknown; 'lint-staged'?: MapObject } = {};
+  const husky: { husky?: { hooks: MapObject }; 'lint-staged'?: MapObject } = {};
 
   if (params.isESLint || params.isPretter) {
     devDependencies['husky'] = '8.0.3';
@@ -105,6 +106,10 @@ export function createFilePackage(data: Data, params: Params) {
     husky['husky'] = {
       hooks: { 'pre-commit': 'lint-staged' },
     };
+
+    if (params.isJest) {
+      husky['husky']['hooks']['pre-push'] = 'yarn test';
+    }
 
     husky['lint-staged'] = {};
     if (params.isPretter) husky['lint-staged']['*.*'] = 'yarn lint:format';
@@ -125,6 +130,12 @@ export function createFilePackage(data: Data, params: Params) {
     devDependencies['eslint-config-prettier'] = '8.6.0';
   }
 
+  if (params.isJest) {
+    devDependencies['jest'] = '29.3.1';
+    devDependencies['@types/jest'] = '29.2.5';
+    devDependencies['ts-jest'] = '29.0.3';
+  }
+
   const context: { [key: string]: unknown } = {
     ...meta,
     author,
@@ -140,7 +151,11 @@ export function createFilePackage(data: Data, params: Params) {
 
   const path = `${params.projectDir}/package.json`;
 
-  return writeFile(path, format(JSON.stringify(context), { parser: 'json' }), {
-    encoding: 'utf8',
-  });
+  return writeFile(
+    path,
+    format(JSON.stringify(context), { parser: 'json', printWidth: 20 }),
+    {
+      encoding: 'utf8',
+    }
+  );
 }
