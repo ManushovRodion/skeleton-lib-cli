@@ -28,6 +28,7 @@ import { createFileTsConfigESLint } from './creates/codeStyleFiles/createFileTsC
 import { createFileEslintrc } from './creates/codeStyleFiles/createFileEslintrc';
 
 import { createFileJestConfig } from './creates/codeTest/createFileJestConfig';
+import { createFileSrcTestMain } from './creates/codeTest/createFileSrcTestMain';
 
 export interface Options {
   rootDir: string;
@@ -106,6 +107,9 @@ export async function runCreate({ outDir, rootDir }: Options) {
   }
 
   if (isJest) {
-    await createFileJestConfig({ projectDir });
+    await Promise.all([
+      createFileJestConfig({ projectDir }),
+      createFileSrcTestMain({ projectDir }),
+    ]);
   }
 }
