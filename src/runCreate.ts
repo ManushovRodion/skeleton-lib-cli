@@ -31,6 +31,12 @@ import { createFileEslintrc } from './creates/codeStyleFiles/createFileEslintrc'
 import { createFileJestConfig } from './creates/codeTestFiles/createFileJestConfig';
 import { createFileSrcTestMain } from './creates/codeTestFiles/createFileSrcTestMain';
 import { createFileBinCli } from './creates/cliFiles/createFileBinCli';
+import { questionMultiLangDocs } from './questions/questionMultiLangDocs';
+import { questionMultiLangDocsList } from './questions/questionMultiLangDocsList';
+import { createFileMultiLangReadme } from './creates/multiLangFiles/createFileMultiLangReadme';
+import { createFileMultiLangChangelog } from './creates/multiLangFiles/createFileMultiLangChangelog';
+import { createFileMultiLangReadmeItem } from './creates/multiLangFiles/createFileMultiLangReadmeItem';
+import { createFileMultiLangChangelogItem } from './creates/multiLangFiles/createFileMultiLangChangelogItem';
 
 export interface Options {
   rootDir: string;
@@ -50,12 +56,19 @@ export async function runCreate({ outDir, rootDir }: Options) {
   const codeStyle = await questionСodeStyle();
   const codeTest = await questionСodeTest();
   const cli = await questionСli();
+  const multiLangDocs = await questionMultiLangDocs();
 
   const projectDir = outDir ? outDir : `${rootDir}/${name}`;
   const isESLint = codeStyle === 'ESLINT' || codeStyle === 'FULL';
   const isPretter = codeStyle === 'PRETTER' || codeStyle === 'FULL';
   const isJest = codeTest === 'JEST';
   const isCli = cli === 'TRUE';
+  const isMltiLangDocs = multiLangDocs === 'TRUE';
+
+  let multiLangDocsList: string[] = [];
+  if (isMltiLangDocs) {
+    multiLangDocsList = await questionMultiLangDocsList();
+  }
 
   try {
     await mkdir(projectDir, { recursive: true });
@@ -94,11 +107,15 @@ export async function runCreate({ outDir, rootDir }: Options) {
     createFileTsConfig({ projectDir }),
     createFileRollupConfig({ projectDir }),
 
-    createFileReadme({ name, description }, { projectDir }),
-    createFileChangelog({ name }, { projectDir }),
-
     createFileSrcMain({ projectDir }),
   ]);
+
+  if (!isMltiLangDocs) {
+    await Promise.all([
+      createFileReadme({ name, description }, { projectDir }),
+      createFileChangelog({ name }, { projectDir }),
+    ]);
+  }
 
   if (isPretter) {
     await createFilePretter({ projectDir });
@@ -120,5 +137,29 @@ export async function runCreate({ outDir, rootDir }: Options) {
 
   if (isCli) {
     await createFileBinCli({ name }, { projectDir });
+  }
+
+  if (isMltiLangDocs) {
+    await mkdir(`${projectDir}/docs`);
+
+    await Promise.all([
+      createFileMultiLangReadme(
+        { name, lang: multiLangDocsList },
+        { projectDir }
+      ),
+      createFileMultiLangChangelog(
+        { name, lang: multiLangDocsList },
+        { projectDir }
+      ),
+      ...multiLangDocsList.map((lang) => {
+        return [
+          createFileMultiLangReadmeItem(
+            { name, description, lang },
+            { projectDir }
+          ),
+          createFileMultiLangChangelogItem({ name, lang }, { projectDir }),
+        ];
+      }),
+    ]);
   }
 }

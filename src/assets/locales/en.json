@@ -1,5 +1,68 @@
 {
   "translation": {
-    "Not implemented": "Не реализовано!"
+    "NotImplemented": "Not implemented!",
+    "not": "No",
+    "yes": "Yes",
+    "error": {
+      "NotCreatedProject": "This project folder has already been created!"
+    },
+    "questions": {
+      "namePackage": {
+        "message": "Package name (mandatory!)",
+        "validation": "Invalid value! Valid characters are 'a-z' and '-'."
+      },
+      "descPackage": {
+        "message": "Project summary"
+      },
+      "urlHome": {
+        "message": "Project Home Page"
+      },
+      "urlRepository": {
+        "message": "Address, Git repository where the project is located (required field!)",
+        "validation": "Required!"
+      },
+      "urlIssue": {
+        "message": "Address where issues are available"
+      },
+      "author": {
+        "message": "The author of the project. In this case, how you can be contacted (required field!)",
+        "validation": "Required!"
+      },
+      "authorEmail": {
+        "message": "Author's Email"
+      },
+      "authorUrl": {
+        "message": "Author Page"
+      },
+      "copyright": {
+        "message": "Copyright author/team"
+      },
+      "codeStyle": {
+        "message": "Need code style support?"
+      },
+      "codeTest": {
+        "message": "Need tests?"
+      },
+      "cli": {
+        "message": "Need the bin executable?"
+      },
+      "multiLangDocs": {
+        "message": "Enable multilanguage for documentation?"
+      },
+      "multiLangDocsList": {
+        "message": "It is necessary to list, separated by commas, language codes. (mandatory field!)",
+        "validation": "Required!"
+      }
+    },
+    "readme": {
+      "install": {
+        "title": "Installation",
+        "npm": "For NPM users:",
+        "yarn": "For those who use YARN:"
+      },
+      "license": {
+        "title": "License"
+      }
+    }
   }
 }
