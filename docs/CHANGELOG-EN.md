@@ -2,6 +2,6 @@
 
 # SKELETON-LIB-CLI
 
-### # v1.0.0 (2023-01-08)
+### # v0.1.0 (2023-01-20)
 
-Package release `skeleton-lib-cli`
+Package Alpha-Release `skeleton-lib-cli`
