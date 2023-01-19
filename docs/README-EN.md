@@ -43,13 +43,13 @@ After installation, you need to go to the project folder and install the depende
 
 ## # Questions/Answers
 
-1. Question:<br>
+<!-- 1. Question:<br>
    \- I have installed github templates that have labels, but I can't see those labels in the github panel. How can I put these labels?<br><br>
    Answer:<br>
    \- After publishing the project on github, the action "UpdateLabels" will be available in actions - it will start adding labels to the github panel from the list: .github/labels.yml
-   <br><br>
+   <br><br> -->
 
-2. Question:<br>
+1. Question:<br>
    \- I see CJS(CommonJS), UMD and ES formats being built. How can I disable an unnecessary format?<br><br>
    Answer:<br>
    \- Rollup is responsible for the assembly and the config for it is rollup.config.ts - just comment out the extra call.
@@ -82,7 +82,7 @@ After installation, you need to go to the project folder and install the depende
 
    <br>
 
-3. Question:<br>
+2. Question:<br>
    \- What is multilingualism and how does it work?<br><br>
    Answer:<br>
    \- If you chose multilingual when starting the utility, then you will be asked which languages you want to use - just list in the format: ru, en, ch.<br>
@@ -90,7 +90,7 @@ After installation, you need to go to the project folder and install the depende
    It follows from this that multilingualism is the support of a project / package in different languages in the same way. How it works can be seen on the current project.
    <br><br>
 
-4. Question:<br>
+3. Question:<br>
    \- I created a project with a utility and didn't select some packages when initializing. How do I add these packages?<br><br>
    Answer:<br>
    \- For the current day, it is not possible to add to a previously created project or update dependencies using this utility.<br>
