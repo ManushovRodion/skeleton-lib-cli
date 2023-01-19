@@ -13,7 +13,8 @@ The task of the utility is to: launch it, answer questions and get a skeleton fo
 - [x] Eslint and Pritter with base configuration;
 - [x] Jest c Coverage;
 - [x] Multilingual - Create skeletons for documentation with the specified languages;
-- [x] GitHub issues template;
+- [x] File bin (cli run)
+- [ ] GitHub issues template;
 - [ ] JavaScript support;
 - [ ] Mono-repositories based on Lerna;
 - [ ] Lint Git Commits - lint git commits according to [rules](https://www.conventionalcommits.org/en/v1.0.0/);
