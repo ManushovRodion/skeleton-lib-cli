@@ -4,6 +4,7 @@ import { format } from 'prettier';
 export interface Params {
   projectDir: string;
   isPretter: boolean;
+  isCli: boolean;
 }
 
 export function createFileEslintrc(params: Params) {
@@ -12,8 +13,14 @@ export function createFileEslintrc(params: Params) {
     'plugin:@typescript-eslint/recommended',
   ];
 
+  const ignorePatterns: string[] = [];
+
   if (params.isPretter) {
     extendsList.push('prettier');
+  }
+
+  if (params.isCli) {
+    ignorePatterns.push('cli.js');
   }
 
   const context = {
@@ -24,6 +31,7 @@ export function createFileEslintrc(params: Params) {
     },
     plugins: ['@typescript-eslint'],
     extends: extendsList,
+    ignorePatterns,
     rules: {},
   };
 

@@ -125,7 +125,7 @@ export async function runCreate({ outDir, rootDir }: Options) {
   if (isESLint) {
     await Promise.all([
       createFileTsConfigESLint({ projectDir }),
-      createFileEslintrc({ projectDir, isPretter }),
+      createFileEslintrc({ projectDir, isPretter, isCli }),
     ]);
   }
 
