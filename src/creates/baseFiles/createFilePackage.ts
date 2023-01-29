@@ -38,7 +38,7 @@ export function createFilePackage(data: Data, params: Params) {
     files: ['dist'],
     main: `dist/${data.name}.cjs.js`,
     unpkg: `dist/${data.name}.umd.js`,
-    module: `dist/${data.name}.esm.js`,
+    module: `dist/${data.name}.es.js`,
     types: `dist/${data.name}.d.ts`,
   };
 
