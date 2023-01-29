@@ -97,6 +97,7 @@ export async function runCreate({ outDir, rootDir }: Options) {
         isPretter,
         isJest,
         isCli,
+        isMltiLangDocs,
       }
     ),
     createFileLicense({ copyright }, { projectDir }),

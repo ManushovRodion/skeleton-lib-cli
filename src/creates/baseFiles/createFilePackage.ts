@@ -17,6 +17,7 @@ export interface Params {
   isPretter: boolean;
   isJest: boolean;
   isCli: boolean;
+  isMltiLangDocs: boolean;
 }
 
 export type MapObject = { [key: string]: string };
@@ -34,8 +35,13 @@ export function createFilePackage(data: Data, params: Params) {
     meta['homepage'] = data.urlHome;
   }
 
+  const files = ['dist'];
+  if (params.isMltiLangDocs) {
+    files.push('docs');
+  }
+
   const dist = {
-    files: ['dist'],
+    files,
     main: `dist/${data.name}.cjs.js`,
     unpkg: `dist/${data.name}.umd.js`,
     module: `dist/${data.name}.es.js`,
