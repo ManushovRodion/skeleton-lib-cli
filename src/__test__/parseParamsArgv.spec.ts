@@ -4,9 +4,6 @@ describe('parseParamsArgv', () => {
   it('Если нет значений в argv, то возвращается обьект параметров с дефолтными значениями', () => {
     const params = parseParamsArgv([]);
 
-    expect(params.help.value).toBe('');
-    expect(params.help.has).toBeFalsy();
-
     expect(params.lang.value).toBe('ru');
     expect(params.lang.has).toBeFalsy();
 
@@ -22,9 +19,6 @@ describe('parseParamsArgv', () => {
       '--outDir',
       'test',
     ]);
-
-    expect(params.help.value).toBe('');
-    expect(params.help.has).toBeTruthy();
 
     expect(params.lang.value).toBe('en');
     expect(params.lang.has).toBeTruthy();

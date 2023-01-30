@@ -10,7 +10,6 @@ export interface ParamLangArgv extends ParamArgv {
 }
 
 export interface ParamsArgv {
-  help: ParamArgv;
   lang: ParamLangArgv;
   outDir: ParamArgv;
 }
@@ -38,7 +37,6 @@ function findParamArgv<T extends ParamArgv>(
 
 export function parseParamsArgv(argvs: string[]): ParamsArgv {
   return {
-    help: findParamArgv(argvs, '--help'),
     lang: <ParamLangArgv>findParamArgv(argvs, '--lang', { defaultValue: 'ru' }),
     outDir: findParamArgv(argvs, '--outDir', { findValue: true }),
   };
