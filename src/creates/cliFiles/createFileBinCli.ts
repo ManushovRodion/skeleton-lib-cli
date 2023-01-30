@@ -14,7 +14,7 @@ export async function createFileBinCli(data: Data, params: Params) {
 const lib = require('../dist/${data.name}.cjs.js');
 
 try {
-    ib.cli(process);
+    lib.cli(process);
 } catch (e) {
     console.error(e);
     process.exit(0);
