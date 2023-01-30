@@ -15,3 +15,9 @@ FIX:
 - Missing README.md for multilanguage.
 
 - Crash when starting linter when it tries to parse cli node
+
+### # v0.1.2 (2023-01-30)
+
+FIX:
+
+- Discovery error cli: `ReferenceError: ib is not defined`
