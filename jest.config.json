@@ -5,6 +5,8 @@
   "collectCoverage": true,
   "collectCoverageFrom": ["src/**/*.ts"],
 
+  "restoreMocks": true,
+
   "coverageThreshold": {
     "global": {
       "branches": 80,
