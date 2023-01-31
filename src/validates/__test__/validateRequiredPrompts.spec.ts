@@ -1,25 +1,20 @@
 import { validateRequiredPrompts } from '../validateRequiredPrompts';
 
-jest.mock('prompts', () => ({
-  ...jest.requireActual('i18next'),
-  __esModule: true,
-  t: jest.fn(),
+jest.mock('i18next', () => ({
+  t: (key: string) => {
+    if (key === 'base.requiredInput') return 'REQUIRED';
+    return '';
+  },
 }));
 
 describe('validates/validateRequiredPrompts', () => {
-  it('Если нет значений, то вернет сообщение', () => {
-    const i18next = require('i18next');
-    i18next.t = () => 'ERROR';
-
-    expect(validateRequiredPrompts('')).toBe('ERROR');
-    expect(validateRequiredPrompts([])).toBe('ERROR');
-    expect(validateRequiredPrompts()).toBe('ERROR');
+  it('Если нет значений, то вернет сообщение из стора i18next', () => {
+    expect(validateRequiredPrompts('')).toBe('REQUIRED');
+    expect(validateRequiredPrompts([])).toBe('REQUIRED');
+    expect(validateRequiredPrompts()).toBe('REQUIRED');
   });
 
   it('Если есть значение, то вернет TRUE', () => {
-    const i18next = require('i18next');
-    i18next.t = () => 'ERROR';
-
     expect(validateRequiredPrompts('text')).toBeTruthy();
     expect(validateRequiredPrompts(['text'])).toBeTruthy();
   });
