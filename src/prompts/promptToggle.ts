@@ -18,8 +18,8 @@ export async function promptToggle(message: string) {
     type: 'toggle',
     name: 'value',
     message: `${message}: `,
-    active: i18next.t('yes'),
-    inactive: i18next.t('not'),
+    active: i18next.t('base.yes'),
+    inactive: i18next.t('base.not'),
     initial: true,
     onState,
   });

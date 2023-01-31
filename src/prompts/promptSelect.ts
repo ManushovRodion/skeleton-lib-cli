@@ -23,7 +23,7 @@ export async function promptSelect(message: string, options: Option[]) {
     type: 'select',
     name: 'value',
     message: `${message}: `,
-    choices: [...options, { title: i18next.t('not'), value: 'NONE' }],
+    choices: [...options, { title: i18next.t('base.not'), value: 'NONE' }],
     initial: 0,
     onState,
   });

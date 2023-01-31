@@ -1,5 +1,11 @@
 {
   "translation": {
+    "base": {
+      "not": "Нет",
+      "yes": "Да",
+      "requiredinput": "Обязательное поле!"
+    },
+
     "NotImplemented": "Не реализовано!",
     "not": "Нет",
     "yes": "Да",
