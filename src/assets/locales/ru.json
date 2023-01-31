@@ -3,7 +3,7 @@
     "base": {
       "not": "Нет",
       "yes": "Да",
-      "requiredinput": "Обязательное поле!"
+      "requiredInput": "Обязательное поле!"
     },
 
     "NotImplemented": "Не реализовано!",
