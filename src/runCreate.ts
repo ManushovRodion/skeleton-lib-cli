@@ -3,7 +3,7 @@ import { mkdir } from 'node:fs/promises';
 
 import { questionAuthorName } from './questions/author/questionAuthorName';
 import { questionAuthorEmail } from './questions/author/questionAuthorEmail';
-import { questionAuthorUrl } from './questions/author/questionAuthorUrl';
+import { questionAuthorURL } from './questions/author/questionAuthorURL';
 
 import { questionDescPackage } from './questions/questionDescPackage';
 import { questionNamePackage } from './questions/questionNamePackage';
@@ -52,11 +52,11 @@ export async function runCreate({ outDir, rootDir }: Options) {
   const urlHome = await questionUrlHome(urlRepository);
 
   // author
-  const author = await questionAuthorName();
+  const authorName = await questionAuthorName();
   const authorEmail = await questionAuthorEmail();
-  const authorUrl = await questionAuthorUrl();
+  const authorURL = await questionAuthorURL();
 
-  const copyright = await questionСopyright(author);
+  const copyright = await questionСopyright(authorName);
   const codeStyle = await questionСodeStyle();
   const codeTest = await questionСodeTest();
   const cli = await questionСli();
@@ -88,9 +88,9 @@ export async function runCreate({ outDir, rootDir }: Options) {
       {
         name,
         description,
-        author,
+        author: authorName,
         authorEmail,
-        authorUrl,
+        authorUrl: authorURL,
         urlRepository,
         urlIssues,
         urlHome,

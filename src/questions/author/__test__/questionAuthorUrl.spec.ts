@@ -1,4 +1,4 @@
-import { questionAuthorUrl } from '../questionAuthorUrl';
+import { questionAuthorURL } from '../questionAuthorURL';
 
 import * as PromptText from '../../../prompts/promptText';
 
@@ -9,7 +9,7 @@ jest.mock('i18next', () => ({
   },
 }));
 
-describe('questions/author/questionAuthorUrl', () => {
+describe('questions/author/questionAuthorURL', () => {
   beforeEach(() => {
     /**
      * Чтобы мы не ждали ответа ввода в консоле -> кидаем сразу результат
@@ -22,14 +22,14 @@ describe('questions/author/questionAuthorUrl', () => {
     const promptText = jest.spyOn(PromptText, 'promptText');
     promptText.mockResolvedValue('value');
 
-    const value = await questionAuthorUrl();
+    const value = await questionAuthorURL();
     expect(value).toBe('value');
   });
 
   it('Проверка, что для promptText корректно передается сообщение', async () => {
     const promptText = jest.spyOn(PromptText, 'promptText');
 
-    await questionAuthorUrl();
+    await questionAuthorURL();
 
     const message = promptText.mock.calls[0][0];
     expect(message).toBe('TITLE');
