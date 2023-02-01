@@ -1,9 +1,10 @@
 import i18next from 'i18next';
 import { mkdir } from 'node:fs/promises';
 
-import { questionAuthor } from './questions/questionAuthor';
-import { questionAuthorEmail } from './questions/questionAuthorEmail';
-import { questionAuthorUrl } from './questions/questionAuthorUrl';
+import { questionAuthorName } from './questions/author/questionAuthorName';
+import { questionAuthorEmail } from './questions/author/questionAuthorEmail';
+import { questionAuthorUrl } from './questions/author/questionAuthorUrl';
+
 import { questionDescPackage } from './questions/questionDescPackage';
 import { questionNamePackage } from './questions/questionNamePackage';
 import { questionUrlHome } from './questions/questionUrlHome';
@@ -49,9 +50,12 @@ export async function runCreate({ outDir, rootDir }: Options) {
   const urlRepository = await questionUrlRepository();
   const urlIssues = await questionUrlIssues(`${urlRepository}/issues`);
   const urlHome = await questionUrlHome(urlRepository);
-  const author = await questionAuthor();
+
+  // author
+  const author = await questionAuthorName();
   const authorEmail = await questionAuthorEmail();
   const authorUrl = await questionAuthorUrl();
+
   const copyright = await questionСopyright(author);
   const codeStyle = await questionСodeStyle();
   const codeTest = await questionСodeTest();
