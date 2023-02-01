@@ -1,71 +1,76 @@
-import { promptSelect, type State } from '../promptSelect';
+import Prompts, { type PromptObject } from 'prompts';
+import { promptSelect } from '../promptSelect';
 
-jest.mock('prompts', () => ({
-  ...jest.requireActual('prompts'),
-  __esModule: true,
-  default: jest.fn(),
+jest.mock('prompts');
+const prompts = jest.mocked(Prompts);
+
+jest.mock('i18next', () => ({
+  t: (key: string) => {
+    if (key === 'base.not') return 'NOT';
+    return '';
+  },
 }));
 
 describe('prompts/promptSelect', () => {
+  beforeEach(() => {
+    prompts.mockReset();
+
+    /**
+     * Чтобы мы не ждали ответа ввода в консоле -> кидаем сразу результат
+     */
+    prompts.mockResolvedValue({ value: '' });
+  });
+
   it('Проверка, что возвращается значение NONE, когда список пуст', async () => {
-    const prompts = require('prompts');
-    prompts.default = async () => ({ value: 'NONE' });
+    prompts.mockResolvedValue({ value: 'NONE' });
 
     const value = await promptSelect('', []);
     expect(value).toBe('NONE');
   });
 
   it('Проверка, что возвращается значение из списка', async () => {
-    const prompts = require('prompts');
-    prompts.default = async () => ({ value: 'TEST' });
+    prompts.mockResolvedValue({ value: 'TEST' });
 
     const value = await promptSelect('', [{ title: 'TITLE', value: 'TEST' }]);
     expect(value).toBe('TEST');
   });
 
-  it('Проверка, что выполнение останавливается, когда нажато CTRL + C', async () => {
-    const prompts = require('prompts');
-    jest
-      .spyOn(process, 'exit')
-      .mockImplementation((code: number | undefined) => {
-        throw code;
-      });
-
-    interface Prompts {
-      onState: (state: State) => void;
-    }
-
-    prompts.default = async ({ onState }: Prompts) => {
-      onState({ aborted: true });
-    };
-
-    try {
-      await promptSelect('', []);
-    } catch (code) {
-      expect(code).toBe(0);
-    }
-  });
-
   it('Проверка, что корректно передаются опции для prompts', async () => {
-    const prompts = require('prompts');
-    let options: any = {};
-
-    prompts.default = (opt: any) => {
-      options = opt;
-
-      return { value: '' };
-    };
-
     await promptSelect('message', [{ title: 'TITLE', value: 'VALUE' }]);
 
-    expect(options).toHaveProperty('type', 'select');
-    expect(options).toHaveProperty('name', 'value');
-    expect(options).toHaveProperty('message', 'message: ');
-    expect(options).toHaveProperty('choices', [
+    const props = prompts.mock.calls[0][0] as PromptObject;
+
+    expect(props.type).toBe('select');
+    expect(props.name).toBe('value');
+    expect(props.initial).toBe(0);
+    expect(props.onState).toBeTruthy();
+
+    expect(props.message).toBe('message: ');
+    expect(props.choices).toEqual([
       { title: 'TITLE', value: 'VALUE' },
-      { title: undefined, value: 'NONE' }, // undefined - так как не подтянулась локализация
+      { title: 'NOT', value: 'NONE' },
     ]);
-    expect(options).toHaveProperty('initial', 0);
-    expect(options).toHaveProperty('onState');
+  });
+
+  // Пока нет такого функционала в propmps и приходится его имитировать самим
+  it('Проверка, что выполнение останавливается, когда нажато CTRL + C, за счет вызова onState, в котором идет вызов process.exit(0)', async () => {
+    const exit = jest.spyOn(process, 'exit');
+    exit.mockReturnValue(0 as never); // отключение прерывания вызова
+
+    // имитация вызова onState в prompts
+    prompts.mockImplementation(async (props) => {
+      const prompt = props as PromptObject;
+      const value = { value: '' };
+
+      if (prompt?.onState) {
+        prompt.onState({ aborted: true }, value, prompt);
+      }
+
+      return value;
+    });
+
+    await promptSelect('message', []);
+
+    expect(exit).toBeCalled();
   });
 });

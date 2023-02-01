@@ -1,4 +1,8 @@
-import { promptList, type State } from '../promptList';
+import Prompts, { type PromptObject } from 'prompts';
+import { promptList } from '../promptList';
+
+jest.mock('prompts');
+const prompts = jest.mocked(Prompts);
 
 jest.mock('prompts', () => ({
   ...jest.requireActual('prompts'),
@@ -7,73 +11,69 @@ jest.mock('prompts', () => ({
 }));
 
 describe('prompts/promptList', () => {
+  beforeEach(() => {
+    prompts.mockReset();
+
+    /**
+     * Чтобы мы не ждали ответа ввода в консоле -> кидаем сразу результат
+     */
+    prompts.mockResolvedValue({ value: [] });
+  });
+
   it('Проверка, что возвращается значение', async () => {
-    const prompts = require('prompts');
-    prompts.default = async () => ({ value: ['1', '2'] });
+    prompts.mockResolvedValue({ value: ['ru', 'en'] });
 
     const value = await promptList('');
-    expect(value).toEqual(['1', '2']);
+    expect(value).toEqual(['ru', 'en']);
   });
 
   it('Проверка, что возвращается дефолтное значение, когда не указано значение с консоли', async () => {
-    const prompts = require('prompts');
-    prompts.default = async () => ({ value: [] });
-
-    const value = await promptList('', { defaultValue: ['1', '2'] });
-    expect(value).toEqual(['1', '2']);
+    const value = await promptList('', { defaultValue: ['ru', 'en'] });
+    expect(value).toEqual(['ru', 'en']);
   });
 
   it('Проверка, что возвращается пустой массив, когда не указано значение с консоли и нет дефолтного значения', async () => {
-    const prompts = require('prompts');
-    prompts.default = async () => ({ value: [] });
-
     const value = await promptList('');
     expect(value).toEqual([]);
   });
 
-  it('Проверка, что выполнение останавливается, когда нажато CTRL + C', async () => {
-    const prompts = require('prompts');
-    jest
-      .spyOn(process, 'exit')
-      .mockImplementation((code: number | undefined) => {
-        throw code;
-      });
+  it('Проверка, что корректно передаются опции для prompts', async () => {
+    await promptList('message', {
+      defaultValue: ['ru', 'en', 'ch'],
+      validate: () => '',
+    });
 
-    interface Prompts {
-      onState: (state: State) => void;
-    }
+    const props = prompts.mock.calls[0][0] as PromptObject;
 
-    prompts.default = async ({ onState }: Prompts) => {
-      onState({ aborted: true });
-    };
+    expect(props.type).toBe('list');
+    expect(props.name).toBe('value');
+    expect(props.separator).toBe(',');
+    expect(props.onState).toBeTruthy();
 
-    try {
-      await promptList('');
-    } catch (code) {
-      expect(code).toBe(0);
-    }
+    expect(props.initial).toEqual('ru, en, ch');
+    expect(props.message).toBe('message: ');
+    expect(props.validate).toBeTruthy();
   });
 
-  it('Проверка, что корректно передаются опции для prompts', async () => {
-    const prompts = require('prompts');
-    let options: any = {};
+  // Пока нет такого функционала в propmps и приходится его имитировать самим
+  it('Проверка, что выполнение останавливается, когда нажато CTRL + C, за счет вызова onState, в котором идет вызов process.exit(0)', async () => {
+    const exit = jest.spyOn(process, 'exit');
+    exit.mockReturnValue(0 as never); // отключение прерывания вызова
 
-    prompts.default = (opt: any) => {
-      options = opt;
+    // имитация вызова onState в prompts
+    prompts.mockImplementation(async (props) => {
+      const prompt = props as PromptObject;
+      const value = { value: '' };
 
-      return { value: '' };
-    };
+      if (prompt?.onState) {
+        prompt.onState({ aborted: true }, value, prompt);
+      }
 
-    const validate = () => 'validate';
+      return value;
+    });
 
-    await promptList('message', { defaultValue: ['1', '2', '3'], validate });
+    await promptList('message');
 
-    expect(options).toHaveProperty('type', 'list');
-    expect(options).toHaveProperty('name', 'value');
-    expect(options).toHaveProperty('message', 'message: ');
-    expect(options).toHaveProperty('initial', '1, 2, 3');
-    expect(options).toHaveProperty('separator', ',');
-    expect(options).toHaveProperty('validate');
-    expect(options).toHaveProperty('onState');
+    expect(exit).toBeCalled();
   });
 });
