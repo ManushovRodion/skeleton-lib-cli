@@ -18,5 +18,9 @@ export async function cli(process: NodeJS.Process) {
     resources: { ru, en },
   });
 
-  runCreate({ rootDir, outDir: outDirValue });
+  try {
+    await runCreate({ rootDir, outDir: outDirValue });
+  } catch (e) {
+    console.log(e);
+  }
 }
