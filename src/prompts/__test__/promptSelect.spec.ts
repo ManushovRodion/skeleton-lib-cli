@@ -25,10 +25,7 @@ describe('prompts/promptSelect', () => {
     expect(props.onState).toBeTruthy();
 
     expect(props.message).toBe('message: ');
-    expect(props.choices).toEqual([
-      { title: 'TITLE', value: 'VALUE' },
-      { title: 'base.not', value: 'NONE' },
-    ]);
+    expect(props.choices).toEqual([{ title: 'TITLE', value: 'VALUE' }]);
   });
 
   // Пока нет такого функционала в propmps и приходится его имитировать самим

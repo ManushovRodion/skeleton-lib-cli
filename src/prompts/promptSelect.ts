@@ -1,16 +1,18 @@
-import i18next from 'i18next';
 import prompts from 'prompts';
 
 export interface State {
   aborted: boolean;
 }
 
-export interface Option {
+export interface Option<Value> {
   title: string;
-  value: string;
+  value: Value;
 }
 
-export async function promptSelect(message: string, options: Option[]) {
+export async function promptSelect<Value>(
+  message: string,
+  options: Option<Value>[]
+) {
   /**
    * CTRL + C не останавливают процесс
    * https://github.com/terkelg/prompts/issues/252
@@ -23,10 +25,10 @@ export async function promptSelect(message: string, options: Option[]) {
     type: 'select',
     name: 'value',
     message: `${message}: `,
-    choices: [...options, { title: i18next.t('base.not'), value: 'NONE' }],
+    choices: options,
     initial: 0,
     onState,
   });
 
-  return value as string;
+  return value as Value;
 }
