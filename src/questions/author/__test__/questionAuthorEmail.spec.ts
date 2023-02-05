@@ -3,10 +3,7 @@ import { questionAuthorEmail } from '../questionAuthorEmail';
 import * as PromptText from '../../../prompts/promptText';
 
 jest.mock('i18next', () => ({
-  t: (key: string) => {
-    if (key === 'questionsMessage.author.email') return 'TITLE';
-    return '';
-  },
+  t: (key: string) => key,
 }));
 
 describe('questions/author/questionAuthorEmail', () => {
@@ -18,7 +15,7 @@ describe('questions/author/questionAuthorEmail', () => {
     promptText.mockResolvedValue('');
   });
 
-  it('Проверка, что переданные данные из promptText передаются как результат функции', async () => {
+  it('Данные возврщаются через promptText', async () => {
     const promptText = jest.spyOn(PromptText, 'promptText');
     promptText.mockResolvedValue('value');
 
@@ -26,12 +23,12 @@ describe('questions/author/questionAuthorEmail', () => {
     expect(value).toBe('value');
   });
 
-  it('Проверка, что для promptText корректно передается сообщение', async () => {
+  it('Корректный ключ локализации', async () => {
     const promptText = jest.spyOn(PromptText, 'promptText');
 
     await questionAuthorEmail();
 
     const message = promptText.mock.calls[0][0];
-    expect(message).toBe('TITLE');
+    expect(message).toBe('questionsMessage.author.email');
   });
 });

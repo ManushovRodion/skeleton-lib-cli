@@ -3,11 +3,7 @@ import { questionAuthorName } from './../questionAuthorName';
 import * as PromptText from '../../../prompts/promptText';
 
 jest.mock('i18next', () => ({
-  t: (key: string) => {
-    if (key === 'questionsMessage.author.name') return 'TITLE';
-    if (key === 'base.requiredInput') return 'REQUIRED';
-    return '';
-  },
+  t: (key: string) => key,
 }));
 
 describe('questions/author/questionAuthorName', () => {
@@ -19,7 +15,7 @@ describe('questions/author/questionAuthorName', () => {
     promptText.mockResolvedValue('');
   });
 
-  it('Проверка, что переданные данные из promptText передаются как результат функции', async () => {
+  it('Данные возврщаются через promptText', async () => {
     const promptText = jest.spyOn(PromptText, 'promptText');
     promptText.mockResolvedValue('value');
 
@@ -27,16 +23,16 @@ describe('questions/author/questionAuthorName', () => {
     expect(value).toBe('value');
   });
 
-  it('Проверка, что для promptText корректно передается сообщение', async () => {
+  it('Корректный ключ локализации', async () => {
     const promptText = jest.spyOn(PromptText, 'promptText');
 
     await questionAuthorName();
 
     const message = promptText.mock.calls[0][0];
-    expect(message).toBe('TITLE (REQUIRED)');
+    expect(message).toBe('questionsMessage.author.name (base.requiredInput)');
   });
 
-  it('Проверка, что для promptText передается функция валидации validateRequiredPrompts', async () => {
+  it('В качестве валидации выступает функция validateRequiredPrompts', async () => {
     const promptText = jest.spyOn(PromptText, 'promptText');
 
     await questionAuthorName();
