@@ -15,11 +15,12 @@ import { questionMultiLangDocsList } from './questions/multiLangDocs/questionMul
 //import { questionLicense } from './questions/license/questionLicense';
 import { questionLicenseСopyright } from './questions/license/questionLicenseСopyright';
 
+import { questionPackageName } from './questions/package/questionPackageName';
+import { questionPackageDescription } from './questions/package/questionPackageDescription';
+
 import { questionCommandLineInterface } from './questions/questionCommandLineInterface';
 
 // ....
-import { questionDescPackage } from './questions/questionDescPackage';
-import { questionNamePackage } from './questions/questionNamePackage';
 
 import { questionСodeStyle } from './questions/questionСodeStyle';
 import { questionСodeTest } from './questions/questionСodeTest';
@@ -52,8 +53,9 @@ export interface Options {
 }
 
 export async function runCreate({ outDir, rootDir }: Options) {
-  const name = await questionNamePackage();
-  const description = await questionDescPackage();
+  // package
+  const name = await questionPackageName();
+  const description = await questionPackageDescription();
 
   // url
   const urlRepository = await questionURLRepository();
@@ -71,6 +73,7 @@ export async function runCreate({ outDir, rootDir }: Options) {
 
   const codeStyle = await questionСodeStyle();
   const codeTest = await questionСodeTest();
+
   const isCLI = await questionCommandLineInterface();
   const isMltiLangDocs = await questionMultiLangDocs();
 

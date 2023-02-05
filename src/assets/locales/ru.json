@@ -5,9 +5,14 @@
       "yes": "Да"
     },
     "validation": {
-      "requiredInput": "Необходимо заполнить!"
+      "requiredInput": "Необходимо заполнить!",
+      "namePackage": "Допустимые символы 'a-z' и '-'."
     },
     "questionsMessage": {
+      "package": {
+        "name": "Название пакета",
+        "description": "Краткое описание проекта"
+      },
       "author": {
         "name": "Автор проекта. В данном случае то как к Вам можно обращаться",
         "email": "Email автора",
@@ -26,26 +31,13 @@
         "toggle": "Нужен файл лицензии",
         "copyright": "Копирайт автора/команды"
       },
-      "cli": "Нужен исполняемый файл bin"
+      "cli": "Нужен исполняемый файл bin",
+      "codeStyle": "Нужна поддержка code style",
+      "codeTest": "Нужны тесты"
     },
 
     "error": {
       "NotCreatedProject": "Данная папка под проект уже создана!"
-    },
-    "questions": {
-      "namePackage": {
-        "message": "Название пакета (обязательное поле!)",
-        "validation": "Невалидное значение! Допустимые символы 'a-z' и '-'."
-      },
-      "descPackage": {
-        "message": "Краткое описание проекта"
-      },
-      "codeStyle": {
-        "message": "Нужна поддержка code style?"
-      },
-      "codeTest": {
-        "message": "Нужны тесты?"
-      }
     },
     "readme": {
       "install": {
