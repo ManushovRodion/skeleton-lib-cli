@@ -25,7 +25,7 @@ describe('questions/url/questionURLRepository', () => {
 
     const message = promptText.mock.calls[0][0];
     expect(message).toBe(
-      'questionsMessage.url.repository (base.requiredInput)'
+      'questionsMessage.url.repository (validation.requiredInput)'
     );
   });
 

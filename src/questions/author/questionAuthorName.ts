@@ -5,7 +5,7 @@ import { validateRequiredPrompts } from '../../validates/validateRequiredPrompts
 
 export function questionAuthorName() {
   const title = i18next.t('questionsMessage.author.name');
-  const messageRequired = i18next.t('base.requiredInput');
+  const messageRequired = i18next.t('validation.requiredInput');
   const message = `${title} (${messageRequired})`;
 
   return promptText(message, { validate: validateRequiredPrompts });

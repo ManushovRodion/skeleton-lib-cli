@@ -24,7 +24,9 @@ describe('questions/author/questionPackageName', () => {
     await questionPackageName();
 
     const message = promptText.mock.calls[0][0];
-    expect(message).toBe('questionsMessage.package.name (base.requiredInput)');
+    expect(message).toBe(
+      'questionsMessage.package.name (validation.requiredInput)'
+    );
   });
 
   it('В качестве валидации выступает функция validatePackageNamePrompts', async () => {

@@ -5,7 +5,7 @@ import { validatePackageNamePrompts } from '../../validates/validatePackageNameP
 
 export async function questionPackageName() {
   const title = i18next.t('questionsMessage.package.name');
-  const messageRequired = i18next.t('base.requiredInput');
+  const messageRequired = i18next.t('validation.requiredInput');
   const message = `${title} (${messageRequired})`;
 
   return promptText(message, { validate: validatePackageNamePrompts });

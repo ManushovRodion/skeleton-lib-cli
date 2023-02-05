@@ -24,7 +24,9 @@ describe('questions/author/questionAuthorName', () => {
     await questionAuthorName();
 
     const message = promptText.mock.calls[0][0];
-    expect(message).toBe('questionsMessage.author.name (base.requiredInput)');
+    expect(message).toBe(
+      'questionsMessage.author.name (validation.requiredInput)'
+    );
   });
 
   it('В качестве валидации выступает функция validateRequiredPrompts', async () => {
