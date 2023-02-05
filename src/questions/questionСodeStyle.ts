@@ -1,21 +1,17 @@
 import i18next from 'i18next';
-import prompts from 'prompts';
+import { promptSelect, type Option } from '../prompts/promptSelect';
+
+export type Value = 'FULL' | 'ESLINT' | 'PRETTER' | 'NONE';
 
 export async function questionСodeStyle() {
-  const message = i18next.t('questions.codeStyle.message');
+  const message = i18next.t('questionsMessage.codeStyle');
 
-  const data = await prompts({
-    type: 'select',
-    name: 'value',
-    message,
-    choices: [
-      { title: 'ESLint + Pretter', value: 'FULL' },
-      { title: 'ESLint', value: 'ESLINT' },
-      { title: 'Pretter', value: 'PRETTER' },
-      { title: i18next.t('not'), value: 'NONE' },
-    ],
-    initial: 0,
-  });
+  const options: Option<Value>[] = [
+    { title: 'ESLint + Pretter', value: 'FULL' },
+    { title: 'ESLint', value: 'ESLINT' },
+    { title: 'Pretter', value: 'PRETTER' },
+    { title: i18next.t('base.not'), value: 'NONE' },
+  ];
 
-  return (data.value || 'NONE') as 'FULL' | 'ESLINT' | 'PRETTER' | 'NONE';
+  return promptSelect<Value>(message, options);
 }

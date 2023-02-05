@@ -1,6 +1,10 @@
 import i18next from 'i18next';
 import { mkdir } from 'node:fs/promises';
 
+/**
+ * QUESTIONS...
+ */
+
 import { questionAuthorName } from './questions/author/questionAuthorName';
 import { questionAuthorEmail } from './questions/author/questionAuthorEmail';
 import { questionAuthorURL } from './questions/author/questionAuthorURL';
@@ -19,11 +23,12 @@ import { questionPackageName } from './questions/package/questionPackageName';
 import { questionPackageDescription } from './questions/package/questionPackageDescription';
 
 import { questionCommandLineInterface } from './questions/questionCommandLineInterface';
-
-// ....
-
 import { questionСodeStyle } from './questions/questionСodeStyle';
-import { questionСodeTest } from './questions/questionСodeTest';
+import { questionUnitTest } from './questions/questionUnitTest';
+
+/**
+ * CREATE FILES...
+ */
 
 import { createFileLicense } from './creates/baseFiles/createFileLicense';
 import { createFilePackage } from './creates/baseFiles/createFilePackage';
@@ -72,7 +77,7 @@ export async function runCreate({ outDir, rootDir }: Options) {
   const licenseCopyright = await questionLicenseСopyright(authorName);
 
   const codeStyle = await questionСodeStyle();
-  const codeTest = await questionСodeTest();
+  const codeTest = await questionUnitTest();
 
   const isCLI = await questionCommandLineInterface();
   const isMltiLangDocs = await questionMultiLangDocs();

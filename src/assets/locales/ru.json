@@ -33,7 +33,7 @@
       },
       "cli": "Нужен исполняемый файл bin",
       "codeStyle": "Нужна поддержка code style",
-      "codeTest": "Нужны тесты"
+      "unitTest": "Нужны unit тесты"
     },
 
     "error": {
