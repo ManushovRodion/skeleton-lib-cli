@@ -5,6 +5,8 @@ import { questionAuthorName } from './questions/author/questionAuthorName';
 import { questionAuthorEmail } from './questions/author/questionAuthorEmail';
 import { questionAuthorURL } from './questions/author/questionAuthorURL';
 
+import { questionIsCLI } from './questions/questionIsCLI';
+
 import { questionDescPackage } from './questions/questionDescPackage';
 import { questionNamePackage } from './questions/questionNamePackage';
 import { questionUrlHome } from './questions/questionUrlHome';
@@ -13,7 +15,6 @@ import { questionUrlRepository } from './questions/questionUrlRepository';
 import { questionСopyright } from './questions/questionСopyright';
 import { questionСodeStyle } from './questions/questionСodeStyle';
 import { questionСodeTest } from './questions/questionСodeTest';
-import { questionСli } from './questions/questionCli';
 
 import { createFileLicense } from './creates/baseFiles/createFileLicense';
 import { createFilePackage } from './creates/baseFiles/createFilePackage';
@@ -59,14 +60,13 @@ export async function runCreate({ outDir, rootDir }: Options) {
   const copyright = await questionСopyright(authorName);
   const codeStyle = await questionСodeStyle();
   const codeTest = await questionСodeTest();
-  const cli = await questionСli();
+  const isCLI = await questionIsCLI();
   const multiLangDocs = await questionMultiLangDocs();
 
   const projectDir = outDir ? outDir : `${rootDir}/${name}`;
   const isESLint = codeStyle === 'ESLINT' || codeStyle === 'FULL';
   const isPretter = codeStyle === 'PRETTER' || codeStyle === 'FULL';
   const isJest = codeTest === 'JEST';
-  const isCli = cli === 'TRUE';
   const isMltiLangDocs = multiLangDocs === 'TRUE';
 
   let multiLangDocsList: string[] = [];
@@ -100,7 +100,7 @@ export async function runCreate({ outDir, rootDir }: Options) {
         isESLint,
         isPretter,
         isJest,
-        isCli,
+        isCli: isCLI,
         isMltiLangDocs,
       }
     ),
@@ -129,7 +129,7 @@ export async function runCreate({ outDir, rootDir }: Options) {
   if (isESLint) {
     await Promise.all([
       createFileTsConfigESLint({ projectDir }),
-      createFileEslintrc({ projectDir, isPretter, isCli }),
+      createFileEslintrc({ projectDir, isPretter, isCli: isCLI }),
     ]);
   }
 
@@ -140,7 +140,7 @@ export async function runCreate({ outDir, rootDir }: Options) {
     ]);
   }
 
-  if (isCli) {
+  if (isCLI) {
     await createFileBinCli({ name }, { projectDir });
   }
 
