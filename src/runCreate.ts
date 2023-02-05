@@ -9,6 +9,9 @@ import { questionURLRepository } from './questions/url/questionURLRepository';
 import { questionURLIssues } from './questions/url/questionURLIssues';
 import { questionURLHome } from './questions/url/questionURLHome';
 
+import { questionMultiLangDocs } from './questions/multiLangDocs/questionMultiLangDocs';
+import { questionMultiLangDocsList } from './questions/multiLangDocs/questionMultiLangDocsList';
+
 import { questionCommandLineInterface } from './questions/questionCommandLineInterface';
 
 // ....
@@ -36,8 +39,6 @@ import { createFileEslintrc } from './creates/codeStyleFiles/createFileEslintrc'
 import { createFileJestConfig } from './creates/codeTestFiles/createFileJestConfig';
 import { createFileSrcTestMain } from './creates/codeTestFiles/createFileSrcTestMain';
 import { createFileBinCli } from './creates/cliFiles/createFileBinCli';
-import { questionMultiLangDocs } from './questions/questionMultiLangDocs';
-import { questionMultiLangDocsList } from './questions/questionMultiLangDocsList';
 import { createFileMultiLangReadme } from './creates/multiLangFiles/createFileMultiLangReadme';
 import { createFileMultiLangChangelog } from './creates/multiLangFiles/createFileMultiLangChangelog';
 import { createFileMultiLangReadmeItem } from './creates/multiLangFiles/createFileMultiLangReadmeItem';
@@ -66,17 +67,16 @@ export async function runCreate({ outDir, rootDir }: Options) {
   const codeStyle = await questionСodeStyle();
   const codeTest = await questionСodeTest();
   const isCLI = await questionCommandLineInterface();
-  const multiLangDocs = await questionMultiLangDocs();
+  const isMltiLangDocs = await questionMultiLangDocs();
 
   const projectDir = outDir ? outDir : `${rootDir}/${name}`;
   const isESLint = codeStyle === 'ESLINT' || codeStyle === 'FULL';
   const isPretter = codeStyle === 'PRETTER' || codeStyle === 'FULL';
   const isJest = codeTest === 'JEST';
-  const isMltiLangDocs = multiLangDocs === 'TRUE';
 
   let multiLangDocsList: string[] = [];
   if (isMltiLangDocs) {
-    multiLangDocsList = await questionMultiLangDocsList();
+    multiLangDocsList = await questionMultiLangDocsList(['ru', 'en']);
   }
 
   try {
