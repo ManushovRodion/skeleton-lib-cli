@@ -9,7 +9,7 @@ import { questionURLRepository } from './questions/url/questionURLRepository';
 import { questionURLIssues } from './questions/url/questionURLIssues';
 import { questionURLHome } from './questions/url/questionURLHome';
 
-import { questionIsCLI } from './questions/questionIsCLI';
+import { questionCommandLineInterface } from './questions/questionCommandLineInterface';
 
 // ....
 import { questionDescPackage } from './questions/questionDescPackage';
@@ -65,7 +65,7 @@ export async function runCreate({ outDir, rootDir }: Options) {
   const copyright = await questionСopyright(authorName);
   const codeStyle = await questionСodeStyle();
   const codeTest = await questionСodeTest();
-  const isCLI = await questionIsCLI();
+  const isCLI = await questionCommandLineInterface();
   const multiLangDocs = await questionMultiLangDocs();
 
   const projectDir = outDir ? outDir : `${rootDir}/${name}`;
