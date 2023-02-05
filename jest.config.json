@@ -6,6 +6,7 @@
   "collectCoverageFrom": ["src/**/*.ts"],
 
   "restoreMocks": true,
+  "verbose": true,
 
   "coverageThreshold": {
     "global": {
