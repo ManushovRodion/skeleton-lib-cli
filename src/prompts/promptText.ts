@@ -31,5 +31,5 @@ export async function promptText(message: string, params?: Params) {
     return params.defaultValue;
   }
 
-  return (value || '') as string;
+  return String(value).trim();
 }

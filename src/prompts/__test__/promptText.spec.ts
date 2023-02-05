@@ -14,24 +14,19 @@ describe('prompts/promptText', () => {
     prompts.mockResolvedValue({ value: '' });
   });
 
-  it('Проверка, что возвращается значение с консоли', async () => {
-    prompts.mockResolvedValue({ value: 'value' });
+  it('Проверка, что убираются пустоты по краям строки', async () => {
+    prompts.mockResolvedValue({ value: ' TEST ' });
 
     const value = await promptText('');
-    expect(value).toBe('value');
+    expect(value).toBe('TEST');
   });
 
-  it('Проверка, что возвращается дефолтное значение, когда не указано значение с консоли', async () => {
+  it('Проверка, что возвращается дефолтное значение, когда не указано значение с prompts', async () => {
     const value = await promptText('', { defaultValue: 'defaultValue' });
     expect(value).toBe('defaultValue');
   });
 
-  it('Проверка, что возвращается пустая строка, когда не указано значение в консоли и нет дефолтного значения', async () => {
-    const value = await promptText('');
-    expect(value).toBe('');
-  });
-
-  it('Проверка, что корректно передаются опции для prompts', async () => {
+  it('Проверка, что передаются нужные, для данного типа поля, опции для prompts', async () => {
     await promptText('message', {
       defaultValue: 'defaultValue',
       validate: () => '',

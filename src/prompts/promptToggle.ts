@@ -17,7 +17,7 @@ export async function promptToggle(message: string) {
   const { value } = await prompts({
     type: 'toggle',
     name: 'value',
-    message: `${message}: `,
+    message: `${message}? `,
     active: i18next.t('base.yes'),
     inactive: i18next.t('base.not'),
     initial: true,

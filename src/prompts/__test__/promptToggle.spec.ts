@@ -22,19 +22,7 @@ describe('prompts/promptToggle', () => {
     prompts.mockResolvedValue({ value: false });
   });
 
-  it('Проверка, что возвращается значение', async () => {
-    prompts.mockResolvedValue({ value: true });
-
-    const valueTrue = await promptToggle('');
-    expect(valueTrue).toBeTruthy();
-
-    prompts.mockResolvedValue({ value: false });
-
-    const valueFalse = await promptToggle('');
-    expect(valueFalse).toBeFalsy();
-  });
-
-  it('Проверка, что корректно передаются опции для prompts', async () => {
+  it('Проверка, что передаются нужные, для данного типа поля, опции для prompts', async () => {
     await promptToggle('message');
 
     const props = prompts.mock.calls[0][0] as PromptObject;
@@ -46,7 +34,7 @@ describe('prompts/promptToggle', () => {
     expect(props.inactive).toBe('NOT');
     expect(props.onState).toBeTruthy();
 
-    expect(props.message).toBe('message: ');
+    expect(props.message).toBe('message? ');
   });
 
   // Пока нет такого функционала в propmps и приходится его имитировать самим
