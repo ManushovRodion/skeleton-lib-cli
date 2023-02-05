@@ -5,13 +5,16 @@ import { questionAuthorName } from './questions/author/questionAuthorName';
 import { questionAuthorEmail } from './questions/author/questionAuthorEmail';
 import { questionAuthorURL } from './questions/author/questionAuthorURL';
 
+import { questionURLRepository } from './questions/url/questionURLRepository';
+import { questionURLIssues } from './questions/url/questionURLIssues';
+import { questionURLHome } from './questions/url/questionURLHome';
+
 import { questionIsCLI } from './questions/questionIsCLI';
 
+// ....
 import { questionDescPackage } from './questions/questionDescPackage';
 import { questionNamePackage } from './questions/questionNamePackage';
-import { questionUrlHome } from './questions/questionUrlHome';
-import { questionUrlIssues } from './questions/questionUrlIssues';
-import { questionUrlRepository } from './questions/questionUrlRepository';
+
 import { questionСopyright } from './questions/questionСopyright';
 import { questionСodeStyle } from './questions/questionСodeStyle';
 import { questionСodeTest } from './questions/questionСodeTest';
@@ -48,9 +51,11 @@ export interface Options {
 export async function runCreate({ outDir, rootDir }: Options) {
   const name = await questionNamePackage();
   const description = await questionDescPackage();
-  const urlRepository = await questionUrlRepository();
-  const urlIssues = await questionUrlIssues(`${urlRepository}/issues`);
-  const urlHome = await questionUrlHome(urlRepository);
+
+  // url
+  const urlRepository = await questionURLRepository();
+  const urlIssues = await questionURLIssues(urlRepository);
+  const urlHome = await questionURLHome(urlRepository);
 
   // author
   const authorName = await questionAuthorName();
