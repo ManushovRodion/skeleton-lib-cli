@@ -11,7 +11,6 @@ export async function cli(process: NodeJS.Process) {
   const { lang, outDir } = parseParamsArgv(process.argv);
 
   const rootDir = process.cwd();
-  const outDirValue = outDir.has ? `${rootDir}/${outDir.value}` : '';
 
   i18next.init({
     lng: lang.value,
@@ -19,7 +18,7 @@ export async function cli(process: NodeJS.Process) {
   });
 
   try {
-    await runCreate({ rootDir, outDir: outDirValue });
+    await runCreate({ rootDir: outDir.has ? outDir.value : rootDir });
   } catch (e) {
     console.log(e);
   }

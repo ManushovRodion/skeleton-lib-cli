@@ -4,10 +4,12 @@
       "not": "Нет",
       "yes": "Да"
     },
+
     "validation": {
       "requiredInput": "Необходимо заполнить!",
       "namePackage": "Допустимые символы 'a-z' и '-'."
     },
+
     "questionsMessage": {
       "package": {
         "name": "Название пакета",
@@ -37,8 +39,9 @@
     },
 
     "error": {
-      "NotCreatedProject": "Данная папка под проект уже создана!"
+      "notCreateDirPackage": "Данная папка под проект уже занята! Укажите другую."
     },
+
     "readme": {
       "install": {
         "title": "Установка",

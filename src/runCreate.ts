@@ -1,4 +1,3 @@
-import i18next from 'i18next';
 import { mkdir } from 'node:fs/promises';
 
 /**
@@ -25,6 +24,12 @@ import { questionPackageDescription } from './questions/package/questionPackageD
 import { questionCommandLineInterface } from './questions/questionCommandLineInterface';
 import { questionСodeStyle } from './questions/questionСodeStyle';
 import { questionUnitTest } from './questions/questionUnitTest';
+
+/**
+ * CREATE DIRS...
+ */
+
+import { createDirPackage } from './creates/dirs/createDirPackage';
 
 /**
  * CREATE FILES...
@@ -54,12 +59,15 @@ import { createFileMultiLangChangelogItem } from './creates/multiLangFiles/creat
 
 export interface Options {
   rootDir: string;
-  outDir: string;
 }
 
-export async function runCreate({ outDir, rootDir }: Options) {
+export async function runCreate({ rootDir }: Options) {
+  const packageName = await questionPackageName();
+  const packageDir = `${rootDir}/${packageName}`;
+  await createDirPackage(packageDir);
+
   // package
-  const name = await questionPackageName();
+  //const name = await questionPackageName();
   const description = await questionPackageDescription();
 
   // url
@@ -82,7 +90,8 @@ export async function runCreate({ outDir, rootDir }: Options) {
   const isCLI = await questionCommandLineInterface();
   const isMltiLangDocs = await questionMultiLangDocs();
 
-  const projectDir = outDir ? outDir : `${rootDir}/${name}`;
+  const projectDir = packageDir; // tmp
+  const name = packageName; // tmp
   const isESLint = codeStyle === 'ESLINT' || codeStyle === 'FULL';
   const isPretter = codeStyle === 'PRETTER' || codeStyle === 'FULL';
   const isJest = codeTest === 'JEST';
@@ -92,19 +101,11 @@ export async function runCreate({ outDir, rootDir }: Options) {
     multiLangDocsList = await questionMultiLangDocsList(['ru', 'en']);
   }
 
-  try {
-    await mkdir(projectDir, { recursive: true });
-  } catch (e) {
-    const message = i18next.t('error.NotCreatedProject');
-    console.log(message, e);
-    return;
-  }
-
   // BASE files
   await Promise.all([
     createFilePackage(
       {
-        name,
+        name: packageName,
         description,
         author: authorName,
         authorEmail,
@@ -114,7 +115,7 @@ export async function runCreate({ outDir, rootDir }: Options) {
         urlHome,
       },
       {
-        projectDir,
+        projectDir: packageDir,
         isESLint,
         isPretter,
         isJest,
