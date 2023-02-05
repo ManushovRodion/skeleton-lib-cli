@@ -10,7 +10,7 @@ describe('questions/questionCommandLineInterface', () => {
     promptToggle.mockResolvedValue(false);
   });
 
-  it('Данные возврщаются через функцию promptText', async () => {
+  it('Данные возврщаются через функцию promptToggle', async () => {
     const promptToggle = jest.spyOn(PromptToggle, 'promptToggle');
     promptToggle.mockResolvedValue(true);
 
