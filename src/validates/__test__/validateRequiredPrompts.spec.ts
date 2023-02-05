@@ -6,6 +6,6 @@ jest.mock('i18next', () => ({
 
 describe('validates/validateRequiredPrompts', () => {
   it('Корректный ключ локализации', () => {
-    expect(validateRequiredPrompts('')).toBe('base.requiredInput');
+    expect(validateRequiredPrompts('')).toBe('validation.requiredInput');
   });
 });
