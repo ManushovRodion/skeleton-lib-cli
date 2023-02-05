@@ -10,7 +10,7 @@ describe('questions/author/questionAuthorEmail', () => {
     promptText.mockResolvedValue('');
   });
 
-  it('Данные возврщаются через promptText', async () => {
+  it('Данные возврщаются через функцию promptText', async () => {
     const promptText = jest.spyOn(PromptText, 'promptText');
     promptText.mockResolvedValue('value');
 
