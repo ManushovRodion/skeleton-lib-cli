@@ -12,13 +12,15 @@ import { questionURLHome } from './questions/url/questionURLHome';
 import { questionMultiLangDocs } from './questions/multiLangDocs/questionMultiLangDocs';
 import { questionMultiLangDocsList } from './questions/multiLangDocs/questionMultiLangDocsList';
 
+//import { questionLicense } from './questions/license/questionLicense';
+import { questionLicenseСopyright } from './questions/license/questionLicenseСopyright';
+
 import { questionCommandLineInterface } from './questions/questionCommandLineInterface';
 
 // ....
 import { questionDescPackage } from './questions/questionDescPackage';
 import { questionNamePackage } from './questions/questionNamePackage';
 
-import { questionСopyright } from './questions/questionСopyright';
 import { questionСodeStyle } from './questions/questionСodeStyle';
 import { questionСodeTest } from './questions/questionСodeTest';
 
@@ -63,7 +65,10 @@ export async function runCreate({ outDir, rootDir }: Options) {
   const authorEmail = await questionAuthorEmail();
   const authorURL = await questionAuthorURL();
 
-  const copyright = await questionСopyright(authorName);
+  // license
+  //const isLicense = await questionLicense()
+  const licenseCopyright = await questionLicenseСopyright(authorName);
+
   const codeStyle = await questionСodeStyle();
   const codeTest = await questionСodeTest();
   const isCLI = await questionCommandLineInterface();
@@ -109,7 +114,7 @@ export async function runCreate({ outDir, rootDir }: Options) {
         isMltiLangDocs,
       }
     ),
-    createFileLicense({ copyright }, { projectDir }),
+    createFileLicense({ copyright: licenseCopyright }, { projectDir }),
 
     createFileNVMRC({ projectDir }),
     createFileGitignore({ projectDir }),
