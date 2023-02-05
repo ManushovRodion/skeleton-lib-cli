@@ -14,19 +14,24 @@ describe('prompts/promptText', () => {
     prompts.mockResolvedValue({ value: '' });
   });
 
-  it('Проверка, что убираются пустоты по краям строки', async () => {
+  it('Нет лишних пробелов до и после строки', async () => {
     prompts.mockResolvedValue({ value: ' TEST ' });
 
     const value = await promptText('');
     expect(value).toBe('TEST');
   });
 
-  it('Проверка, что возвращается дефолтное значение, когда не указано значение с prompts', async () => {
-    const value = await promptText('', { defaultValue: 'defaultValue' });
+  it('Возвращается дефолтное значение, если оно указано', async () => {
+    let value = '';
+
+    value = await promptText('', { defaultValue: 'defaultValue' });
     expect(value).toBe('defaultValue');
+
+    value = await promptText('');
+    expect(value).toBe('');
   });
 
-  it('Проверка, что передаются нужные, для данного типа поля, опции для prompts', async () => {
+  it('Указаны необходимые параметры', async () => {
     await promptText('message', {
       defaultValue: 'defaultValue',
       validate: () => '',
@@ -44,7 +49,7 @@ describe('prompts/promptText', () => {
   });
 
   // Пока нет такого функционала в propmps и приходится его имитировать самим
-  it('Проверка, что выполнение останавливается, когда нажато CTRL + C, за счет вызова onState, в котором идет вызов process.exit(0)', async () => {
+  it('Выполнение запроса останавливается при нажатие CTRL + C', async () => {
     const exit = jest.spyOn(process, 'exit');
     exit.mockReturnValue(0 as never); // отключение прерывания вызова
 

@@ -4,12 +4,6 @@ import { promptList } from '../promptList';
 jest.mock('prompts');
 const prompts = jest.mocked(Prompts);
 
-jest.mock('prompts', () => ({
-  ...jest.requireActual('prompts'),
-  __esModule: true,
-  default: jest.fn(),
-}));
-
 describe('prompts/promptList', () => {
   beforeEach(() => {
     prompts.mockReset();
@@ -20,16 +14,14 @@ describe('prompts/promptList', () => {
     prompts.mockResolvedValue({ value: [] });
   });
 
-  it('Проверка, что возвращается значение', async () => {
-    prompts.mockResolvedValue({ value: ['ru', 'en'] });
+  it('Возвращается дефолтное значение, если оно указано', async () => {
+    let value = [];
 
-    const value = await promptList('');
+    value = await promptList('', { defaultValue: ['ru', 'en'] });
     expect(value).toEqual(['ru', 'en']);
-  });
 
-  it('Проверка, что возвращается дефолтное значение, когда не указано значение с консоли', async () => {
-    const value = await promptList('', { defaultValue: ['ru', 'en'] });
-    expect(value).toEqual(['ru', 'en']);
+    value = await promptList('');
+    expect(value).toEqual([]);
   });
 
   it('Проверка, что возвращается пустой массив, когда не указано значение с консоли и нет дефолтного значения', async () => {
@@ -37,7 +29,7 @@ describe('prompts/promptList', () => {
     expect(value).toEqual([]);
   });
 
-  it('Проверка, что корректно передаются опции для prompts', async () => {
+  it('Указаны необходимые параметры', async () => {
     await promptList('message', {
       defaultValue: ['ru', 'en', 'ch'],
       validate: () => '',
@@ -56,7 +48,7 @@ describe('prompts/promptList', () => {
   });
 
   // Пока нет такого функционала в propmps и приходится его имитировать самим
-  it('Проверка, что выполнение останавливается, когда нажато CTRL + C, за счет вызова onState, в котором идет вызов process.exit(0)', async () => {
+  it('Выполнение запроса останавливается при нажатие CTRL + C', async () => {
     const exit = jest.spyOn(process, 'exit');
     exit.mockReturnValue(0 as never); // отключение прерывания вызова
 

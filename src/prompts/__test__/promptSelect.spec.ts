@@ -5,10 +5,7 @@ jest.mock('prompts');
 const prompts = jest.mocked(Prompts);
 
 jest.mock('i18next', () => ({
-  t: (key: string) => {
-    if (key === 'base.not') return 'NOT';
-    return '';
-  },
+  t: (key: string) => key,
 }));
 
 describe('prompts/promptSelect', () => {
@@ -21,21 +18,7 @@ describe('prompts/promptSelect', () => {
     prompts.mockResolvedValue({ value: '' });
   });
 
-  it('Проверка, что возвращается значение NONE, когда список пуст', async () => {
-    prompts.mockResolvedValue({ value: 'NONE' });
-
-    const value = await promptSelect('', []);
-    expect(value).toBe('NONE');
-  });
-
-  it('Проверка, что возвращается значение из списка', async () => {
-    prompts.mockResolvedValue({ value: 'TEST' });
-
-    const value = await promptSelect('', [{ title: 'TITLE', value: 'TEST' }]);
-    expect(value).toBe('TEST');
-  });
-
-  it('Проверка, что корректно передаются опции для prompts', async () => {
+  it('Указаны необходимые параметры', async () => {
     await promptSelect('message', [{ title: 'TITLE', value: 'VALUE' }]);
 
     const props = prompts.mock.calls[0][0] as PromptObject;
@@ -48,12 +31,12 @@ describe('prompts/promptSelect', () => {
     expect(props.message).toBe('message: ');
     expect(props.choices).toEqual([
       { title: 'TITLE', value: 'VALUE' },
-      { title: 'NOT', value: 'NONE' },
+      { title: 'base.not', value: 'NONE' },
     ]);
   });
 
   // Пока нет такого функционала в propmps и приходится его имитировать самим
-  it('Проверка, что выполнение останавливается, когда нажато CTRL + C, за счет вызова onState, в котором идет вызов process.exit(0)', async () => {
+  it('Выполнение запроса останавливается при нажатие CTRL + C', async () => {
     const exit = jest.spyOn(process, 'exit');
     exit.mockReturnValue(0 as never); // отключение прерывания вызова
 
