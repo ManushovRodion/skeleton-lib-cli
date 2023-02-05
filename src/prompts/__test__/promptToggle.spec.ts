@@ -4,10 +4,6 @@ import { promptToggle } from '../promptToggle';
 jest.mock('prompts');
 const prompts = jest.mocked(Prompts);
 
-jest.mock('i18next', () => ({
-  t: (key: string) => key,
-}));
-
 describe('prompts/promptToggle', () => {
   beforeEach(() => {
     prompts.mockReset();

@@ -2,12 +2,13 @@
   "preset": "ts-jest",
   "testEnvironment": "node",
 
-  "collectCoverage": true,
-  "collectCoverageFrom": ["src/**/*.ts"],
-
   "restoreMocks": true,
   "verbose": true,
 
+  "setupFilesAfterEnv": ["<rootDir>/jest.global.mocks.ts"],
+
+  "collectCoverage": true,
+  "collectCoverageFrom": ["src/**/*.ts"],
   "coverageThreshold": {
     "global": {
       "branches": 80,

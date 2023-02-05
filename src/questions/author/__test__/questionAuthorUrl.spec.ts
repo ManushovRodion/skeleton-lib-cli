@@ -1,10 +1,5 @@
 import { questionAuthorURL } from '../questionAuthorURL';
-
 import * as PromptText from '../../../prompts/promptText';
-
-jest.mock('i18next', () => ({
-  t: (key: string) => key,
-}));
 
 describe('questions/author/questionAuthorURL', () => {
   beforeEach(() => {

@@ -4,10 +4,6 @@ import { promptSelect } from '../promptSelect';
 jest.mock('prompts');
 const prompts = jest.mocked(Prompts);
 
-jest.mock('i18next', () => ({
-  t: (key: string) => key,
-}));
-
 describe('prompts/promptSelect', () => {
   beforeEach(() => {
     prompts.mockReset();
