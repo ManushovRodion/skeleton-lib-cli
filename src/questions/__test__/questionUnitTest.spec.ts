@@ -35,7 +35,7 @@ describe('questions/questionUnitTest', () => {
     const options = promptSelect.mock.calls[0][1];
     expect(options).toEqual([
       { title: 'Jest', value: 'JEST' },
-      { title: 'base.not', value: 'NONE' },
+      { title: 'base.not', value: '' },
     ]);
   });
 });

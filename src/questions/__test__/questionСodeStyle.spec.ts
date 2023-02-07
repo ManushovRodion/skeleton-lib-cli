@@ -37,7 +37,7 @@ describe('questions/questionСodeStyle', () => {
       { title: 'ESLint + Pretter', value: 'FULL' },
       { title: 'ESLint', value: 'ESLINT' },
       { title: 'Pretter', value: 'PRETTER' },
-      { title: 'base.not', value: 'NONE' },
+      { title: 'base.not', value: '' },
     ]);
   });
 });
