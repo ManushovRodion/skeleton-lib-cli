@@ -36,6 +36,7 @@ import { createDirPackage } from './creates/dirs/createDirPackage';
  */
 
 import { createFileJsonPackage } from './creates/files/createFileJsonPackage';
+import { createFileNVMRC } from './creates/files/createFileNVMRC';
 
 //import { createFileLicense } from './creates/baseFiles/createFileLicense';
 // import { createFilePackage } from './creates/baseFiles/createFilePackage';
@@ -69,6 +70,7 @@ export async function runCreate({ rootDir }: Options) {
    * ================================================================
    */
   const fileJsonPackage = createFileJsonPackage();
+  const fileNVMRC = createFileNVMRC();
 
   /**
    * QUESTIONS
@@ -147,6 +149,7 @@ export async function runCreate({ rootDir }: Options) {
    * CREATES
    * ================================================================
    */
+  fileNVMRC.updateNodeVersion('16.19.0');
 
   const packageDir = `${rootDir}/${packageName}`;
   await createDirPackage(packageDir);
@@ -155,7 +158,10 @@ export async function runCreate({ rootDir }: Options) {
     await createDirPackage(`${packageDir}/docs`);
   }
 
-  await Promise.all([fileJsonPackage.render(packageDir)]);
+  await Promise.all([
+    fileJsonPackage.render(packageDir),
+    fileNVMRC.render(packageDir),
+  ]);
 
   // =========
 
