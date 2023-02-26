@@ -1,133 +1,149 @@
-import * as constants from './constants';
-import type { Package, State } from './types';
+import type {
+  MapObject,
+  Package,
+  PackageScripts,
+  PackageAuthor,
+  State,
+} from './types';
+
+import {
+  CLI_SCRIPT_BUILD,
+  CLI_SCRIPT_LINT,
+  CLI_SCRIPT_LINT_FORMAT,
+  CLI_SCRIPT_TEST,
+  DEV_DEPENDENCIES_BASE,
+  DEV_DEPENDENCIES_ESLINT,
+  DEV_DEPENDENCIES_ESLINT_PRETTIER,
+  DEV_DEPENDENCIES_JEST,
+  DEV_DEPENDENCIES_PRETTIER,
+} from './constants';
+
+import { setValueByKey } from './setValueByKey';
+import { validationRequired } from './validationRequired';
 
 export function generator(state: State) {
-  const data: Package = {
-    name: state.name,
-    version: state.version,
-  };
+  let data: Package = {};
 
-  if (state.description) {
-    data.description = state.description;
-  }
+  // NAME
+  validationRequired(state.name, 'name');
+  data = setValueByKey(data, 'name', state.name);
 
-  data.keywords = [];
+  // VERSION
+  validationRequired(state.version, 'version');
+  data = setValueByKey(data, 'version', state.version);
 
-  if (state.license) {
-    data.license = state.license;
-  }
+  // DESC
+  data = setValueByKey(data, 'description', state.description);
 
-  if (state.url.home) {
-    data.homepage = state.url.home;
-  }
+  // META
+  data = setValueByKey(data, 'keywords', []);
 
-  data.files = ['dist'];
+  // LICENSE
+  data = setValueByKey(data, 'license', state.license);
 
-  data.main = `dist/${state.name}.cjs.js`;
-  data.unpkg = `dist/${state.name}.umd.js`;
-  data.module = `dist/${state.name}.es.js`;
-  data.types = `dist/${state.name}.d.ts`;
+  // URL HOME
+  data = setValueByKey(data, 'homepage', state.url.home);
 
+  // PUBLICK NPM
+  const files = ['dist'];
+  if (state.isMultiLangDocs) files.push('docs');
+  data = setValueByKey(data, 'files', files);
+
+  // BUILD
+  data = setValueByKey(data, 'main', `dist/${state.name}.cjs.js`);
+  data = setValueByKey(data, 'unpkg', `dist/${state.name}.umd.js`);
+  data = setValueByKey(data, 'module', `dist/${state.name}.es.js`);
+  data = setValueByKey(data, 'types', `dist/${state.name}.d.js`);
+
+  // CLI BIN
   if (state.isCommandLineInterface) {
-    data.bin = {};
-    data.bin[state.name] = './bin/cli.js';
+    data = setValueByKey(data, 'bin', {
+      [`${state.name}`]: './bin/cli.js',
+    });
   }
 
-  data.scripts = {};
-  data.scripts.build = constants.CLI_SCRIPT_BUILD;
+  // SCRIPTS
+  let scripts: PackageScripts = {};
+
+  scripts = setValueByKey(scripts, 'build', CLI_SCRIPT_BUILD);
 
   if (state.codeStyle.isESLint) {
-    data.scripts.lint = constants.CLI_SCRIPT_LINT;
+    scripts = setValueByKey(scripts, 'lint', CLI_SCRIPT_LINT);
   }
 
-  if (state.codeStyle.isPretter) {
-    data.scripts['lint:format'] = constants.CLI_SCRIPT_LINT_FORMAT;
+  if (state.codeStyle.isPrettier) {
+    scripts = setValueByKey(scripts, 'lint:format', CLI_SCRIPT_LINT_FORMAT);
   }
 
   if (state.unitTest.isJest) {
-    data.scripts.test = constants.CLI_SCRIPT_TEST;
+    scripts = setValueByKey(scripts, 'test', CLI_SCRIPT_TEST);
   }
 
+  data = setValueByKey(data, 'scripts', scripts);
+
+  // AUTHOR
   if (state.author.email || state.author.url) {
-    data.author = state.author;
+    let author: PackageAuthor = {};
+
+    author = setValueByKey(author, 'name', state.author.name);
+    author = setValueByKey(author, 'email', state.author.email);
+    author = setValueByKey(author, 'url', state.author.url);
+
+    if (Object.values(author).length) {
+      data = setValueByKey(data, 'author', author);
+    }
   } else {
-    data.author = state.author.name;
+    data = setValueByKey(data, 'author', state.author.name);
   }
 
+  // REPOSITORY
   if (state.url.repository) {
-    data.repository = {
+    data = setValueByKey(data, 'repository', {
       type: 'git',
       url: `git+${state.url.repository}.git`,
-    };
+    });
   }
 
   if (state.url.issues) {
-    data.bugs = {
+    data = setValueByKey(data, 'bugs', {
       url: state.url.issues,
-    };
+    });
   }
 
-  data.dependencies = {};
-  data.devDependencies = {
-    ...constants.DEV_DEPENDENCIES_BASE,
-  };
+  // DEPENDENCIES
+  data = setValueByKey(data, 'dependencies', {});
+
+  let devDependencies: MapObject = DEV_DEPENDENCIES_BASE;
 
   if (state.codeStyle.isESLint) {
-    data.devDependencies = {
-      ...data.devDependencies,
-      ...constants.DEV_DEPENDENCIES_ESLINT,
+    devDependencies = {
+      ...devDependencies,
+      ...DEV_DEPENDENCIES_ESLINT,
     };
   }
 
-  if (state.codeStyle.isPretter) {
-    data.devDependencies = {
-      ...data.devDependencies,
-      ...constants.DEV_DEPENDENCIES_PRETTIER,
+  if (state.codeStyle.isPrettier) {
+    devDependencies = {
+      ...devDependencies,
+      ...DEV_DEPENDENCIES_PRETTIER,
     };
   }
 
-  if (state.codeStyle.isESLint && state.codeStyle.isPretter) {
-    data.devDependencies = {
-      ...data.devDependencies,
-      ...constants.DEV_DEPENDENCIES_ESLINT_PRETTIER,
+  if (state.codeStyle.isESLint && state.codeStyle.isPrettier) {
+    devDependencies = {
+      ...devDependencies,
+      ...DEV_DEPENDENCIES_ESLINT_PRETTIER,
     };
   }
 
   if (state.unitTest.isJest) {
-    data.devDependencies = {
-      ...data.devDependencies,
-      ...constants.DEV_DEPENDENCIES_JEST,
+    devDependencies = {
+      ...devDependencies,
+      ...DEV_DEPENDENCIES_JEST,
     };
   }
 
-  if (
-    state.codeStyle.isESLint ||
-    state.codeStyle.isPretter ||
-    state.unitTest.isJest
-  ) {
-    data.devDependencies['husky'] = '8.0.3';
-    data.husky = {
-      hooks: {},
-    };
-
-    if (state.codeStyle.isESLint || state.codeStyle.isPretter) {
-      data.devDependencies['lint-staged'] = '13.1.0';
-      data.husky.hooks['pre-commit'] = 'lint-staged';
-      data['lint-staged'] = {};
-
-      if (state.codeStyle.isPretter) {
-        data['lint-staged']['*.*'] = 'yarn lint:format';
-      }
-
-      if (state.codeStyle.isESLint) {
-        data['lint-staged']['*.ts'] = 'yarn lint';
-      }
-    }
-
-    if (state.unitTest.isJest) {
-      data.husky.hooks['pre-push'] = 'yarn test';
-    }
-  }
+  data = setValueByKey(data, 'devDependencies', devDependencies);
 
   return data;
 }

@@ -25,7 +25,7 @@ export function defineStateURL(): StateURL {
 export function defineStateCodeStyle(): StateCodeStyle {
   return {
     isESLint: false,
-    isPretter: false,
+    isPrettier: false,
   };
 }
 
@@ -38,9 +38,9 @@ export function defineStateUnitTest(): StateUnitTest {
 export function defineState(): State {
   return {
     name: '',
-    version: '0.1.0',
+    version: '',
     description: '',
-    license: 'MIT',
+    license: '',
 
     author: defineStateAuthor(),
     url: defineStateURL(),

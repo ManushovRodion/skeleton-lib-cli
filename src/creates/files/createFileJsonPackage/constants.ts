@@ -1,5 +1,7 @@
 import type { MapObject } from './types';
 
+export const FILE_NAME = 'package.json';
+
 export const CLI_SCRIPT_BUILD =
   'rimraf dist && rollup --c rollup.config.ts --configPlugin typescript && rimraf dist/types';
 
@@ -26,18 +28,22 @@ export const DEV_DEPENDENCIES_ESLINT: MapObject = {
   eslint: '8.31.0',
   '@typescript-eslint/eslint-plugin': '5.48.0',
   '@typescript-eslint/parser': '5.48.0',
+  husky: '8.0.3',
 };
 
 export const DEV_DEPENDENCIES_PRETTIER: MapObject = {
   prettier: '2.8.2',
+  husky: '8.0.3',
 };
 
 export const DEV_DEPENDENCIES_ESLINT_PRETTIER: MapObject = {
   'eslint-config-prettier': '8.6.0',
+  husky: '8.0.3',
 };
 
 export const DEV_DEPENDENCIES_JEST: MapObject = {
   jest: '29.3.1',
   'ts-jest': '29.0.3',
   '@types/jest': '29.2.5',
+  husky: '8.0.3',
 };

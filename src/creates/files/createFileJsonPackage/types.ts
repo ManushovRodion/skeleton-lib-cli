@@ -16,7 +16,7 @@ export interface StateURL {
 
 export interface StateCodeStyle {
   isESLint: boolean;
-  isPretter: boolean;
+  isPrettier: boolean;
 }
 
 export interface StateUnitTest {
@@ -40,8 +40,21 @@ export interface State {
   isMultiLangDocs: boolean;
 }
 
+export interface PackageScripts {
+  build?: string;
+  lint?: string;
+  'lint:format'?: string;
+  test?: string;
+}
+
+export interface PackageAuthor {
+  name?: string;
+  email?: string;
+  url?: string;
+}
+
 export interface Package {
-  name: string;
+  name?: string;
 
   version?: string;
   description?: string;
@@ -59,14 +72,9 @@ export interface Package {
 
   bin?: MapObject;
 
-  scripts?: {
-    build?: string;
-    lint?: string;
-    'lint:format'?: string;
-    test?: string;
-  };
+  scripts?: PackageScripts;
 
-  author?: StateAuthor | string;
+  author?: PackageAuthor | string;
 
   repository?: {
     type: 'git';
@@ -79,13 +87,4 @@ export interface Package {
 
   dependencies?: MapObject;
   devDependencies?: MapObject;
-
-  husky?: {
-    hooks: {
-      'pre-commit'?: string;
-      'pre-push'?: string;
-    };
-  };
-
-  'lint-staged'?: MapObject;
 }

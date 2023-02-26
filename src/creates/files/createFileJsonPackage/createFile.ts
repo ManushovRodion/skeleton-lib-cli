@@ -1,5 +1,6 @@
 import { writeFile } from 'node:fs/promises';
 import { format } from 'prettier';
+import { FILE_NAME } from './constants';
 
 import { defineState } from './defineState';
 import { generator } from './generator';
@@ -49,18 +50,18 @@ export function createFile() {
 
   // ons
 
-  const onPrivate = () => (state.isPrivate = true);
+  //const onPrivate = () => (state.isPrivate = true);
   const onCommandLineInterface = () => (state.isCommandLineInterface = true);
   const onMultiLangDocs = () => (state.isMultiLangDocs = true);
   const onESLint = () => (state.codeStyle.isESLint = true);
-  const onPretter = () => (state.codeStyle.isPretter = true);
+  const onPrettier = () => (state.codeStyle.isPrettier = true);
   const onJest = () => (state.unitTest.isJest = true);
 
   // render
 
   const render = (outDir: string) => {
     const context = generator(state);
-    const path = `${outDir}/package.json`;
+    const path = `${outDir}/${FILE_NAME}`;
 
     const data = format(JSON.stringify(context), {
       parser: 'json',
@@ -82,11 +83,11 @@ export function createFile() {
 
     updateAuthor,
 
-    onPrivate,
+    //onPrivate,
     onCommandLineInterface,
     onMultiLangDocs,
     onESLint,
-    onPretter,
+    onPrettier,
     onJest,
 
     render,

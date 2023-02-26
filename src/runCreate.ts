@@ -48,7 +48,7 @@ import { createFileNVMRC } from './creates/files/createFileNVMRC';
 // import { createFileChangelog } from './creates/baseFiles/createFileChangelog';
 // import { createFileSrcMain } from './creates/baseFiles/createFileSrcMain';
 
-// import { createFilePretter } from './creates/codeStyleFiles/createFilePretter';
+// import { createFilePrettier } from './creates/codeStyleFiles/createFilePrettier';
 // import { createFileTsConfigESLint } from './creates/codeStyleFiles/createFileTsConfigESLint';
 // import { createFileEslintrc } from './creates/codeStyleFiles/createFileEslintrc';
 
@@ -112,7 +112,7 @@ export async function runCreate({ rootDir }: Options) {
   switch (codeStyle) {
     case 'FULL': {
       fileJsonPackage.onESLint();
-      fileJsonPackage.onPretter();
+      fileJsonPackage.onPrettier();
       break;
     }
     case 'ESLINT': {
@@ -120,7 +120,7 @@ export async function runCreate({ rootDir }: Options) {
       break;
     }
     case 'PRETTER': {
-      fileJsonPackage.onPretter();
+      fileJsonPackage.onPrettier();
       break;
     }
   }
@@ -149,6 +149,9 @@ export async function runCreate({ rootDir }: Options) {
    * CREATES
    * ================================================================
    */
+  fileJsonPackage.updateVersion('0.1.0');
+  fileJsonPackage.updateLicense('MIT');
+
   fileNVMRC.updateNodeVersion('16.19.0');
 
   const packageDir = `${rootDir}/${packageName}`;
@@ -173,7 +176,7 @@ export async function runCreate({ rootDir }: Options) {
   //  }
 
   // const isESLint = codeStyle === 'ESLINT' || codeStyle === 'FULL';
-  // const isPretter = codeStyle === 'PRETTER' || codeStyle === 'FULL';
+  // const isPrettier = codeStyle === 'PRETTER' || codeStyle === 'FULL';
   // const isJest = unitTest === 'JEST';
 
   // const projectDir = packageDir; // tmp
@@ -195,7 +198,7 @@ export async function runCreate({ rootDir }: Options) {
   //     {
   //       projectDir: packageDir,
   //       isESLint,
-  //       isPretter,
+  //       isPrettier,
   //       isJest,
   //       isCli: isCommandLineInterface,
   //       isMltiLangDocs: !!multiLangDocsList.length,
@@ -222,8 +225,8 @@ export async function runCreate({ rootDir }: Options) {
   //   ]);
   // }
 
-  // if (isPretter) {
-  //   await createFilePretter({ projectDir });
+  // if (isPrettier) {
+  //   await createFilePrettier({ projectDir });
   // }
 
   // if (isESLint) {
@@ -231,7 +234,7 @@ export async function runCreate({ rootDir }: Options) {
   //     createFileTsConfigESLint({ projectDir }),
   //     createFileEslintrc({
   //       projectDir,
-  //       isPretter,
+  //       isPrettier,
   //       isCli: isCommandLineInterface,
   //     }),
   //   ]);
