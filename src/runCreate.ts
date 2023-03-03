@@ -37,6 +37,7 @@ import { createDirPackage } from './creates/dirs/createDirPackage';
 
 import { createFileJsonPackage } from './creates/files/createFileJsonPackage';
 import { createFileNVMRC } from './creates/files/createFileNVMRC';
+import { createFileGitignore } from './creates/files/createFileGitignore';
 
 //import { createFileLicense } from './creates/baseFiles/createFileLicense';
 // import { createFilePackage } from './creates/baseFiles/createFilePackage';
@@ -71,6 +72,7 @@ export async function runCreate({ rootDir }: Options) {
    */
   const fileJsonPackage = createFileJsonPackage();
   const fileNVMRC = createFileNVMRC();
+  const fileGitignore = createFileGitignore();
 
   /**
    * QUESTIONS
@@ -154,6 +156,24 @@ export async function runCreate({ rootDir }: Options) {
 
   fileNVMRC.updateNodeVersion('16.19.0');
 
+  fileGitignore.pushGroup('Node artifact file', [
+    'node_modules',
+    'dist',
+    'coverage',
+  ]);
+  fileGitignore.pushGroup('Generated OS', ['.DS_Store', 'Thumbs.db']);
+  fileGitignore.pushGroup('Local files', ['.local']);
+  fileGitignore.pushGroup('Log files', ['*.log']);
+  fileGitignore.pushGroup('IDE', [
+    '.idea',
+    '.vscode',
+    '*.suo',
+    '*.ntvs*',
+    '*.njsproj',
+    '*.sln',
+    '*.sw?',
+  ]);
+
   const packageDir = `${rootDir}/${packageName}`;
   await createDirPackage(packageDir);
 
@@ -164,6 +184,7 @@ export async function runCreate({ rootDir }: Options) {
   await Promise.all([
     fileJsonPackage.render(packageDir),
     fileNVMRC.render(packageDir),
+    fileGitignore.render(packageDir),
   ]);
 
   // =========
