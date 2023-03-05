@@ -1,5 +1,3 @@
-//import { mkdir } from 'node:fs/promises';
-
 /**
  * QUESTIONS...
  */
@@ -38,11 +36,9 @@ import { createDirPackage } from './creates/dirs/createDirPackage';
 import { createFileJsonPackage } from './creates/files/createFileJsonPackage';
 import { createFileNVMRC } from './creates/files/createFileNVMRC';
 import { createFileGitignore } from './creates/files/createFileGitignore';
+import { createFileCommandLineInterface } from './creates/files/createFileCommandLineInterface';
 
-//import { createFileLicense } from './creates/baseFiles/createFileLicense';
-// import { createFilePackage } from './creates/baseFiles/createFilePackage';
-// import { createFileNVMRC } from './creates/baseFiles/createFileNVMRC';
-// import { createFileGitignore } from './creates/baseFiles/createFileGitignore';
+// import { createFileLicense } from './creates/baseFiles/createFileLicense';
 // import { createFileRollupConfig } from './creates/baseFiles/createFileRollupConfig';
 // import { createFileTsConfig } from './creates/baseFiles/createFileTsConfig';
 // import { createFileReadme } from './creates/baseFiles/createFileReadme';
@@ -55,7 +51,6 @@ import { createFileGitignore } from './creates/files/createFileGitignore';
 
 // import { createFileJestConfig } from './creates/codeTestFiles/createFileJestConfig';
 // import { createFileSrcTestMain } from './creates/codeTestFiles/createFileSrcTestMain';
-// import { createFileBinCli } from './creates/cliFiles/createFileBinCli';
 // import { createFileMultiLangReadme } from './creates/multiLangFiles/createFileMultiLangReadme';
 // import { createFileMultiLangChangelog } from './creates/multiLangFiles/createFileMultiLangChangelog';
 // import { createFileMultiLangReadmeItem } from './creates/multiLangFiles/createFileMultiLangReadmeItem';
@@ -73,6 +68,7 @@ export async function runCreate({ rootDir }: Options) {
   const fileJsonPackage = createFileJsonPackage();
   const fileNVMRC = createFileNVMRC();
   const fileGitignore = createFileGitignore();
+  const fileCommandLineInterface = createFileCommandLineInterface();
 
   /**
    * QUESTIONS
@@ -82,6 +78,7 @@ export async function runCreate({ rootDir }: Options) {
   // name
   const packageName = await questionPackageName();
   fileJsonPackage.updateName(packageName);
+  fileCommandLineInterface.updateName(packageName);
 
   // description
   const packageDescription = await questionPackageDescription();
@@ -137,7 +134,8 @@ export async function runCreate({ rootDir }: Options) {
   }
 
   // commandLineInterface (CLI)
-  if (await questionCommandLineInterface()) {
+  const isCommandLineInterface = await questionCommandLineInterface();
+  if (isCommandLineInterface) {
     fileJsonPackage.onCommandLineInterface();
   }
 
@@ -151,6 +149,8 @@ export async function runCreate({ rootDir }: Options) {
    * CREATES
    * ================================================================
    */
+  const promiseList: (() => Promise<void>)[] = [];
+
   fileJsonPackage.updateVersion('0.1.0');
   fileJsonPackage.updateLicense('MIT');
 
@@ -177,6 +177,13 @@ export async function runCreate({ rootDir }: Options) {
   const packageDir = `${rootDir}/${packageName}`;
   await createDirPackage(packageDir);
 
+  if (isCommandLineInterface) {
+    const binDir = `${packageDir}/bin`;
+
+    await createDirPackage(binDir);
+    promiseList.push(() => fileCommandLineInterface.render(binDir));
+  }
+
   if (isMultiLangDocs) {
     await createDirPackage(`${packageDir}/docs`);
   }
@@ -185,11 +192,10 @@ export async function runCreate({ rootDir }: Options) {
     fileJsonPackage.render(packageDir),
     fileNVMRC.render(packageDir),
     fileGitignore.render(packageDir),
+    ...promiseList,
   ]);
 
   // =========
-
-  //  const isCommandLineInterface = await questionCommandLineInterface();
 
   //  let multiLangDocsList: string[] = [];
   //  if (await questionMultiLangDocs()) {
@@ -199,9 +205,6 @@ export async function runCreate({ rootDir }: Options) {
   // const isESLint = codeStyle === 'ESLINT' || codeStyle === 'FULL';
   // const isPrettier = codeStyle === 'PRETTER' || codeStyle === 'FULL';
   // const isJest = unitTest === 'JEST';
-
-  // const projectDir = packageDir; // tmp
-  // const name = packageName; // tmp
 
   // BASE files
   // await Promise.all([
@@ -226,9 +229,6 @@ export async function runCreate({ rootDir }: Options) {
   //     }
   //   ),
   //   //createFileLicense({ copyright: licenseCopyright }, { projectDir }),
-
-  //   createFileNVMRC({ projectDir }),
-  //   createFileGitignore({ projectDir }),
 
   //   createFileTsConfig({ projectDir }),
   //   createFileRollupConfig({ projectDir }),
