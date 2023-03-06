@@ -38,8 +38,8 @@ import { createFileNVMRC } from './creates/files/createFileNVMRC';
 import { createFileGitignore } from './creates/files/createFileGitignore';
 import { createFileCommandLineInterface } from './creates/files/createFileCommandLineInterface';
 import { createFileLicense } from './creates/files/createFileLicense';
+import { createFileRollupConfig } from './creates/files/createFileRollupConfig';
 
-// import { createFileRollupConfig } from './creates/baseFiles/createFileRollupConfig';
 // import { createFileTsConfig } from './creates/baseFiles/createFileTsConfig';
 // import { createFileReadme } from './creates/baseFiles/createFileReadme';
 // import { createFileChangelog } from './creates/baseFiles/createFileChangelog';
@@ -70,6 +70,7 @@ export async function runCreate({ rootDir }: Options) {
   const fileGitignore = createFileGitignore();
   const fileCommandLineInterface = createFileCommandLineInterface();
   const fileLicense = createFileLicense();
+  const fileRollupConfig = createFileRollupConfig();
 
   /**
    * QUESTIONS
@@ -195,6 +196,7 @@ export async function runCreate({ rootDir }: Options) {
     fileNVMRC.render(packageDir),
     fileGitignore.render(packageDir),
     fileLicense.render(packageDir),
+    fileRollupConfig.render(packageDir),
     ...promiseList,
   ]);
 
@@ -211,27 +213,6 @@ export async function runCreate({ rootDir }: Options) {
 
   // BASE files
   // await Promise.all([
-  //   createFilePackage(
-  //     {
-  //       name: packageName,
-  //       description: packageDescription,
-  //       author: authorName,
-  //       authorEmail,
-  //       authorUrl: authorURL,
-  //       urlRepository,
-  //       urlIssues,
-  //       urlHome,
-  //     },
-  //     {
-  //       projectDir: packageDir,
-  //       isESLint,
-  //       isPrettier,
-  //       isJest,
-  //       isCli: isCommandLineInterface,
-  //       isMltiLangDocs: !!multiLangDocsList.length,
-  //     }
-  //   ),
-  //   //createFileLicense({ copyright: licenseCopyright }, { projectDir }),
 
   //   createFileTsConfig({ projectDir }),
   //   createFileRollupConfig({ projectDir }),
