@@ -1,18 +1,9 @@
-import { writeFile } from 'node:fs/promises';
-import { format } from 'prettier';
+export const FILE_NAME = 'LICENSE';
 
-export interface Data {
-  copyright: string;
-}
-export interface Params {
-  projectDir: string;
-}
-
-export function createFileLicense(data: Data, params: Params) {
-  const context = `
+export const DATA_MIT = `
 MIT License
 
-Copyright (c) ${data.copyright}
+Copyright (c) ##########
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,10 +23,3 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 `;
-
-  const path = `${params.projectDir}/LICENSE`;
-
-  return writeFile(path, format(context, { parser: 'markdown' }), {
-    encoding: 'utf8',
-  });
-}

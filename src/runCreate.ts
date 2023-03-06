@@ -14,7 +14,7 @@ import { questionMultiLangDocs } from './questions/multiLangDocs/questionMultiLa
 //import { questionMultiLangDocsList } from './questions/multiLangDocs/questionMultiLangDocsList';
 
 //import { questionLicense } from './questions/license/questionLicense';
-//import { questionLicenseСopyright } from './questions/license/questionLicenseСopyright';
+import { questionLicenseСopyright } from './questions/license/questionLicenseСopyright';
 
 import { questionPackageName } from './questions/package/questionPackageName';
 import { questionPackageDescription } from './questions/package/questionPackageDescription';
@@ -37,8 +37,8 @@ import { createFileJsonPackage } from './creates/files/createFileJsonPackage';
 import { createFileNVMRC } from './creates/files/createFileNVMRC';
 import { createFileGitignore } from './creates/files/createFileGitignore';
 import { createFileCommandLineInterface } from './creates/files/createFileCommandLineInterface';
+import { createFileLicense } from './creates/files/createFileLicense';
 
-// import { createFileLicense } from './creates/baseFiles/createFileLicense';
 // import { createFileRollupConfig } from './creates/baseFiles/createFileRollupConfig';
 // import { createFileTsConfig } from './creates/baseFiles/createFileTsConfig';
 // import { createFileReadme } from './creates/baseFiles/createFileReadme';
@@ -69,6 +69,7 @@ export async function runCreate({ rootDir }: Options) {
   const fileNVMRC = createFileNVMRC();
   const fileGitignore = createFileGitignore();
   const fileCommandLineInterface = createFileCommandLineInterface();
+  const fileLicense = createFileLicense();
 
   /**
    * QUESTIONS
@@ -104,7 +105,8 @@ export async function runCreate({ rootDir }: Options) {
 
   // license
   //const isLicense = await questionLicense()
-  //const licenseCopyright = await questionLicenseСopyright(authorName);
+  const licenseCopyright = await questionLicenseСopyright(authorName);
+  fileLicense.updateCopyright(licenseCopyright);
 
   // codeStyle
   const codeStyle = await questionСodeStyle();
@@ -192,6 +194,7 @@ export async function runCreate({ rootDir }: Options) {
     fileJsonPackage.render(packageDir),
     fileNVMRC.render(packageDir),
     fileGitignore.render(packageDir),
+    fileLicense.render(packageDir),
     ...promiseList,
   ]);
 
