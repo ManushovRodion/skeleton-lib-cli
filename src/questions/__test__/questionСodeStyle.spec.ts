@@ -36,7 +36,7 @@ describe('questions/questionСodeStyle', () => {
     expect(options).toEqual([
       { title: 'ESLint + Pretter', value: 'FULL' },
       { title: 'ESLint', value: 'ESLINT' },
-      { title: 'Pretter', value: 'PRETTER' },
+      { title: 'Prettier', value: 'PRETTIER' },
       { title: 'base.not', value: '' },
     ]);
   });
