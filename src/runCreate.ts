@@ -43,10 +43,10 @@ import { createFileCommandLineInterface } from './creates/createFileCommandLineI
 import { createFileLicense } from './creates/createFileLicense/index';
 import { createFileRollupConfig } from './creates/createFileRollupConfig/index';
 import { createFileTsConfig } from './creates/createFileTsConfig/index';
+import { createFileMain } from './creates/createFileMain/index';
 
 // import { createFileReadme } from './creates/baseFiles/createFileReadme';
 // import { createFileChangelog } from './creates/baseFiles/createFileChangelog';
-// import { createFileSrcMain } from './creates/baseFiles/createFileSrcMain';
 
 // import { createFilePrettier } from './creates/codeStyleFiles/createFilePrettier';
 // import { createFileTsConfigESLint } from './creates/codeStyleFiles/createFileTsConfigESLint';
@@ -77,6 +77,7 @@ export async function runCreate({ rootDir }: Options) {
   const fileLicense = createFileLicense(PRETTER_CONFIG);
   const fileRollupConfig = createFileRollupConfig(PRETTER_CONFIG);
   const fileTsConfig = createFileTsConfig(PRETTER_CONFIG);
+  const fileMain = createFileMain(PRETTER_CONFIG);
 
   /**
    * QUESTIONS
@@ -148,6 +149,7 @@ export async function runCreate({ rootDir }: Options) {
   const isCommandLineInterface = await questionCommandLineInterface();
   if (isCommandLineInterface) {
     fileJsonPackage.onCommandLineInterface();
+    fileMain.onCommandLineInterface();
   }
 
   // multiLangDocs
@@ -165,6 +167,9 @@ export async function runCreate({ rootDir }: Options) {
   const packageDir = `${rootDir}/${packageName}`;
   await createDirPackage(packageDir);
 
+  const packageSrcDir = `${rootDir}/${packageName}/src`;
+  await createDirPackage(packageSrcDir);
+
   if (isCommandLineInterface) {
     const binDir = `${packageDir}/bin`;
 
@@ -177,12 +182,18 @@ export async function runCreate({ rootDir }: Options) {
   }
 
   await Promise.all([
+    // core dir
     fileJsonPackage.render(packageDir),
     fileNVMRC.render(packageDir),
     fileGitignore.render(packageDir),
     fileLicense.render(packageDir),
     fileRollupConfig.render(packageDir),
     fileTsConfig.render(packageDir),
+
+    // core/src dir
+    fileMain.render(packageSrcDir),
+
+    // any
     ...promiseList.map((item) => item()),
   ]);
 
