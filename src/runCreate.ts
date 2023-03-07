@@ -36,18 +36,19 @@ import { createDirPackage } from './creates/createDirPackage';
  * CREATE FILES...
  */
 
-import { createFileJsonPackage } from './creates/createFileJsonPackage/index';
-import { createFileNVMRC } from './creates/createFileNVMRC/index';
-import { createFileGitignore } from './creates/createFileGitignore/index';
-import { createFileCommandLineInterface } from './creates/createFileCommandLineInterface/index';
-import { createFileLicense } from './creates/createFileLicense/index';
-import { createFileRollupConfig } from './creates/createFileRollupConfig/index';
-import { createFileTsConfig } from './creates/createFileTsConfig/index';
-import { createFileMain } from './creates/createFileMain/index';
-import { createFileEslintrc } from './creates/createFileEslintrc/index';
-import { createFileTsConfigEsLint } from './creates/createFileTsConfigEsLint/index';
-import { createFilePrettierrc } from './creates/createFilePrettierrc/index';
-import { createFileJestConfig } from './creates/createFileJestConfig/index';
+import { createFileJsonPackage } from './creates/createFileJsonPackage';
+import { createFileNVMRC } from './creates/createFileNVMRC';
+import { createFileGitignore } from './creates/createFileGitignore';
+import { createFileCommandLineInterface } from './creates/createFileCommandLineInterface';
+import { createFileLicense } from './creates/createFileLicense';
+import { createFileRollupConfig } from './creates/createFileRollupConfig';
+import { createFileTsConfig } from './creates/createFileTsConfig';
+import { createFileMain } from './creates/createFileMain';
+import { createFileMainSpec } from './creates/createFileMainSpec';
+import { createFileEslintrc } from './creates/createFileEslintrc';
+import { createFileTsConfigEsLint } from './creates/createFileTsConfigEsLint';
+import { createFilePrettierrc } from './creates/createFilePrettierrc';
+import { createFileJestConfig } from './creates/createFileJestConfig';
 
 // import { createFileReadme } from './creates/baseFiles/createFileReadme';
 // import { createFileChangelog } from './creates/baseFiles/createFileChangelog';
@@ -77,6 +78,7 @@ export async function runCreate({ rootDir }: Options) {
   const fileRollupConfig = createFileRollupConfig(PRETTIER_CONFIG);
   const fileTsConfig = createFileTsConfig(PRETTIER_CONFIG);
   const fileMain = createFileMain(PRETTIER_CONFIG);
+  const fileMainSpec = createFileMainSpec(PRETTIER_CONFIG);
   const fileEslintrc = createFileEslintrc(PRETTIER_CONFIG);
   const fileTsConfigEsLint = createFileTsConfigEsLint(PRETTIER_CONFIG);
   const filePrettierrc = createFilePrettierrc(PRETTIER_CONFIG);
@@ -154,6 +156,7 @@ export async function runCreate({ rootDir }: Options) {
   if (isCommandLineInterface) {
     fileJsonPackage.onCommandLineInterface();
     fileMain.onCommandLineInterface();
+    fileMainSpec.onCommandLineInterface();
     fileEslintrc.onCommandLineInterface();
   }
 
@@ -197,6 +200,7 @@ export async function runCreate({ rootDir }: Options) {
 
   if (unitTest === 'JEST') {
     promiseList.push(() => fileJestConfig.render(packageDir));
+    promiseList.push(() => fileMainSpec.render(packageSrcDir));
   }
 
   await Promise.all([
