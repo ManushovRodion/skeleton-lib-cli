@@ -44,13 +44,13 @@ import { createFileLicense } from './creates/createFileLicense/index';
 import { createFileRollupConfig } from './creates/createFileRollupConfig/index';
 import { createFileTsConfig } from './creates/createFileTsConfig/index';
 import { createFileMain } from './creates/createFileMain/index';
+import { createFileEslintrc } from './creates/createFileEslintrc/index';
 
 // import { createFileReadme } from './creates/baseFiles/createFileReadme';
 // import { createFileChangelog } from './creates/baseFiles/createFileChangelog';
 
 // import { createFilePrettier } from './creates/codeStyleFiles/createFilePrettier';
 // import { createFileTsConfigESLint } from './creates/codeStyleFiles/createFileTsConfigESLint';
-// import { createFileEslintrc } from './creates/codeStyleFiles/createFileEslintrc';
 
 // import { createFileJestConfig } from './creates/codeTestFiles/createFileJestConfig';
 // import { createFileSrcTestMain } from './creates/codeTestFiles/createFileSrcTestMain';
@@ -78,6 +78,7 @@ export async function runCreate({ rootDir }: Options) {
   const fileRollupConfig = createFileRollupConfig(PRETTER_CONFIG);
   const fileTsConfig = createFileTsConfig(PRETTER_CONFIG);
   const fileMain = createFileMain(PRETTER_CONFIG);
+  const fileEslintrc = createFileEslintrc(PRETTER_CONFIG);
 
   /**
    * QUESTIONS
@@ -124,6 +125,7 @@ export async function runCreate({ rootDir }: Options) {
     case 'FULL': {
       fileJsonPackage.onESLint();
       fileJsonPackage.onPrettier();
+      fileEslintrc.onPrettier();
       break;
     }
     case 'ESLINT': {
@@ -150,6 +152,7 @@ export async function runCreate({ rootDir }: Options) {
   if (isCommandLineInterface) {
     fileJsonPackage.onCommandLineInterface();
     fileMain.onCommandLineInterface();
+    fileEslintrc.onCommandLineInterface();
   }
 
   // multiLangDocs
@@ -179,6 +182,10 @@ export async function runCreate({ rootDir }: Options) {
 
   if (isMultiLangDocs) {
     await createDirPackage(`${packageDir}/docs`);
+  }
+
+  if (codeStyle === 'FULL' || codeStyle === 'ESLINT') {
+    promiseList.push(() => fileEslintrc.render(packageDir));
   }
 
   await Promise.all([
@@ -227,26 +234,11 @@ export async function runCreate({ rootDir }: Options) {
   //   await createFilePrettier({ projectDir });
   // }
 
-  // if (isESLint) {
-  //   await Promise.all([
-  //     createFileTsConfigESLint({ projectDir }),
-  //     createFileEslintrc({
-  //       projectDir,
-  //       isPrettier,
-  //       isCli: isCommandLineInterface,
-  //     }),
-  //   ]);
-  // }
-
   // if (isJest) {
   //   await Promise.all([
   //     createFileJestConfig({ projectDir }),
   //     createFileSrcTestMain({ projectDir }),
   //   ]);
-  // }
-
-  // if (isCommandLineInterface) {
-  //   await createFileBinCli({ name }, { projectDir });
   // }
 
   // if (!!multiLangDocsList.length) {
