@@ -47,11 +47,11 @@ import { createFileMain } from './creates/createFileMain/index';
 import { createFileEslintrc } from './creates/createFileEslintrc/index';
 import { createFileTsConfigEsLint } from './creates/createFileTsConfigEsLint/index';
 import { createFilePrettierrc } from './creates/createFilePrettierrc/index';
+import { createFileJestConfig } from './creates/createFileJestConfig/index';
 
 // import { createFileReadme } from './creates/baseFiles/createFileReadme';
 // import { createFileChangelog } from './creates/baseFiles/createFileChangelog';
 
-// import { createFileJestConfig } from './creates/codeTestFiles/createFileJestConfig';
 // import { createFileSrcTestMain } from './creates/codeTestFiles/createFileSrcTestMain';
 // import { createFileMultiLangReadme } from './creates/multiLangFiles/createFileMultiLangReadme';
 // import { createFileMultiLangChangelog } from './creates/multiLangFiles/createFileMultiLangChangelog';
@@ -80,6 +80,7 @@ export async function runCreate({ rootDir }: Options) {
   const fileEslintrc = createFileEslintrc(PRETTIER_CONFIG);
   const fileTsConfigEsLint = createFileTsConfigEsLint(PRETTIER_CONFIG);
   const filePrettierrc = createFilePrettierrc(PRETTIER_CONFIG);
+  const fileJestConfig = createFileJestConfig(PRETTIER_CONFIG);
 
   /**
    * QUESTIONS
@@ -194,6 +195,10 @@ export async function runCreate({ rootDir }: Options) {
     promiseList.push(() => filePrettierrc.render(packageDir));
   }
 
+  if (unitTest === 'JEST') {
+    promiseList.push(() => fileJestConfig.render(packageDir));
+  }
+
   await Promise.all([
     // core dir
     fileJsonPackage.render(packageDir),
@@ -229,7 +234,7 @@ export async function runCreate({ rootDir }: Options) {
 
   // if (isJest) {
   //   await Promise.all([
-  //     createFileJestConfig({ projectDir }),
+  //
   //     createFileSrcTestMain({ projectDir }),
   //   ]);
   // }
