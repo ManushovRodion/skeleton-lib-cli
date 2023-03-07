@@ -45,12 +45,12 @@ import { createFileRollupConfig } from './creates/createFileRollupConfig/index';
 import { createFileTsConfig } from './creates/createFileTsConfig/index';
 import { createFileMain } from './creates/createFileMain/index';
 import { createFileEslintrc } from './creates/createFileEslintrc/index';
+import { createFileTsConfigEsLint } from './creates/createFileTsConfigEsLint/index';
 
 // import { createFileReadme } from './creates/baseFiles/createFileReadme';
 // import { createFileChangelog } from './creates/baseFiles/createFileChangelog';
 
 // import { createFilePrettier } from './creates/codeStyleFiles/createFilePrettier';
-// import { createFileTsConfigESLint } from './creates/codeStyleFiles/createFileTsConfigESLint';
 
 // import { createFileJestConfig } from './creates/codeTestFiles/createFileJestConfig';
 // import { createFileSrcTestMain } from './creates/codeTestFiles/createFileSrcTestMain';
@@ -79,6 +79,7 @@ export async function runCreate({ rootDir }: Options) {
   const fileTsConfig = createFileTsConfig(PRETTER_CONFIG);
   const fileMain = createFileMain(PRETTER_CONFIG);
   const fileEslintrc = createFileEslintrc(PRETTER_CONFIG);
+  const fileTsConfigEsLint = createFileTsConfigEsLint(PRETTER_CONFIG);
 
   /**
    * QUESTIONS
@@ -186,6 +187,7 @@ export async function runCreate({ rootDir }: Options) {
 
   if (codeStyle === 'FULL' || codeStyle === 'ESLINT') {
     promiseList.push(() => fileEslintrc.render(packageDir));
+    promiseList.push(() => fileTsConfigEsLint.render(packageDir));
   }
 
   await Promise.all([
