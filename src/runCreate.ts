@@ -39,8 +39,8 @@ import { createFileGitignore } from './creates/files/createFileGitignore';
 import { createFileCommandLineInterface } from './creates/files/createFileCommandLineInterface';
 import { createFileLicense } from './creates/files/createFileLicense';
 import { createFileRollupConfig } from './creates/files/createFileRollupConfig';
+import { createFileTsConfig } from './creates/files/createFileTsConfig';
 
-// import { createFileTsConfig } from './creates/baseFiles/createFileTsConfig';
 // import { createFileReadme } from './creates/baseFiles/createFileReadme';
 // import { createFileChangelog } from './creates/baseFiles/createFileChangelog';
 // import { createFileSrcMain } from './creates/baseFiles/createFileSrcMain';
@@ -71,6 +71,7 @@ export async function runCreate({ rootDir }: Options) {
   const fileCommandLineInterface = createFileCommandLineInterface();
   const fileLicense = createFileLicense();
   const fileRollupConfig = createFileRollupConfig();
+  const fileTsConfig = createFileTsConfig();
 
   /**
    * QUESTIONS
@@ -176,7 +177,8 @@ export async function runCreate({ rootDir }: Options) {
     fileGitignore.render(packageDir),
     fileLicense.render(packageDir),
     fileRollupConfig.render(packageDir),
-    ...promiseList,
+    fileTsConfig.render(packageDir),
+    ...promiseList.map((item) => item()),
   ]);
 
   // =========
@@ -192,10 +194,6 @@ export async function runCreate({ rootDir }: Options) {
 
   // BASE files
   // await Promise.all([
-
-  //   createFileTsConfig({ projectDir }),
-  //   createFileRollupConfig({ projectDir }),
-
   //   createFileSrcMain({ projectDir }),
   // ]);
 

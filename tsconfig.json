@@ -17,13 +17,13 @@
      * [EN]: Module strategy
      * https://www.typescriptlang.org/tsconfig#moduleResolution
      */
-    "moduleResolution": "node",
+    "moduleResolution": "Node16",
     /**
      * [RU]: Конвертация в нужный стандарт
      * [EN]: Convert to the desired standard
      * https://www.typescriptlang.org/tsconfig#target
      */
-    "target": "ES6",
+    "target": "ES5",
     /**
      * [RU]: Позволяет импортировать json
      * [EN]: Allows you to import json
