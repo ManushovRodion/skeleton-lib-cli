@@ -46,11 +46,10 @@ import { createFileTsConfig } from './creates/createFileTsConfig/index';
 import { createFileMain } from './creates/createFileMain/index';
 import { createFileEslintrc } from './creates/createFileEslintrc/index';
 import { createFileTsConfigEsLint } from './creates/createFileTsConfigEsLint/index';
+import { createFilePrettierrc } from './creates/createFilePrettierrc/index';
 
 // import { createFileReadme } from './creates/baseFiles/createFileReadme';
 // import { createFileChangelog } from './creates/baseFiles/createFileChangelog';
-
-// import { createFilePrettier } from './creates/codeStyleFiles/createFilePrettier';
 
 // import { createFileJestConfig } from './creates/codeTestFiles/createFileJestConfig';
 // import { createFileSrcTestMain } from './creates/codeTestFiles/createFileSrcTestMain';
@@ -63,23 +62,24 @@ export interface Options {
   rootDir: string;
 }
 
-const PRETTER_CONFIG = prettierConfig as PrettierOptions;
+const PRETTIER_CONFIG = prettierConfig as PrettierOptions;
 
 export async function runCreate({ rootDir }: Options) {
   /**
    * FILES
    * ================================================================
    */
-  const fileJsonPackage = createFileJsonPackage(PRETTER_CONFIG);
-  const fileNVMRC = createFileNVMRC(PRETTER_CONFIG);
+  const fileJsonPackage = createFileJsonPackage(PRETTIER_CONFIG);
+  const fileNVMRC = createFileNVMRC(PRETTIER_CONFIG);
   const fileGitignore = createFileGitignore();
-  const fileCLI = createFileCommandLineInterface(PRETTER_CONFIG);
-  const fileLicense = createFileLicense(PRETTER_CONFIG);
-  const fileRollupConfig = createFileRollupConfig(PRETTER_CONFIG);
-  const fileTsConfig = createFileTsConfig(PRETTER_CONFIG);
-  const fileMain = createFileMain(PRETTER_CONFIG);
-  const fileEslintrc = createFileEslintrc(PRETTER_CONFIG);
-  const fileTsConfigEsLint = createFileTsConfigEsLint(PRETTER_CONFIG);
+  const fileCLI = createFileCommandLineInterface(PRETTIER_CONFIG);
+  const fileLicense = createFileLicense(PRETTIER_CONFIG);
+  const fileRollupConfig = createFileRollupConfig(PRETTIER_CONFIG);
+  const fileTsConfig = createFileTsConfig(PRETTIER_CONFIG);
+  const fileMain = createFileMain(PRETTIER_CONFIG);
+  const fileEslintrc = createFileEslintrc(PRETTIER_CONFIG);
+  const fileTsConfigEsLint = createFileTsConfigEsLint(PRETTIER_CONFIG);
+  const filePrettierrc = createFilePrettierrc(PRETTIER_CONFIG);
 
   /**
    * QUESTIONS
@@ -133,7 +133,7 @@ export async function runCreate({ rootDir }: Options) {
       fileJsonPackage.onESLint();
       break;
     }
-    case 'PRETTER': {
+    case 'PRETTIER': {
       fileJsonPackage.onPrettier();
       break;
     }
@@ -190,6 +190,10 @@ export async function runCreate({ rootDir }: Options) {
     promiseList.push(() => fileTsConfigEsLint.render(packageDir));
   }
 
+  if (codeStyle === 'FULL' || codeStyle === 'PRETTIER') {
+    promiseList.push(() => filePrettierrc.render(packageDir));
+  }
+
   await Promise.all([
     // core dir
     fileJsonPackage.render(packageDir),
@@ -213,15 +217,6 @@ export async function runCreate({ rootDir }: Options) {
   //    multiLangDocsList = await questionMultiLangDocsList(['ru', 'en']);
   //  }
 
-  // const isESLint = codeStyle === 'ESLINT' || codeStyle === 'FULL';
-  // const isPrettier = codeStyle === 'PRETTER' || codeStyle === 'FULL';
-  // const isJest = unitTest === 'JEST';
-
-  // BASE files
-  // await Promise.all([
-  //   createFileSrcMain({ projectDir }),
-  // ]);
-
   // if (!multiLangDocsList.length) {
   //   await Promise.all([
   //     createFileReadme(
@@ -230,10 +225,6 @@ export async function runCreate({ rootDir }: Options) {
   //     ),
   //     createFileChangelog({ name }, { projectDir }),
   //   ]);
-  // }
-
-  // if (isPrettier) {
-  //   await createFilePrettier({ projectDir });
   // }
 
   // if (isJest) {
