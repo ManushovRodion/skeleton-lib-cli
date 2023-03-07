@@ -2,6 +2,6 @@ import type { State } from './types';
 
 export function defineState(): State {
   return {
-    nodeVersion: '',
+    nodeVersion: '16.19.0',
   };
 }

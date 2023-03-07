@@ -80,6 +80,7 @@ export async function runCreate({ rootDir }: Options) {
   // name
   const packageName = await questionPackageName();
   fileJsonPackage.updateName(packageName);
+  fileJsonPackage.updateVersion('0.1.0');
   fileCommandLineInterface.updateName(packageName);
 
   // description
@@ -108,6 +109,7 @@ export async function runCreate({ rootDir }: Options) {
   //const isLicense = await questionLicense()
   const licenseCopyright = await questionLicenseСopyright(authorName);
   fileLicense.updateCopyright(licenseCopyright);
+  fileJsonPackage.updateLicense('MIT'); // @TODO план на получения значения извне
 
   // codeStyle
   const codeStyle = await questionСodeStyle();
@@ -153,11 +155,6 @@ export async function runCreate({ rootDir }: Options) {
    * ================================================================
    */
   const promiseList: (() => Promise<void>)[] = [];
-
-  fileJsonPackage.updateVersion('0.1.0');
-  fileJsonPackage.updateLicense('MIT');
-
-  fileNVMRC.updateNodeVersion('16.19.0');
 
   const packageDir = `${rootDir}/${packageName}`;
   await createDirPackage(packageDir);

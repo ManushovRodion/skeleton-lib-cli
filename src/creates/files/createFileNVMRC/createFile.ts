@@ -1,17 +1,12 @@
 import { writeFile } from 'node:fs/promises';
 import { format } from 'prettier';
-import { FILE_NAME } from './constants';
 
+import { FILE_NAME } from './constants';
 import { defineState } from './defineState';
 import { generator } from './generator';
-import { State } from './types';
 
 export function createFile() {
   const state = defineState();
-
-  const updateNodeVersion = (nodeVersion: State['nodeVersion']) => {
-    state.nodeVersion = nodeVersion;
-  };
 
   const render = (outDir: string) => {
     const context = generator(state);
@@ -27,8 +22,6 @@ export function createFile() {
   };
 
   return {
-    updateNodeVersion,
-
     render,
   };
 }
