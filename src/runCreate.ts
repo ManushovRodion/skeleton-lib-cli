@@ -1,3 +1,6 @@
+import type { Options as PrettierOptions } from 'prettier';
+import prettierConfig from './../.prettierrc.json';
+
 /**
  * QUESTIONS...
  */
@@ -27,19 +30,19 @@ import { questionUnitTest } from './questions/questionUnitTest';
  * CREATE DIRS...
  */
 
-import { createDirPackage } from './creates/dirs/createDirPackage';
+import { createDirPackage } from './creates/createDirPackage';
 
 /**
  * CREATE FILES...
  */
 
-import { createFileJsonPackage } from './creates/files/createFileJsonPackage';
-import { createFileNVMRC } from './creates/files/createFileNVMRC';
-import { createFileGitignore } from './creates/files/createFileGitignore';
-import { createFileCommandLineInterface } from './creates/files/createFileCommandLineInterface';
-import { createFileLicense } from './creates/files/createFileLicense';
-import { createFileRollupConfig } from './creates/files/createFileRollupConfig';
-import { createFileTsConfig } from './creates/files/createFileTsConfig';
+import { createFileJsonPackage } from './creates/createFileJsonPackage/index';
+import { createFileNVMRC } from './creates/createFileNVMRC/index';
+import { createFileGitignore } from './creates/createFileGitignore/index';
+import { createFileCommandLineInterface } from './creates/createFileCommandLineInterface/index';
+import { createFileLicense } from './creates/createFileLicense/index';
+import { createFileRollupConfig } from './creates/createFileRollupConfig/index';
+import { createFileTsConfig } from './creates/createFileTsConfig/index';
 
 // import { createFileReadme } from './creates/baseFiles/createFileReadme';
 // import { createFileChangelog } from './creates/baseFiles/createFileChangelog';
@@ -60,18 +63,20 @@ export interface Options {
   rootDir: string;
 }
 
+const PRETTER_CONFIG = prettierConfig as PrettierOptions;
+
 export async function runCreate({ rootDir }: Options) {
   /**
    * FILES
    * ================================================================
    */
-  const fileJsonPackage = createFileJsonPackage();
-  const fileNVMRC = createFileNVMRC();
+  const fileJsonPackage = createFileJsonPackage(PRETTER_CONFIG);
+  const fileNVMRC = createFileNVMRC(PRETTER_CONFIG);
   const fileGitignore = createFileGitignore();
-  const fileCommandLineInterface = createFileCommandLineInterface();
-  const fileLicense = createFileLicense();
-  const fileRollupConfig = createFileRollupConfig();
-  const fileTsConfig = createFileTsConfig();
+  const fileCLI = createFileCommandLineInterface(PRETTER_CONFIG);
+  const fileLicense = createFileLicense(PRETTER_CONFIG);
+  const fileRollupConfig = createFileRollupConfig(PRETTER_CONFIG);
+  const fileTsConfig = createFileTsConfig(PRETTER_CONFIG);
 
   /**
    * QUESTIONS
@@ -82,7 +87,7 @@ export async function runCreate({ rootDir }: Options) {
   const packageName = await questionPackageName();
   fileJsonPackage.updateName(packageName);
   fileJsonPackage.updateVersion('0.1.0');
-  fileCommandLineInterface.updateName(packageName);
+  fileCLI.updateName(packageName);
 
   // description
   const packageDescription = await questionPackageDescription();
@@ -164,7 +169,7 @@ export async function runCreate({ rootDir }: Options) {
     const binDir = `${packageDir}/bin`;
 
     await createDirPackage(binDir);
-    promiseList.push(() => fileCommandLineInterface.render(binDir));
+    promiseList.push(() => fileCLI.render(binDir));
   }
 
   if (isMultiLangDocs) {

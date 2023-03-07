@@ -1,0 +1,30 @@
+{
+  "name": "name",
+  "version": "version",
+  "keywords": [],
+  "files": ["dist"],
+  "main": "dist/name.cjs.js",
+  "unpkg": "dist/name.umd.js",
+  "module": "dist/name.es.js",
+  "types": "dist/name.d.js",
+  "scripts": {
+    "build": "rimraf dist && rollup --c rollup.config.ts --configPlugin typescript && rimraf dist/types"
+  },
+  "author": {
+    "name": "author_name",
+    "email": "author_email",
+    "url": "author_url"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-json": "6.0.0",
+    "@rollup/plugin-terser": "0.3.0",
+    "@rollup/plugin-typescript": "11.0.0",
+    "@types/node": "16.18.11",
+    "rimraf": "3.0.2",
+    "rollup": "3.9.1",
+    "rollup-plugin-dts": "5.1.1",
+    "tslib": "2.4.1",
+    "typescript": "4.9.4"
+  }
+}
