@@ -159,24 +159,6 @@ export async function runCreate({ rootDir }: Options) {
 
   fileNVMRC.updateNodeVersion('16.19.0');
 
-  fileGitignore.pushGroup('Node artifact file', [
-    'node_modules',
-    'dist',
-    'coverage',
-  ]);
-  fileGitignore.pushGroup('Generated OS', ['.DS_Store', 'Thumbs.db']);
-  fileGitignore.pushGroup('Local files', ['.local']);
-  fileGitignore.pushGroup('Log files', ['*.log']);
-  fileGitignore.pushGroup('IDE', [
-    '.idea',
-    '.vscode',
-    '*.suo',
-    '*.ntvs*',
-    '*.njsproj',
-    '*.sln',
-    '*.sw?',
-  ]);
-
   const packageDir = `${rootDir}/${packageName}`;
   await createDirPackage(packageDir);
 
