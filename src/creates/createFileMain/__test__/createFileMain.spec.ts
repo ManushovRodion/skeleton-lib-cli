@@ -12,12 +12,12 @@ const PRETTER_CONFIG = prettierConfig as PrettierOptions;
 describe('createFileMain', () => {
   it('Создается файл с установленными базовыми параметрами', async () => {
     const file = createFileMain(PRETTER_CONFIG);
-    const pathStab = `${DIR_TEST}/stabs/stabBase.ts`;
+    const pathStub = `${DIR_TEST}/stubs/stubBase.ts`;
 
     await file.render(DIR_TEST);
 
     const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-    const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+    const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
     expect(context).toBe(contextResult);
     unlink(PATH_FILE);
@@ -25,13 +25,13 @@ describe('createFileMain', () => {
 
   it('Создается файл с установленными cli параметрами', async () => {
     const file = createFileMain(PRETTER_CONFIG);
-    const pathStab = `${DIR_TEST}/stabs/stabBaseAndCli.ts`;
+    const pathStub = `${DIR_TEST}/stubs/stubBaseAndCli.ts`;
 
     file.onCommandLineInterface();
     await file.render(DIR_TEST);
 
     const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-    const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+    const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
     expect(context).toBe(contextResult);
     unlink(PATH_FILE);

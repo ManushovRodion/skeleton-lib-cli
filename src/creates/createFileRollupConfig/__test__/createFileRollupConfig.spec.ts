@@ -12,12 +12,12 @@ const PRETTER_CONFIG = prettierConfig as PrettierOptions;
 describe('createFileRollupConfig', () => {
   it('Создается файл с установленными параметрами', async () => {
     const file = createFileRollupConfig(PRETTER_CONFIG);
-    const pathStab = `${DIR_TEST}/stabs/stabFull.ts`;
+    const pathStub = `${DIR_TEST}/stubs/stubFull.ts`;
 
     await file.render(DIR_TEST);
 
     const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-    const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+    const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
     expect(context).toBe(contextResult);
     unlink(PATH_FILE);

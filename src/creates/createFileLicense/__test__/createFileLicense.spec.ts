@@ -22,13 +22,13 @@ describe('createFileLicense', () => {
 
   it('Создается файл с установленными параметрами', async () => {
     const file = createFileLicense(PRETTER_CONFIG);
-    const pathStab = `${DIR_TEST}/stabs/stabMIT.txt`;
+    const pathStub = `${DIR_TEST}/stubs/stubMIT.txt`;
 
     file.updateCopyright('test');
     await file.render(DIR_TEST);
 
     const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-    const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+    const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
     expect(context).toBe(contextResult);
     unlink(PATH_FILE);

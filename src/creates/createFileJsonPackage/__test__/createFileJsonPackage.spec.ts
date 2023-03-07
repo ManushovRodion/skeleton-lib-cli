@@ -29,7 +29,7 @@ describe('createFileJsonPackage', () => {
 
   it('Создается файл: кейс, когда установлены только обязательные параметры', async () => {
     const file = createFileJsonPackage(PRETTER_CONFIG);
-    const pathStab = `${DIR_TEST}/stabs/stabBaseParams.json`;
+    const pathStub = `${DIR_TEST}/stubs/stubBaseParams.json`;
 
     file.updateName('name');
     file.updateVersion('version');
@@ -37,7 +37,7 @@ describe('createFileJsonPackage', () => {
     await file.render(DIR_TEST);
 
     const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-    const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+    const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
     expect(context).toBe(contextResult);
     unlink(PATH_FILE);
@@ -51,12 +51,12 @@ describe('createFileJsonPackage', () => {
 
     it('Указано только имя', async () => {
       file.updateAuthor('author_name');
-      const pathStab = `${DIR_TEST}/stabs/stabAuthorNameParams.json`;
+      const pathStub = `${DIR_TEST}/stubs/stubAuthorNameParams.json`;
 
       await file.render(DIR_TEST);
 
       const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-      const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+      const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
       expect(context).toBe(contextResult);
       unlink(PATH_FILE);
@@ -64,12 +64,12 @@ describe('createFileJsonPackage', () => {
 
     it('Указано имя и email', async () => {
       file.updateAuthor('author_name', 'author_email');
-      const pathStab = `${DIR_TEST}/stabs/stabAuthorNameAndAuthorEmailParams.json`;
+      const pathStub = `${DIR_TEST}/stubs/stubAuthorNameAndAuthorEmailParams.json`;
 
       await file.render(DIR_TEST);
 
       const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-      const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+      const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
       expect(context).toBe(contextResult);
       unlink(PATH_FILE);
@@ -77,12 +77,12 @@ describe('createFileJsonPackage', () => {
 
     it('Указано имя и url', async () => {
       file.updateAuthor('author_name', '', 'author_url');
-      const pathStab = `${DIR_TEST}/stabs/stabAuthorNameAndAuthorUrlParams.json`;
+      const pathStub = `${DIR_TEST}/stubs/stubAuthorNameAndAuthorUrlParams.json`;
 
       await file.render(DIR_TEST);
 
       const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-      const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+      const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
       expect(context).toBe(contextResult);
       unlink(PATH_FILE);
@@ -90,12 +90,12 @@ describe('createFileJsonPackage', () => {
 
     it('Указано полное значение автора', async () => {
       file.updateAuthor('author_name', 'author_email', 'author_url');
-      const pathStab = `${DIR_TEST}/stabs/stabAuthorFullParams.json`;
+      const pathStub = `${DIR_TEST}/stubs/stubAuthorFullParams.json`;
 
       await file.render(DIR_TEST);
 
       const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-      const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+      const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
       expect(context).toBe(contextResult);
       unlink(PATH_FILE);
@@ -104,7 +104,7 @@ describe('createFileJsonPackage', () => {
 
   it('Создается файл: кейс, когда установлены дополнительные параметры', async () => {
     const file = createFileJsonPackage(PRETTER_CONFIG);
-    const pathStab = `${DIR_TEST}/stabs/stabBasePlusParams.json`;
+    const pathStub = `${DIR_TEST}/stubs/stubBasePlusParams.json`;
 
     file.updateName('name');
     file.updateVersion('version');
@@ -118,7 +118,7 @@ describe('createFileJsonPackage', () => {
     await file.render(DIR_TEST);
 
     const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-    const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+    const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
     expect(context).toBe(contextResult);
     unlink(PATH_FILE);
@@ -126,7 +126,7 @@ describe('createFileJsonPackage', () => {
 
   it('Создается файл: кейс, когда установлены параметры eslint', async () => {
     const file = createFileJsonPackage(PRETTER_CONFIG);
-    const pathStab = `${DIR_TEST}/stabs/stabEslintParams.json`;
+    const pathStub = `${DIR_TEST}/stubs/stubEslintParams.json`;
 
     file.updateName('name');
     file.updateVersion('version');
@@ -135,7 +135,7 @@ describe('createFileJsonPackage', () => {
     await file.render(DIR_TEST);
 
     const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-    const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+    const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
     expect(context).toBe(contextResult);
     unlink(PATH_FILE);
@@ -143,7 +143,7 @@ describe('createFileJsonPackage', () => {
 
   it('Создается файл: кейс, когда установлены параметры prettier', async () => {
     const file = createFileJsonPackage(PRETTER_CONFIG);
-    const pathStab = `${DIR_TEST}/stabs/stabPrettierParams.json`;
+    const pathStub = `${DIR_TEST}/stubs/stubPrettierParams.json`;
 
     file.updateName('name');
     file.updateVersion('version');
@@ -152,7 +152,7 @@ describe('createFileJsonPackage', () => {
     await file.render(DIR_TEST);
 
     const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-    const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+    const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
     expect(context).toBe(contextResult);
     unlink(PATH_FILE);
@@ -160,7 +160,7 @@ describe('createFileJsonPackage', () => {
 
   it('Создается файл: кейс, когда установлены параметры eslint и prettier', async () => {
     const file = createFileJsonPackage(PRETTER_CONFIG);
-    const pathStab = `${DIR_TEST}/stabs/stabEslintAndPrettierParams.json`;
+    const pathStub = `${DIR_TEST}/stubs/stubEslintAndPrettierParams.json`;
 
     file.updateName('name');
     file.updateVersion('version');
@@ -170,7 +170,7 @@ describe('createFileJsonPackage', () => {
     await file.render(DIR_TEST);
 
     const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-    const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+    const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
     expect(context).toBe(contextResult);
     unlink(PATH_FILE);
@@ -178,7 +178,7 @@ describe('createFileJsonPackage', () => {
 
   it('Создается файл: кейс, когда установлены параметры jest', async () => {
     const file = createFileJsonPackage(PRETTER_CONFIG);
-    const pathStab = `${DIR_TEST}/stabs/stabJestParams.json`;
+    const pathStub = `${DIR_TEST}/stubs/stubJestParams.json`;
 
     file.updateName('name');
     file.updateVersion('version');
@@ -187,7 +187,7 @@ describe('createFileJsonPackage', () => {
     await file.render(DIR_TEST);
 
     const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-    const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+    const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
     expect(context).toBe(contextResult);
     unlink(PATH_FILE);
@@ -195,7 +195,7 @@ describe('createFileJsonPackage', () => {
 
   it('Создается файл: кейс, когда установлены параметры cli', async () => {
     const file = createFileJsonPackage(PRETTER_CONFIG);
-    const pathStab = `${DIR_TEST}/stabs/stabCliParams.json`;
+    const pathStub = `${DIR_TEST}/stubs/stubCliParams.json`;
 
     file.updateName('name');
     file.updateVersion('version');
@@ -204,7 +204,7 @@ describe('createFileJsonPackage', () => {
     await file.render(DIR_TEST);
 
     const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-    const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+    const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
     expect(context).toBe(contextResult);
     unlink(PATH_FILE);
@@ -212,7 +212,7 @@ describe('createFileJsonPackage', () => {
 
   it('Создается файл: кейс, когда установлены параметры multilang docs', async () => {
     const file = createFileJsonPackage(PRETTER_CONFIG);
-    const pathStab = `${DIR_TEST}/stabs/stabMultiDocsParams.json`;
+    const pathStub = `${DIR_TEST}/stubs/stubMultiDocsParams.json`;
 
     file.updateName('name');
     file.updateVersion('version');
@@ -221,7 +221,7 @@ describe('createFileJsonPackage', () => {
     await file.render(DIR_TEST);
 
     const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-    const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+    const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
     expect(context).toBe(contextResult);
     unlink(PATH_FILE);

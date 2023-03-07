@@ -12,12 +12,12 @@ const PRETTER_CONFIG = prettierConfig as PrettierOptions;
 describe('createFileNVMRC', () => {
   it('Создается файл с установленными параметрами', async () => {
     const file = createFileNVMRC(PRETTER_CONFIG);
-    const pathStab = `${DIR_TEST}/stabs/stab.txt`;
+    const pathStub = `${DIR_TEST}/stubs/stub.txt`;
 
     await file.render(DIR_TEST);
 
     const context = await readFile(PATH_FILE, { encoding: 'utf-8' });
-    const contextResult = await readFile(pathStab, { encoding: 'utf-8' });
+    const contextResult = await readFile(pathStub, { encoding: 'utf-8' });
 
     expect(context).toBe(contextResult);
     unlink(PATH_FILE);
