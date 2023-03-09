@@ -13,15 +13,12 @@ export async function cli(process: NodeJS.Process) {
   const rootDir = process.cwd();
 
   i18next.init({
-    lng: lang.value,
+    lng: lang,
     resources: { ru, en },
   });
 
   try {
-    await runCreate({
-      rootDir: outDir.has ? outDir.value : rootDir,
-      lang: lang.value,
-    });
+    await runCreate({ rootDir: outDir || rootDir, lang });
   } catch (e) {
     console.log(e);
   }

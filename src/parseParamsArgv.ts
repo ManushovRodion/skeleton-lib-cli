@@ -1,43 +1,23 @@
-export type Lang = 'ru' | 'en';
-
-export interface ParamArgv {
-  has: boolean;
-  value: string;
-}
-
-export interface ParamLangArgv extends ParamArgv {
-  value: Lang;
-}
-
 export interface ParamsArgv {
-  lang: ParamLangArgv;
-  outDir: ParamArgv;
+  lang: string;
+  outDir: string;
 }
 
-function findParamArgv<T extends ParamArgv>(
-  argvs: string[],
-  paramName: string,
-  options?: { defaultValue?: T['value']; findValue?: boolean }
-) {
-  const findIndex = argvs.findIndex((argv) => argv === paramName);
-  const has = findIndex > -1;
+export function parseParamsArgv(argvs: string[]) {
+  return argvs.reduce<ParamsArgv>(
+    (res, item, index) => {
+      if (item === '--lang') {
+        res.lang = argvs[index + 1] || 'ru';
+        return res;
+      }
 
-  if (!options?.defaultValue && !options?.findValue) {
-    return { has, value: '' };
-  }
+      if (item === '--outDir') {
+        res.outDir = argvs[index + 1] || '';
+        return res;
+      }
 
-  if (!has && options.defaultValue) {
-    return { has, value: options.defaultValue };
-  }
-
-  const value = argvs[findIndex + 1] || options.defaultValue || '';
-
-  return { has, value };
-}
-
-export function parseParamsArgv(argvs: string[]): ParamsArgv {
-  return {
-    lang: <ParamLangArgv>findParamArgv(argvs, '--lang', { defaultValue: 'ru' }),
-    outDir: findParamArgv(argvs, '--outDir', { findValue: true }),
-  };
+      return res;
+    },
+    { lang: 'ru', outDir: '' }
+  );
 }

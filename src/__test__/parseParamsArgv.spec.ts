@@ -1,17 +1,14 @@
 import { parseParamsArgv } from './../parseParamsArgv';
 
 describe('parseParamsArgv', () => {
-  it('Если нет значений в argv, то возвращается обьект параметров с дефолтными значениями', () => {
+  it('Возвращаем дефолтные значение', () => {
     const params = parseParamsArgv([]);
 
-    expect(params.lang.value).toBe('ru');
-    expect(params.lang.has).toBeFalsy();
-
-    expect(params.outDir.value).toBe('');
-    expect(params.outDir.has).toBeFalsy();
+    expect(params.lang).toBe('ru');
+    expect(params.outDir).toBe('');
   });
 
-  it('Возвращается обьект параметров с найденными значениями', () => {
+  it('Возвращается найденные значения', () => {
     const params = parseParamsArgv([
       '--help',
       '--lang',
@@ -20,10 +17,7 @@ describe('parseParamsArgv', () => {
       'test',
     ]);
 
-    expect(params.lang.value).toBe('en');
-    expect(params.lang.has).toBeTruthy();
-
-    expect(params.outDir.value).toBe('test');
-    expect(params.outDir.has).toBeTruthy();
+    expect(params.lang).toBe('en');
+    expect(params.outDir).toBe('test');
   });
 });
