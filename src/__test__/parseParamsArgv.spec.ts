@@ -2,8 +2,17 @@ import { parseParamsArgv } from './../parseParamsArgv';
 
 describe('parseParamsArgv', () => {
   it('Возвращаем дефолтные значение', () => {
-    const params = parseParamsArgv([]);
+    let params;
 
+    params = parseParamsArgv([]);
+    expect(params.lang).toBe('ru');
+    expect(params.outDir).toBe('');
+
+    params = parseParamsArgv(['--lang']);
+    expect(params.lang).toBe('ru');
+    expect(params.outDir).toBe('');
+
+    params = parseParamsArgv(['--outDir']);
     expect(params.lang).toBe('ru');
     expect(params.outDir).toBe('');
   });
