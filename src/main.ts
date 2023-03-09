@@ -20,6 +20,6 @@ export async function cli(process: NodeJS.Process) {
   try {
     await runCreate({ rootDir: outDir || rootDir, lang });
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }
