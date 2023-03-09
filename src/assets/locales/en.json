@@ -1,68 +1,45 @@
 {
   "translation": {
-    "NotImplemented": "Not implemented!",
-    "not": "No",
-    "yes": "Yes",
-    "error": {
-      "NotCreatedProject": "This project folder has already been created!"
+    "base": {
+      "not": "No",
+      "yes": "Yes"
     },
-    "questions": {
-      "namePackage": {
-        "message": "Package name (mandatory!)",
-        "validation": "Invalid value! Valid characters are 'a-z' and '-'."
-      },
-      "descPackage": {
-        "message": "Project summary"
-      },
-      "urlHome": {
-        "message": "Project Home Page"
-      },
-      "urlRepository": {
-        "message": "Address, Git repository where the project is located (required field!)",
-        "validation": "Required!"
-      },
-      "urlIssue": {
-        "message": "Address where issues are available"
+
+    "validation": {
+      "requiredInput": "Required input!",
+      "namePackage": "Valid characters are 'a-z' and '-'."
+    },
+
+    "questionsMessage": {
+      "package": {
+        "name": "Package name",
+        "description": "Brief description of the project"
       },
       "author": {
-        "message": "The author of the project. In this case, how you can be contacted (required field!)",
-        "validation": "Required!"
+        "name": "Author of the project. In this case, how can you be contacted",
+        "email": "Email of the author",
+        "url": "Author Page"
       },
-      "authorEmail": {
-        "message": "Author's Email"
-      },
-      "authorUrl": {
-        "message": "Author Page"
-      },
-      "copyright": {
-        "message": "Copyright author/team"
-      },
-      "codeStyle": {
-        "message": "Need code style support?"
-      },
-      "codeTest": {
-        "message": "Need tests?"
-      },
-      "cli": {
-        "message": "Need the bin executable?"
+      "url": {
+        "repository": "Address, Git repository where the project is located",
+        "home": "Project home page",
+        "issues": "Address where requests/issues are available"
       },
       "multiLangDocs": {
-        "message": "Enable multilanguage for documentation?"
-      },
-      "multiLangDocsList": {
-        "message": "It is necessary to list, separated by commas, language codes. (mandatory field!)",
-        "validation": "Required!"
-      }
-    },
-    "readme": {
-      "install": {
-        "title": "Installation",
-        "npm": "For NPM users:",
-        "yarn": "For those who use YARN:"
+        "toggle": "Enable multilingual documentation",
+        "list": "It is necessary to list, separated by commas, language codes"
       },
       "license": {
-        "title": "License"
-      }
+        "toggle": "Need a license file",
+        "copyright": "Copyright of the author/team"
+      },
+      "cli": "Need bin executable",
+      "codeStyle": "Need code style support",
+      "unitTest": "Need unit tests"
+    },
+
+    "error": {
+      "notCreateDirPackage": "This project folder is already taken! Specify another one."
     }
   }
 }

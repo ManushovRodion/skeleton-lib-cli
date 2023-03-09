@@ -18,7 +18,10 @@ export async function cli(process: NodeJS.Process) {
   });
 
   try {
-    await runCreate({ rootDir: outDir.has ? outDir.value : rootDir });
+    await runCreate({
+      rootDir: outDir.has ? outDir.value : rootDir,
+      lang: lang.value,
+    });
   } catch (e) {
     console.log(e);
   }

@@ -14,7 +14,7 @@ import { questionURLIssues } from './questions/url/questionURLIssues';
 import { questionURLHome } from './questions/url/questionURLHome';
 
 import { questionMultiLangDocs } from './questions/multiLangDocs/questionMultiLangDocs';
-//import { questionMultiLangDocsList } from './questions/multiLangDocs/questionMultiLangDocsList';
+import { questionMultiLangDocsList } from './questions/multiLangDocs/questionMultiLangDocsList';
 
 //import { questionLicense } from './questions/license/questionLicense';
 import { questionLicenseСopyright } from './questions/license/questionLicenseСopyright';
@@ -49,23 +49,19 @@ import { createFileEslintrc } from './creates/createFileEslintrc';
 import { createFileTsConfigEsLint } from './creates/createFileTsConfigEsLint';
 import { createFilePrettierrc } from './creates/createFilePrettierrc';
 import { createFileJestConfig } from './creates/createFileJestConfig';
-
-// import { createFileReadme } from './creates/baseFiles/createFileReadme';
-// import { createFileChangelog } from './creates/baseFiles/createFileChangelog';
-
-// import { createFileSrcTestMain } from './creates/codeTestFiles/createFileSrcTestMain';
-// import { createFileMultiLangReadme } from './creates/multiLangFiles/createFileMultiLangReadme';
-// import { createFileMultiLangChangelog } from './creates/multiLangFiles/createFileMultiLangChangelog';
-// import { createFileMultiLangReadmeItem } from './creates/multiLangFiles/createFileMultiLangReadmeItem';
-// import { createFileMultiLangChangelogItem } from './creates/multiLangFiles/createFileMultiLangChangelogItem';
+import {
+  createFileReadme,
+  createFileReadmeMultilang,
+} from './creates/createFileReadme/index';
 
 export interface Options {
   rootDir: string;
+  lang: string;
 }
 
 const PRETTIER_CONFIG = prettierConfig as PrettierOptions;
 
-export async function runCreate({ rootDir }: Options) {
+export async function runCreate({ rootDir, lang }: Options) {
   /**
    * FILES
    * ================================================================
@@ -83,21 +79,30 @@ export async function runCreate({ rootDir }: Options) {
   const fileTsConfigEsLint = createFileTsConfigEsLint(PRETTIER_CONFIG);
   const filePrettierrc = createFilePrettierrc(PRETTIER_CONFIG);
   const fileJestConfig = createFileJestConfig(PRETTIER_CONFIG);
+  const fileReadme = createFileReadme(PRETTIER_CONFIG);
+  const fileReadmeMultilang = createFileReadmeMultilang(PRETTIER_CONFIG);
 
   /**
    * QUESTIONS
    * ================================================================
    */
+  fileReadme.updateLang(lang);
 
   // name
   const packageName = await questionPackageName();
+
   fileJsonPackage.updateName(packageName);
   fileJsonPackage.updateVersion('0.1.0');
   fileCLI.updateName(packageName);
+  fileReadme.updateName(packageName);
+  fileReadmeMultilang.updateName(packageName);
 
   // description
   const packageDescription = await questionPackageDescription();
+
   fileJsonPackage.updateDescription(packageDescription);
+  fileReadme.updateDescription(packageDescription);
+  fileReadmeMultilang.updateDescription(packageDescription);
 
   // repository
   const urlRepository = await questionURLRepository();
@@ -120,8 +125,11 @@ export async function runCreate({ rootDir }: Options) {
   // license
   //const isLicense = await questionLicense()
   const licenseCopyright = await questionLicenseСopyright(authorName);
+
   fileLicense.updateCopyright(licenseCopyright);
   fileJsonPackage.updateLicense('MIT'); // @TODO план на получения значения извне
+  fileReadme.updateLicense('MIT'); // @TODO план на получения значения извне
+  fileReadmeMultilang.updateLicense('MIT'); // @TODO план на получения значения извне
 
   // codeStyle
   const codeStyle = await questionСodeStyle();
@@ -162,8 +170,17 @@ export async function runCreate({ rootDir }: Options) {
 
   // multiLangDocs
   const isMultiLangDocs = await questionMultiLangDocs();
+  let multiLangDocs: string[] = [];
   if (isMultiLangDocs) {
+    multiLangDocs = await questionMultiLangDocsList(['ru', 'en']);
+
     fileJsonPackage.onMultiLangDocs();
+
+    fileReadme.onMultiLangDocs();
+    fileReadme.updateLangsURL(multiLangDocs);
+    fileReadme.updateRootPathURL('./docs');
+    fileReadmeMultilang.updateLangsURL(multiLangDocs);
+    fileReadmeMultilang.updateRootPathURL('./..');
   }
 
   /**
@@ -186,7 +203,13 @@ export async function runCreate({ rootDir }: Options) {
   }
 
   if (isMultiLangDocs) {
-    await createDirPackage(`${packageDir}/docs`);
+    const docsDir = `${packageDir}/docs`;
+
+    await createDirPackage(docsDir);
+
+    multiLangDocs.forEach((lang) => {
+      promiseList.push(() => fileReadmeMultilang.render(docsDir, lang));
+    });
   }
 
   if (codeStyle === 'FULL' || codeStyle === 'ESLINT') {
@@ -211,6 +234,7 @@ export async function runCreate({ rootDir }: Options) {
     fileLicense.render(packageDir),
     fileRollupConfig.render(packageDir),
     fileTsConfig.render(packageDir),
+    fileReadme.render(packageDir),
 
     // core/src dir
     fileMain.render(packageSrcDir),
@@ -218,52 +242,4 @@ export async function runCreate({ rootDir }: Options) {
     // any
     ...promiseList.map((item) => item()),
   ]);
-
-  // =========
-
-  //  let multiLangDocsList: string[] = [];
-  //  if (await questionMultiLangDocs()) {
-  //    multiLangDocsList = await questionMultiLangDocsList(['ru', 'en']);
-  //  }
-
-  // if (!multiLangDocsList.length) {
-  //   await Promise.all([
-  //     createFileReadme(
-  //       { name, description: packageDescription },
-  //       { projectDir }
-  //     ),
-  //     createFileChangelog({ name }, { projectDir }),
-  //   ]);
-  // }
-
-  // if (isJest) {
-  //   await Promise.all([
-  //
-  //     createFileSrcTestMain({ projectDir }),
-  //   ]);
-  // }
-
-  // if (!!multiLangDocsList.length) {
-  //   await mkdir(`${projectDir}/docs`);
-
-  //   await Promise.all([
-  //     createFileMultiLangReadme(
-  //       { name, lang: multiLangDocsList },
-  //       { projectDir }
-  //     ),
-  //     createFileMultiLangChangelog(
-  //       { name, lang: multiLangDocsList },
-  //       { projectDir }
-  //     ),
-  //     ...multiLangDocsList.map((lang) => {
-  //       return [
-  //         createFileMultiLangReadmeItem(
-  //           { name, description: packageDescription, lang },
-  //           { projectDir }
-  //         ),
-  //         createFileMultiLangChangelogItem({ name, lang }, { projectDir }),
-  //       ];
-  //     }),
-  //   ]);
-  // }
 }
