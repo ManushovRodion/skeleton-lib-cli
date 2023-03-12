@@ -16,12 +16,7 @@ export function generatorBase(state: State) {
     state.name.toUpperCase()
   );
 
-  const date = new Date();
-  const day = date.getDay();
-  const month = date.getMonth();
-  const year = date.getFullYear();
-
-  const dateString = [year, month, day].join('-');
+  const dateString = ['####', '##', '##'].join('-');
 
   const version = PATTERN_BLOCK_TITLE_H3.replace(
     'TITLE',
