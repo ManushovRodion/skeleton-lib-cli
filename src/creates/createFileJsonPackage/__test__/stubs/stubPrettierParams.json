@@ -9,7 +9,8 @@
   "types": "dist/name.d.js",
   "scripts": {
     "build": "rimraf dist && rollup --c rollup.config.ts --configPlugin typescript && rimraf dist/types",
-    "lint:format": "prettier --ignore-path .gitignore --write ."
+    "lint:format": "prettier --ignore-path .gitignore --write .",
+    "prepare": "husky install"
   },
   "dependencies": {},
   "devDependencies": {

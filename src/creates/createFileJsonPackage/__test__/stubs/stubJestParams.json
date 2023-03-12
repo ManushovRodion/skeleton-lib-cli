@@ -9,7 +9,8 @@
   "types": "dist/name.d.js",
   "scripts": {
     "build": "rimraf dist && rollup --c rollup.config.ts --configPlugin typescript && rimraf dist/types",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky install"
   },
   "dependencies": {},
   "devDependencies": {

@@ -57,6 +57,8 @@ import {
   createFileChangelog,
   createFileChangelogMultilang,
 } from './creates/createFileChangelog';
+import { createFileHuskyPreCommit } from './creates/createFileHuskyPreCommit/index';
+import { createFileHuskyPrePush } from './creates/createFileHuskyPrePush/index';
 
 export interface Options {
   rootDir: string;
@@ -87,6 +89,8 @@ export async function runCreate({ rootDir, lang }: Options) {
   const fileReadmeMultilang = createFileReadmeMultilang(PRETTIER_CONFIG);
   const fileChangelog = createFileChangelog(PRETTIER_CONFIG);
   const fileChangelogMultilang = createFileChangelogMultilang(PRETTIER_CONFIG);
+  const fileHuskyPreCommit = createFileHuskyPreCommit();
+  const fileHuskyPrePush = createFileHuskyPrePush();
 
   /**
    * QUESTIONS
@@ -238,18 +242,48 @@ export async function runCreate({ rootDir, lang }: Options) {
     });
   }
 
-  if (codeStyle === 'FULL' || codeStyle === 'ESLINT') {
-    promiseList.push(() => fileEslintrc.render(packageDir));
-    promiseList.push(() => fileTsConfigEsLint.render(packageDir));
-  }
+  if (codeStyle || unitTest) {
+    const huskyDir = `${packageDir}/.husky`;
 
-  if (codeStyle === 'FULL' || codeStyle === 'PRETTIER') {
-    promiseList.push(() => filePrettierrc.render(packageDir));
-  }
+    await createDirPackage(huskyDir);
 
-  if (unitTest === 'JEST') {
-    promiseList.push(() => fileJestConfig.render(packageDir));
-    promiseList.push(() => fileMainSpec.render(packageSrcDir));
+    switch (codeStyle) {
+      case 'FULL': {
+        fileHuskyPreCommit.onESLint();
+        fileHuskyPreCommit.onPrettier();
+
+        promiseList.push(() => fileEslintrc.render(packageDir));
+        promiseList.push(() => fileTsConfigEsLint.render(packageDir));
+        promiseList.push(() => filePrettierrc.render(packageDir));
+        promiseList.push(() => fileHuskyPreCommit.render(huskyDir));
+
+        break;
+      }
+      case 'ESLINT': {
+        fileHuskyPreCommit.onESLint();
+
+        promiseList.push(() => fileEslintrc.render(packageDir));
+        promiseList.push(() => fileTsConfigEsLint.render(packageDir));
+        promiseList.push(() => fileHuskyPreCommit.render(huskyDir));
+
+        break;
+      }
+      case 'PRETTIER': {
+        fileHuskyPreCommit.onPrettier();
+
+        promiseList.push(() => filePrettierrc.render(packageDir));
+        promiseList.push(() => fileHuskyPreCommit.render(huskyDir));
+        break;
+      }
+    }
+
+    if (unitTest === 'JEST') {
+      fileHuskyPrePush.onJest();
+
+      promiseList.push(() => fileJestConfig.render(packageDir));
+      promiseList.push(() => fileMainSpec.render(packageSrcDir));
+      promiseList.push(() => fileHuskyPrePush.render(huskyDir));
+    }
   }
 
   await Promise.all([

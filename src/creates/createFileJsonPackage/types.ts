@@ -45,6 +45,7 @@ export interface PackageScripts {
   lint?: string;
   'lint:format'?: string;
   test?: string;
+  prepare?: string;
 }
 
 export interface PackageAuthor {

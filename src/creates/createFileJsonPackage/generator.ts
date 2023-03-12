@@ -79,6 +79,14 @@ export function generator(state: State) {
     scripts = setValueByKey(scripts, 'test', CLI_SCRIPT_TEST);
   }
 
+  if (
+    state.codeStyle.isESLint ||
+    state.codeStyle.isPrettier ||
+    state.unitTest.isJest
+  ) {
+    scripts = setValueByKey(scripts, 'prepare', 'husky install');
+  }
+
   data = setValueByKey(data, 'scripts', scripts);
 
   // AUTHOR

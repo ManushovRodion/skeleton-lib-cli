@@ -10,7 +10,8 @@
   "scripts": {
     "build": "rimraf dist && rollup --c rollup.config.ts --configPlugin typescript && rimraf dist/types",
     "lint": "eslint --ignore-path .gitignore .",
-    "lint:format": "prettier --ignore-path .gitignore --write ."
+    "lint:format": "prettier --ignore-path .gitignore --write .",
+    "prepare": "husky install"
   },
   "dependencies": {},
   "devDependencies": {

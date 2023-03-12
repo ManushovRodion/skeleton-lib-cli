@@ -46,7 +46,9 @@ type Files =
   | 'docs/README-RU.md'
   | 'docs/README-EN.md'
   | 'docs/CHANGELOG-RU.md'
-  | 'docs/CHANGELOG-EN.md';
+  | 'docs/CHANGELOG-EN.md'
+  | '.husky/pre-commit'
+  | '.husky/pre-push';
 
 const DIR_TEST = './src/__test__/runCreate';
 const PACKAGE_NAME = 'package_name';
@@ -176,6 +178,7 @@ describe('runCreate', () => {
       getFileName('src/main.ts'),
       getFileName('.eslintrc'),
       getFileName('tsconfig.eslint.json'),
+      getFileName('.husky/pre-commit'),
     ]);
   });
 
@@ -197,6 +200,7 @@ describe('runCreate', () => {
       getFileName('CHANGELOG.md'),
       getFileName('src/main.ts'),
       getFileName('.prettierrc'),
+      getFileName('.husky/pre-commit'),
     ]);
   });
 
@@ -220,6 +224,7 @@ describe('runCreate', () => {
       getFileName('.eslintrc'),
       getFileName('tsconfig.eslint.json'),
       getFileName('.prettierrc'),
+      getFileName('.husky/pre-commit'),
     ]);
   });
 
@@ -242,6 +247,7 @@ describe('runCreate', () => {
       getFileName('src/main.ts'),
       getFileName('jest.config.json'),
       getFileName('src/main.spec.ts'),
+      getFileName('.husky/pre-push'),
     ]);
   });
 
@@ -299,8 +305,10 @@ describe('runCreate', () => {
       getFileName('.eslintrc'),
       getFileName('tsconfig.eslint.json'),
       getFileName('.prettierrc'),
+      getFileName('.husky/pre-commit'),
       getFileName('jest.config.json'),
       getFileName('src/main.spec.ts'),
+      getFileName('.husky/pre-push'),
     ]);
   });
 });
