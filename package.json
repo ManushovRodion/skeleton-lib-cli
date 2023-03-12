@@ -25,9 +25,10 @@
   "scripts": {
     "build": "rimraf dist && rollup --c rollup.config.ts --configPlugin typescript && rimraf dist/types",
     "lint": "eslint --ignore-path .gitignore .",
-    "lint:format": "prettier --ignore-path .gitignore --write .",
+    "lint-format": "prettier --ignore-path .gitignore --write .",
     "test": "jest",
-    "demo:cli": "rimraf demo && node bin/cli.js --outDir demo"
+    "demo-cli": "rimraf demo && node bin/cli.js --outDir demo",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -65,15 +66,5 @@
     "ts-jest": "29.0.3",
     "tslib": "2.4.1",
     "typescript": "4.9.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn test"
-    }
-  },
-  "lint-staged": {
-    "*.*": "yarn lint:format",
-    "*.ts": "yarn lint"
   }
 }
