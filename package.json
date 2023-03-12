@@ -25,9 +25,9 @@
   "scripts": {
     "build": "rimraf dist && rollup --c rollup.config.ts --configPlugin typescript && rimraf dist/types",
     "lint": "eslint --ignore-path .gitignore .",
-    "lint-format": "prettier --ignore-path .gitignore --write .",
+    "lint:format": "prettier --ignore-path .gitignore --write .",
     "test": "jest",
-    "demo-cli": "rimraf demo && node bin/cli.js --outDir demo",
+    "demo:cli": "rimraf demo && node bin/cli.js --outDir demo",
     "prepare": "husky install"
   },
   "repository": {
