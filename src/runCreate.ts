@@ -52,7 +52,11 @@ import { createFileJestConfig } from './creates/createFileJestConfig';
 import {
   createFileReadme,
   createFileReadmeMultilang,
-} from './creates/createFileReadme/index';
+} from './creates/createFileReadme';
+import {
+  createFileChangelog,
+  createFileChangelogMultilang,
+} from './creates/createFileChangelog';
 
 export interface Options {
   rootDir: string;
@@ -81,6 +85,8 @@ export async function runCreate({ rootDir, lang }: Options) {
   const fileJestConfig = createFileJestConfig(PRETTIER_CONFIG);
   const fileReadme = createFileReadme(PRETTIER_CONFIG);
   const fileReadmeMultilang = createFileReadmeMultilang(PRETTIER_CONFIG);
+  const fileChangelog = createFileChangelog(PRETTIER_CONFIG);
+  const fileChangelogMultilang = createFileChangelogMultilang(PRETTIER_CONFIG);
 
   /**
    * QUESTIONS
@@ -92,10 +98,18 @@ export async function runCreate({ rootDir, lang }: Options) {
   const packageName = await questionPackageName();
 
   fileJsonPackage.updateName(packageName);
-  fileJsonPackage.updateVersion('0.1.0');
   fileCLI.updateName(packageName);
   fileReadme.updateName(packageName);
   fileReadmeMultilang.updateName(packageName);
+  fileChangelog.updateName(packageName);
+  fileChangelogMultilang.updateName(packageName);
+
+  // version
+  const packageVersion = '0.1.0';
+
+  fileJsonPackage.updateVersion(packageVersion);
+  fileChangelog.updateVersion(packageVersion);
+  fileChangelogMultilang.updateVersion(packageVersion);
 
   // description
   const packageDescription = await questionPackageDescription();
@@ -174,13 +188,24 @@ export async function runCreate({ rootDir, lang }: Options) {
   if (isMultiLangDocs) {
     multiLangDocs = await questionMultiLangDocsList(['ru', 'en']);
 
+    const rootPathURLByIndex = './docs';
+    const rootPathURL = './..';
+
     fileJsonPackage.onMultiLangDocs();
 
     fileReadme.onMultiLangDocs();
     fileReadme.updateLangsURL(multiLangDocs);
-    fileReadme.updateRootPathURL('./docs');
+    fileReadme.updateRootPathURL(rootPathURLByIndex);
+
     fileReadmeMultilang.updateLangsURL(multiLangDocs);
-    fileReadmeMultilang.updateRootPathURL('./..');
+    fileReadmeMultilang.updateRootPathURL(rootPathURL);
+
+    fileChangelog.onMultiLangDocs();
+    fileChangelog.updateLangsURL(multiLangDocs);
+    fileChangelog.updateRootPathURL(rootPathURLByIndex);
+
+    fileChangelogMultilang.updateLangsURL(multiLangDocs);
+    fileChangelogMultilang.updateRootPathURL(rootPathURL);
   }
 
   /**
@@ -209,6 +234,7 @@ export async function runCreate({ rootDir, lang }: Options) {
 
     multiLangDocs.forEach((lang) => {
       promiseList.push(() => fileReadmeMultilang.render(docsDir, lang));
+      promiseList.push(() => fileChangelogMultilang.render(docsDir, lang));
     });
   }
 
@@ -235,6 +261,7 @@ export async function runCreate({ rootDir, lang }: Options) {
     fileRollupConfig.render(packageDir),
     fileTsConfig.render(packageDir),
     fileReadme.render(packageDir),
+    fileChangelog.render(packageDir),
 
     // core/src dir
     fileMain.render(packageSrcDir),
