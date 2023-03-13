@@ -6,6 +6,6 @@ REFACTOR:
 - [x] Доработка и покрытие тестами создание файлов приложения.
 - [x] Убрана обработка исключений в файле bin/cli.js.
 
-Bug Fixes:
+BUG FIXES:
 
 - [x] Не перехватываются git push и не запускаются test, lint and lint:format
