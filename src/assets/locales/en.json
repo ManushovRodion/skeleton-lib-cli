@@ -30,7 +30,7 @@
         "list": "It is necessary to list, separated by commas, language codes"
       },
       "license": {
-        "toggle": "Need a license file",
+        "list": "Need a license file",
         "copyright": "Copyright of the author/team"
       },
       "cli": "Need bin executable",

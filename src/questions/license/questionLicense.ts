@@ -1,8 +1,15 @@
 import i18next from 'i18next';
-import { promptToggle } from '../../prompts/promptToggle';
+import { promptSelect, type Option } from '../../prompts/promptSelect';
+
+export type Value = 'MIT' | '';
 
 export function questionLicense() {
-  const message = i18next.t('questionsMessage.license.toggle');
+  const message = i18next.t('questionsMessage.license.list');
 
-  return promptToggle(message);
+  const options: Option<Value>[] = [
+    { title: 'MIT', value: 'MIT' },
+    { title: i18next.t('base.not'), value: '' },
+  ];
+
+  return promptSelect<Value>(message, options);
 }

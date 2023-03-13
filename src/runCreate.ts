@@ -16,7 +16,7 @@ import { questionURLHome } from './questions/url/questionURLHome';
 import { questionMultiLangDocs } from './questions/multiLangDocs/questionMultiLangDocs';
 import { questionMultiLangDocsList } from './questions/multiLangDocs/questionMultiLangDocsList';
 
-//import { questionLicense } from './questions/license/questionLicense';
+import { questionLicense } from './questions/license/questionLicense';
 import { questionLicenseСopyright } from './questions/license/questionLicenseСopyright';
 
 import { questionPackageName } from './questions/package/questionPackageName';
@@ -141,13 +141,15 @@ export async function runCreate({ rootDir, lang }: Options) {
   fileJsonPackage.updateAuthor(authorName, authorEmail, authorURL);
 
   // license
-  //const isLicense = await questionLicense()
-  const licenseCopyright = await questionLicenseСopyright(authorName);
+  const license = await questionLicense();
+  if (license) {
+    const licenseCopyright = await questionLicenseСopyright(authorName);
 
-  fileLicense.updateCopyright(licenseCopyright);
-  fileJsonPackage.updateLicense('MIT'); // @TODO план на получения значения извне
-  fileReadme.updateLicense('MIT'); // @TODO план на получения значения извне
-  fileReadmeMultilang.updateLicense('MIT'); // @TODO план на получения значения извне
+    fileLicense.updateCopyright(licenseCopyright);
+    fileJsonPackage.updateLicense(license);
+    fileReadme.updateLicense(license);
+    fileReadmeMultilang.updateLicense(license);
+  }
 
   // codeStyle
   const codeStyle = await questionСodeStyle();
@@ -286,12 +288,15 @@ export async function runCreate({ rootDir, lang }: Options) {
     }
   }
 
+  if (license) {
+    promiseList.push(() => fileLicense.render(packageDir));
+  }
+
   await Promise.all([
     // core dir
     fileJsonPackage.render(packageDir),
     fileNVMRC.render(packageDir),
     fileGitignore.render(packageDir),
-    fileLicense.render(packageDir),
     fileRollupConfig.render(packageDir),
     fileTsConfig.render(packageDir),
     fileReadme.render(packageDir),

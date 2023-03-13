@@ -15,7 +15,7 @@ import * as QURLHome from './../questions/url/questionURLHome';
 import * as QMultiLangDocs from './../questions/multiLangDocs/questionMultiLangDocs';
 import * as QMultiLangDocsList from './../questions/multiLangDocs/questionMultiLangDocsList';
 
-//import * as QLicense from './questions/license/questionLicense';
+import * as QLicense from './../questions/license/questionLicense';
 import * as QLicenseСopyright from './../questions/license/questionLicenseСopyright';
 
 import * as QPackageName from './../questions/package/questionPackageName';
@@ -86,7 +86,7 @@ describe('runCreate', () => {
     /**
      * LICENSE
      */
-    // jest.spyOn(QLicense, 'questionLicense').mockResolvedValue(() => false);
+    jest.spyOn(QLicense, 'questionLicense').mockResolvedValue('');
     jest
       .spyOn(QLicenseСopyright, 'questionLicenseСopyright')
       .mockResolvedValue('copyright');
@@ -127,7 +127,6 @@ describe('runCreate', () => {
       getFileName('package.json'),
       getFileName('.nvmrc'),
       getFileName('.gitignore'),
-      getFileName('LICENSE'),
       getFileName('rollup.config.ts'),
       getFileName('tsconfig.json'),
       getFileName('README.md'),
@@ -149,7 +148,6 @@ describe('runCreate', () => {
       getFileName('package.json'),
       getFileName('.nvmrc'),
       getFileName('.gitignore'),
-      getFileName('LICENSE'),
       getFileName('rollup.config.ts'),
       getFileName('tsconfig.json'),
       getFileName('README.md'),
@@ -170,7 +168,6 @@ describe('runCreate', () => {
       getFileName('package.json'),
       getFileName('.nvmrc'),
       getFileName('.gitignore'),
-      getFileName('LICENSE'),
       getFileName('rollup.config.ts'),
       getFileName('tsconfig.json'),
       getFileName('README.md'),
@@ -193,7 +190,6 @@ describe('runCreate', () => {
       getFileName('package.json'),
       getFileName('.nvmrc'),
       getFileName('.gitignore'),
-      getFileName('LICENSE'),
       getFileName('rollup.config.ts'),
       getFileName('tsconfig.json'),
       getFileName('README.md'),
@@ -215,7 +211,6 @@ describe('runCreate', () => {
       getFileName('package.json'),
       getFileName('.nvmrc'),
       getFileName('.gitignore'),
-      getFileName('LICENSE'),
       getFileName('rollup.config.ts'),
       getFileName('tsconfig.json'),
       getFileName('README.md'),
@@ -239,7 +234,6 @@ describe('runCreate', () => {
       getFileName('package.json'),
       getFileName('.nvmrc'),
       getFileName('.gitignore'),
-      getFileName('LICENSE'),
       getFileName('rollup.config.ts'),
       getFileName('tsconfig.json'),
       getFileName('README.md'),
@@ -262,7 +256,6 @@ describe('runCreate', () => {
       getFileName('package.json'),
       getFileName('.nvmrc'),
       getFileName('.gitignore'),
-      getFileName('LICENSE'),
       getFileName('rollup.config.ts'),
       getFileName('tsconfig.json'),
       getFileName('README.md'),
@@ -275,6 +268,26 @@ describe('runCreate', () => {
     ]);
   });
 
+  it('Созданы базовые файлы + license', async () => {
+    const mock = jest.spyOn(fs, 'writeFile').mockResolvedValue();
+    jest.spyOn(QLicense, 'questionLicense').mockResolvedValue('MIT');
+
+    await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
+    const files = mock.mock.calls.map((item) => item[0]);
+
+    expect(files).toEqual([
+      getFileName('package.json'),
+      getFileName('.nvmrc'),
+      getFileName('.gitignore'),
+      getFileName('rollup.config.ts'),
+      getFileName('tsconfig.json'),
+      getFileName('README.md'),
+      getFileName('CHANGELOG.md'),
+      getFileName('src/main.ts'),
+      getFileName('LICENSE'),
+    ]);
+  });
+
   it('Созданы все файла для полного конплекта', async () => {
     const mock = jest.spyOn(fs, 'writeFile').mockResolvedValue();
     jest
@@ -283,6 +296,7 @@ describe('runCreate', () => {
     jest.spyOn(QСodeStyle, 'questionСodeStyle').mockResolvedValue('FULL');
     jest.spyOn(QUnitTest, 'questionUnitTest').mockResolvedValue('JEST');
     jest.spyOn(QMultiLangDocs, 'questionMultiLangDocs').mockResolvedValue(true);
+    jest.spyOn(QLicense, 'questionLicense').mockResolvedValue('MIT');
 
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
     const files: unknown[] = mock.mock.calls.map((item) => item[0]);
@@ -291,7 +305,6 @@ describe('runCreate', () => {
       getFileName('package.json'),
       getFileName('.nvmrc'),
       getFileName('.gitignore'),
-      getFileName('LICENSE'),
       getFileName('rollup.config.ts'),
       getFileName('tsconfig.json'),
       getFileName('README.md'),
@@ -309,6 +322,7 @@ describe('runCreate', () => {
       getFileName('jest.config.json'),
       getFileName('src/main.spec.ts'),
       getFileName('.husky/pre-push'),
+      getFileName('LICENSE'),
     ]);
   });
 });
