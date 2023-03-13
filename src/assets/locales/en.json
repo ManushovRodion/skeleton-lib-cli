@@ -13,7 +13,8 @@
     "questionsMessage": {
       "package": {
         "name": "Package name",
-        "description": "Brief description of the project"
+        "description": "Brief description of the project",
+        "version": "Package version"
       },
       "author": {
         "name": "Author of the project. In this case, how can you be contacted",

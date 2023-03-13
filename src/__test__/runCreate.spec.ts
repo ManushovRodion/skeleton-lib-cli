@@ -20,6 +20,7 @@ import * as QLicenseСopyright from './../questions/license/questionLicenseСopy
 
 import * as QPackageName from './../questions/package/questionPackageName';
 import * as QPackageDescription from './../questions/package/questionPackageDescription';
+import * as QPackageVersion from './../questions/package/questionPackageVersion';
 
 import * as QCommandLineInterface from './../questions/questionCommandLineInterface';
 import * as QСodeStyle from './../questions/questionСodeStyle';
@@ -97,10 +98,12 @@ describe('runCreate', () => {
     jest
       .spyOn(QPackageName, 'questionPackageName')
       .mockResolvedValue(PACKAGE_NAME);
-
     jest
       .spyOn(QPackageDescription, 'questionPackageDescription')
       .mockResolvedValue('');
+    jest
+      .spyOn(QPackageVersion, 'questionPackageVersion')
+      .mockResolvedValue('0.1.0');
 
     /**
      * OTHER

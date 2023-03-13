@@ -59,6 +59,7 @@ import {
 } from './creates/createFileChangelog';
 import { createFileHuskyPreCommit } from './creates/createFileHuskyPreCommit/index';
 import { createFileHuskyPrePush } from './creates/createFileHuskyPrePush/index';
+import { questionPackageVersion } from './questions/package/questionPackageVersion';
 
 export interface Options {
   rootDir: string;
@@ -109,7 +110,7 @@ export async function runCreate({ rootDir, lang }: Options) {
   fileChangelogMultilang.updateName(packageName);
 
   // version
-  const packageVersion = '0.1.0';
+  const packageVersion = await questionPackageVersion('0.1.0');
 
   fileJsonPackage.updateVersion(packageVersion);
   fileChangelog.updateVersion(packageVersion);
