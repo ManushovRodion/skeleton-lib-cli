@@ -8,4 +8,4 @@ REFACTOR:
 
 FIX:
 
-- [x] Не перехвачиваются git push и не запускаются test, lint and lint:format
+- [x] Не перехватываются git push и не запускаются test, lint and lint:format
