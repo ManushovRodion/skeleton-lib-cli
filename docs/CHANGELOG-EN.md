@@ -2,6 +2,13 @@
 
 # SKELETON-LIB-CLI
 
+### # v0.3.0 (2023-03-13)
+
+FEATURES:
+
+- [x] Application version version question. Default 0.1.0
+- [x] App license questions.
+
 ### # v0.2.0 (2023-03-13)
 
 REFACTORS:

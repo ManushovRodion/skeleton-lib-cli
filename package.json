@@ -1,6 +1,6 @@
 {
   "name": "skeleton-lib-cli",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "[RU]Интерфейс командной строки, который инициализирует скелет библиотеки.[EN]Command line interface that invokes skeleton libraries",
   "keywords": [
     "skeleton-lib",
