@@ -2,6 +2,7 @@
   "name": "skeleton-lib-cli",
   "version": "0.3.0",
   "description": "[RU]Интерфейс командной строки, который инициализирует скелет библиотеки.[EN]Command line interface that invokes skeleton libraries",
+  "packageManager": "pnpm@8.8.0",
   "keywords": [
     "skeleton-lib",
     "skeleton",
