@@ -13,37 +13,37 @@ export const CLI_SCRIPT_LINT_FORMAT =
 export const CLI_SCRIPT_TEST = 'jest';
 
 export const DEV_DEPENDENCIES_BASE: MapObject = {
-  '@rollup/plugin-json': '6.0.0',
-  '@rollup/plugin-terser': '0.3.0',
-  '@rollup/plugin-typescript': '11.0.0',
-  '@types/node': '16.18.11',
-  rimraf: '3.0.2',
-  rollup: '3.9.1',
-  'rollup-plugin-dts': '5.1.1',
-  tslib: '2.4.1',
-  typescript: '4.9.4',
+  '@rollup/plugin-json': '6.0.1',
+  '@rollup/plugin-terser': '0.4.4',
+  '@rollup/plugin-typescript': '11.1.5',
+  '@types/node': '20.8.3',
+  rimraf: '5.0.5',
+  rollup: '4.0.2',
+  'rollup-plugin-dts': '6.1.0',
+  tslib: '2.6.2',
+  typescript: '5.2.2',
 };
 
 export const DEV_DEPENDENCIES_ESLINT: MapObject = {
-  eslint: '8.31.0',
-  '@typescript-eslint/eslint-plugin': '5.48.0',
-  '@typescript-eslint/parser': '5.48.0',
+  eslint: '8.51.0',
+  '@typescript-eslint/eslint-plugin': '6.7.4',
+  '@typescript-eslint/parser': '6.7.4',
   husky: '8.0.3',
 };
 
 export const DEV_DEPENDENCIES_PRETTIER: MapObject = {
-  prettier: '2.8.2',
+  prettier: '3.0.3',
   husky: '8.0.3',
 };
 
 export const DEV_DEPENDENCIES_ESLINT_PRETTIER: MapObject = {
-  'eslint-config-prettier': '8.6.0',
+  'eslint-config-prettier': '9.0.0',
   husky: '8.0.3',
 };
 
 export const DEV_DEPENDENCIES_JEST: MapObject = {
-  jest: '29.3.1',
-  'ts-jest': '29.0.3',
-  '@types/jest': '29.2.5',
+  jest: '29.7.0',
+  'ts-jest': '29.1.1',
+  '@types/jest': '29.5.5',
   husky: '8.0.3',
 };

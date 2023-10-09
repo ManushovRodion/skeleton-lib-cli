@@ -13,19 +13,19 @@ export const defineState = (): State => ({
      * [EN]: Type module
      * https://www.typescriptlang.org/tsconfig#module
      */
-    module: 'ES2020',
+    module: 'ES2022',
     /**
      * [RU]: Стратегия модуля
      * [EN]: Module strategy
      * https://www.typescriptlang.org/tsconfig#moduleResolution
      */
-    moduleResolution: 'Node16',
+    moduleResolution: 'Bundler',
     /**
      * [RU]: Конвертация в нужный стандарт
      * [EN]: Convert to the desired standard
      * https://www.typescriptlang.org/tsconfig#target
      */
-    target: 'ES5',
+    target: 'ES2022',
     /**
      * [RU]: Позволяет импортировать json
      * [EN]: Allows you to import json
