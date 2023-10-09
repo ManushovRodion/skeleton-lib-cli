@@ -126,19 +126,19 @@ describe('runCreate', () => {
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
     const files = mock.mock.calls.map((item) => item[0]).sort();
 
-    expect(files).toEqual([
-      getFileName('package.json'),
-      getFileName('.nvmrc'),
-      getFileName('.gitignore'),
-      getFileName('rollup.config.ts'),
-      getFileName('tsconfig.json'),
-      getFileName('README.md'),
-      getFileName('CHANGELOG.md'),
-      getFileName('src/main.ts'),
-    ].sort());
+    expect(files).toEqual(
+      [
+        getFileName('package.json'),
+        getFileName('.nvmrc'),
+        getFileName('.gitignore'),
+        getFileName('rollup.config.ts'),
+        getFileName('tsconfig.json'),
+        getFileName('README.md'),
+        getFileName('CHANGELOG.md'),
+        getFileName('src/main.ts'),
+      ].sort()
+    );
   });
-
-
 
   it('Созданы базовые файлы + необходимые файды для cli', async () => {
     const mock = jest.spyOn(fs, 'writeFile').mockResolvedValue();
@@ -149,17 +149,19 @@ describe('runCreate', () => {
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
     const files = mock.mock.calls.map((item) => item[0]).sort();
 
-    expect(files).toEqual([
-      getFileName('package.json'),
-      getFileName('.nvmrc'),
-      getFileName('.gitignore'),
-      getFileName('rollup.config.ts'),
-      getFileName('tsconfig.json'),
-      getFileName('README.md'),
-      getFileName('CHANGELOG.md'),
-      getFileName('src/main.ts'),
-      getFileName('bin/cli.js'),
-    ].sort());
+    expect(files).toEqual(
+      [
+        getFileName('package.json'),
+        getFileName('.nvmrc'),
+        getFileName('.gitignore'),
+        getFileName('rollup.config.ts'),
+        getFileName('tsconfig.json'),
+        getFileName('README.md'),
+        getFileName('CHANGELOG.md'),
+        getFileName('src/main.ts'),
+        getFileName('bin/cli.js'),
+      ].sort()
+    );
   });
 
   it('Созданы базовые файлы + необходимые файды для eslint', async () => {
@@ -169,19 +171,21 @@ describe('runCreate', () => {
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
     const files = mock.mock.calls.map((item) => item[0]).sort();
 
-    expect(files).toEqual([
-      getFileName('package.json'),
-      getFileName('.nvmrc'),
-      getFileName('.gitignore'),
-      getFileName('rollup.config.ts'),
-      getFileName('tsconfig.json'),
-      getFileName('README.md'),
-      getFileName('CHANGELOG.md'),
-      getFileName('src/main.ts'),
-      getFileName('.eslintrc'),
-      getFileName('tsconfig.eslint.json'),
-      getFileName('.husky/pre-commit'),
-    ].sort());
+    expect(files).toEqual(
+      [
+        getFileName('package.json'),
+        getFileName('.nvmrc'),
+        getFileName('.gitignore'),
+        getFileName('rollup.config.ts'),
+        getFileName('tsconfig.json'),
+        getFileName('README.md'),
+        getFileName('CHANGELOG.md'),
+        getFileName('src/main.ts'),
+        getFileName('.eslintrc'),
+        getFileName('tsconfig.eslint.json'),
+        getFileName('.husky/pre-commit'),
+      ].sort()
+    );
   });
 
   it('Созданы базовые файлы + необходимые файды для prettier', async () => {
@@ -191,18 +195,20 @@ describe('runCreate', () => {
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
     const files = mock.mock.calls.map((item) => item[0]).sort();
 
-    expect(files).toEqual([
-      getFileName('package.json'),
-      getFileName('.nvmrc'),
-      getFileName('.gitignore'),
-      getFileName('rollup.config.ts'),
-      getFileName('tsconfig.json'),
-      getFileName('README.md'),
-      getFileName('CHANGELOG.md'),
-      getFileName('src/main.ts'),
-      getFileName('.prettierrc'),
-      getFileName('.husky/pre-commit'),
-    ].sort());
+    expect(files).toEqual(
+      [
+        getFileName('package.json'),
+        getFileName('.nvmrc'),
+        getFileName('.gitignore'),
+        getFileName('rollup.config.ts'),
+        getFileName('tsconfig.json'),
+        getFileName('README.md'),
+        getFileName('CHANGELOG.md'),
+        getFileName('src/main.ts'),
+        getFileName('.prettierrc'),
+        getFileName('.husky/pre-commit'),
+      ].sort()
+    );
   });
 
   it('Созданы базовые файлы + необходимые файды для eslint and prettier', async () => {
@@ -212,20 +218,22 @@ describe('runCreate', () => {
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
     const files = mock.mock.calls.map((item) => item[0]).sort();
 
-    expect(files).toEqual([
-      getFileName('package.json'),
-      getFileName('.nvmrc'),
-      getFileName('.gitignore'),
-      getFileName('rollup.config.ts'),
-      getFileName('tsconfig.json'),
-      getFileName('README.md'),
-      getFileName('CHANGELOG.md'),
-      getFileName('src/main.ts'),
-      getFileName('.eslintrc'),
-      getFileName('tsconfig.eslint.json'),
-      getFileName('.prettierrc'),
-      getFileName('.husky/pre-commit'),
-    ].sort());
+    expect(files).toEqual(
+      [
+        getFileName('package.json'),
+        getFileName('.nvmrc'),
+        getFileName('.gitignore'),
+        getFileName('rollup.config.ts'),
+        getFileName('tsconfig.json'),
+        getFileName('README.md'),
+        getFileName('CHANGELOG.md'),
+        getFileName('src/main.ts'),
+        getFileName('.eslintrc'),
+        getFileName('tsconfig.eslint.json'),
+        getFileName('.prettierrc'),
+        getFileName('.husky/pre-commit'),
+      ].sort()
+    );
   });
 
   it('Созданы базовые файлы + необходимые файды для jest', async () => {
@@ -235,19 +243,21 @@ describe('runCreate', () => {
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
     const files = mock.mock.calls.map((item) => item[0]).sort();
 
-    expect(files).toEqual([
-      getFileName('package.json'),
-      getFileName('.nvmrc'),
-      getFileName('.gitignore'),
-      getFileName('rollup.config.ts'),
-      getFileName('tsconfig.json'),
-      getFileName('README.md'),
-      getFileName('CHANGELOG.md'),
-      getFileName('src/main.ts'),
-      getFileName('jest.config.json'),
-      getFileName('src/main.spec.ts'),
-      getFileName('.husky/pre-push'),
-    ].sort());
+    expect(files).toEqual(
+      [
+        getFileName('package.json'),
+        getFileName('.nvmrc'),
+        getFileName('.gitignore'),
+        getFileName('rollup.config.ts'),
+        getFileName('tsconfig.json'),
+        getFileName('README.md'),
+        getFileName('CHANGELOG.md'),
+        getFileName('src/main.ts'),
+        getFileName('jest.config.json'),
+        getFileName('src/main.spec.ts'),
+        getFileName('.husky/pre-push'),
+      ].sort()
+    );
   });
 
   it('Созданы базовые файлы + необходимые файды для multilang', async () => {
@@ -257,20 +267,22 @@ describe('runCreate', () => {
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
     const files = mock.mock.calls.map((item) => item[0]).sort();
 
-    expect(files).toEqual([
-      getFileName('package.json'),
-      getFileName('.nvmrc'),
-      getFileName('.gitignore'),
-      getFileName('rollup.config.ts'),
-      getFileName('tsconfig.json'),
-      getFileName('README.md'),
-      getFileName('CHANGELOG.md'),
-      getFileName('src/main.ts'),
-      getFileName('docs/README-RU.md'),
-      getFileName('docs/CHANGELOG-RU.md'),
-      getFileName('docs/README-EN.md'),
-      getFileName('docs/CHANGELOG-EN.md'),
-    ].sort());
+    expect(files).toEqual(
+      [
+        getFileName('package.json'),
+        getFileName('.nvmrc'),
+        getFileName('.gitignore'),
+        getFileName('rollup.config.ts'),
+        getFileName('tsconfig.json'),
+        getFileName('README.md'),
+        getFileName('CHANGELOG.md'),
+        getFileName('src/main.ts'),
+        getFileName('docs/README-RU.md'),
+        getFileName('docs/CHANGELOG-RU.md'),
+        getFileName('docs/README-EN.md'),
+        getFileName('docs/CHANGELOG-EN.md'),
+      ].sort()
+    );
   });
 
   it('Созданы базовые файлы + license', async () => {
@@ -280,17 +292,19 @@ describe('runCreate', () => {
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
     const files = mock.mock.calls.map((item) => item[0]).sort();
 
-    expect(files).toEqual([
-      getFileName('package.json'),
-      getFileName('.nvmrc'),
-      getFileName('.gitignore'),
-      getFileName('rollup.config.ts'),
-      getFileName('tsconfig.json'),
-      getFileName('README.md'),
-      getFileName('CHANGELOG.md'),
-      getFileName('src/main.ts'),
-      getFileName('LICENSE'),
-    ].sort());
+    expect(files).toEqual(
+      [
+        getFileName('package.json'),
+        getFileName('.nvmrc'),
+        getFileName('.gitignore'),
+        getFileName('rollup.config.ts'),
+        getFileName('tsconfig.json'),
+        getFileName('README.md'),
+        getFileName('CHANGELOG.md'),
+        getFileName('src/main.ts'),
+        getFileName('LICENSE'),
+      ].sort()
+    );
   });
 
   it('Созданы все файла для полного конплекта', async () => {
@@ -306,30 +320,30 @@ describe('runCreate', () => {
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
     const files: unknown[] = mock.mock.calls.map((item) => item[0]).sort();
 
-    expect(files).toEqual([
-      getFileName('package.json'),
-      getFileName('.nvmrc'),
-      getFileName('.gitignore'),
-      getFileName('rollup.config.ts'),
-      getFileName('tsconfig.json'),
-      getFileName('README.md'),
-      getFileName('CHANGELOG.md'),
-      getFileName('src/main.ts'),
-      getFileName('bin/cli.js'),
-      getFileName('docs/README-RU.md'),
-      getFileName('docs/CHANGELOG-RU.md'),
-      getFileName('docs/README-EN.md'),
-      getFileName('docs/CHANGELOG-EN.md'),
-      getFileName('.eslintrc'),
-      getFileName('tsconfig.eslint.json'),
-      getFileName('.prettierrc'),
-      getFileName('.husky/pre-commit'),
-      getFileName('jest.config.json'),
-      getFileName('src/main.spec.ts'),
-      getFileName('.husky/pre-push'),
-      getFileName('LICENSE'),
-    ].sort());
+    expect(files).toEqual(
+      [
+        getFileName('package.json'),
+        getFileName('.nvmrc'),
+        getFileName('.gitignore'),
+        getFileName('rollup.config.ts'),
+        getFileName('tsconfig.json'),
+        getFileName('README.md'),
+        getFileName('CHANGELOG.md'),
+        getFileName('src/main.ts'),
+        getFileName('bin/cli.js'),
+        getFileName('docs/README-RU.md'),
+        getFileName('docs/CHANGELOG-RU.md'),
+        getFileName('docs/README-EN.md'),
+        getFileName('docs/CHANGELOG-EN.md'),
+        getFileName('.eslintrc'),
+        getFileName('tsconfig.eslint.json'),
+        getFileName('.prettierrc'),
+        getFileName('.husky/pre-commit'),
+        getFileName('jest.config.json'),
+        getFileName('src/main.spec.ts'),
+        getFileName('.husky/pre-push'),
+        getFileName('LICENSE'),
+      ].sort()
+    );
   });
-
-
 });
