@@ -10,7 +10,8 @@ export const CLI_SCRIPT_LINT = 'eslint --ignore-path .gitignore .';
 export const CLI_SCRIPT_LINT_FORMAT =
   'prettier --ignore-path .gitignore --write .';
 
-export const CLI_SCRIPT_TEST = 'node --experimental-vm-modules ./node_modules/.bin/jest';
+export const CLI_SCRIPT_TEST =
+  'node --experimental-vm-modules ./node_modules/.bin/jest';
 
 export const DEV_DEPENDENCIES_BASE: MapObject = {
   '@rollup/plugin-json': '6.0.1',
