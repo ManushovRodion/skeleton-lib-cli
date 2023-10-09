@@ -59,16 +59,16 @@ export function createFile(prettierConfig: PrettierConfig) {
 
   // render
 
-  const render = (outDir: string) => {
+  const render = async (outDir: string) => {
     const context = generator(state);
     const path = `${outDir}/${FILE_NAME}`;
 
-    const data = format(JSON.stringify(context), {
+    const data = await format(JSON.stringify(context), {
       parser: 'json',
       ...prettierConfig,
     });
 
-    return writeFile(path, data, { encoding: 'utf8' });
+    return await writeFile(path, data, { encoding: 'utf8' });
   };
 
   return {

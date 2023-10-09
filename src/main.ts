@@ -7,7 +7,7 @@ import { parseParamsArgv } from './parseParamsArgv';
 
 import { runCreate } from './runCreate';
 
-export async function cli(process: NodeJS.Process) {
+export function cli(process: NodeJS.Process) {
   const { lang, outDir } = parseParamsArgv(process.argv);
 
   const rootDir = process.cwd();
@@ -17,9 +17,5 @@ export async function cli(process: NodeJS.Process) {
     resources: { ru, en },
   });
 
-  try {
-    await runCreate({ rootDir: outDir || rootDir, lang });
-  } catch (e) {
-    console.error(e);
-  }
+  return runCreate({ rootDir: outDir || rootDir, lang });
 }

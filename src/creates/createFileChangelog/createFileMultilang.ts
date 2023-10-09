@@ -24,7 +24,7 @@ export function createFileMultilang(prettierConfig: PrettierConfig) {
     state.rootPathURL = rootPathURL;
   };
 
-  const render = (outDir: string, langActive: string) => {
+  const render = async (outDir: string, langActive: string) => {
     state.isMultiLangDocs = true;
     state.lang = langActive.toLowerCase();
 
@@ -37,12 +37,12 @@ export function createFileMultilang(prettierConfig: PrettierConfig) {
 
     const path = `${outDir}/${fileName}`;
 
-    const data = format(context, {
+    const data = await format(context, {
       parser: 'markdown',
       ...prettierConfig,
     });
 
-    return writeFile(path, data, {
+    return await writeFile(path, data, {
       encoding: 'utf8',
     });
   };
