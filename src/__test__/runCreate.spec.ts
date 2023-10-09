@@ -6,7 +6,7 @@ import fs from 'fs/promises';
 
 import * as QAuthorName from './../questions/author/questionAuthorName';
 import * as QAuthorEmail from './../questions/author/questionAuthorEmail';
-import * as QAuthorURL from './../questions/author/questionAuthorURL';
+import * as QAuthorURL from '../questions/author/questionAuthorURL';
 
 import * as QURLRepository from './../questions/url/questionURLRepository';
 import * as QURLIssues from './../questions/url/questionURLIssues';
@@ -124,7 +124,7 @@ describe('runCreate', () => {
     const mock = jest.spyOn(fs, 'writeFile').mockResolvedValue();
 
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
-    const files = mock.mock.calls.map((item) => item[0]);
+    const files = mock.mock.calls.map((item) => item[0]).sort();
 
     expect(files).toEqual([
       getFileName('package.json'),
@@ -135,8 +135,10 @@ describe('runCreate', () => {
       getFileName('README.md'),
       getFileName('CHANGELOG.md'),
       getFileName('src/main.ts'),
-    ]);
+    ].sort());
   });
+
+
 
   it('Созданы базовые файлы + необходимые файды для cli', async () => {
     const mock = jest.spyOn(fs, 'writeFile').mockResolvedValue();
@@ -145,7 +147,7 @@ describe('runCreate', () => {
       .mockResolvedValue(true);
 
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
-    const files = mock.mock.calls.map((item) => item[0]);
+    const files = mock.mock.calls.map((item) => item[0]).sort();
 
     expect(files).toEqual([
       getFileName('package.json'),
@@ -157,7 +159,7 @@ describe('runCreate', () => {
       getFileName('CHANGELOG.md'),
       getFileName('src/main.ts'),
       getFileName('bin/cli.js'),
-    ]);
+    ].sort());
   });
 
   it('Созданы базовые файлы + необходимые файды для eslint', async () => {
@@ -165,7 +167,7 @@ describe('runCreate', () => {
     jest.spyOn(QСodeStyle, 'questionСodeStyle').mockResolvedValue('ESLINT');
 
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
-    const files = mock.mock.calls.map((item) => item[0]);
+    const files = mock.mock.calls.map((item) => item[0]).sort();
 
     expect(files).toEqual([
       getFileName('package.json'),
@@ -179,7 +181,7 @@ describe('runCreate', () => {
       getFileName('.eslintrc'),
       getFileName('tsconfig.eslint.json'),
       getFileName('.husky/pre-commit'),
-    ]);
+    ].sort());
   });
 
   it('Созданы базовые файлы + необходимые файды для prettier', async () => {
@@ -187,7 +189,7 @@ describe('runCreate', () => {
     jest.spyOn(QСodeStyle, 'questionСodeStyle').mockResolvedValue('PRETTIER');
 
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
-    const files = mock.mock.calls.map((item) => item[0]);
+    const files = mock.mock.calls.map((item) => item[0]).sort();
 
     expect(files).toEqual([
       getFileName('package.json'),
@@ -200,7 +202,7 @@ describe('runCreate', () => {
       getFileName('src/main.ts'),
       getFileName('.prettierrc'),
       getFileName('.husky/pre-commit'),
-    ]);
+    ].sort());
   });
 
   it('Созданы базовые файлы + необходимые файды для eslint and prettier', async () => {
@@ -208,7 +210,7 @@ describe('runCreate', () => {
     jest.spyOn(QСodeStyle, 'questionСodeStyle').mockResolvedValue('FULL');
 
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
-    const files = mock.mock.calls.map((item) => item[0]);
+    const files = mock.mock.calls.map((item) => item[0]).sort();
 
     expect(files).toEqual([
       getFileName('package.json'),
@@ -223,7 +225,7 @@ describe('runCreate', () => {
       getFileName('tsconfig.eslint.json'),
       getFileName('.prettierrc'),
       getFileName('.husky/pre-commit'),
-    ]);
+    ].sort());
   });
 
   it('Созданы базовые файлы + необходимые файды для jest', async () => {
@@ -231,7 +233,7 @@ describe('runCreate', () => {
     jest.spyOn(QUnitTest, 'questionUnitTest').mockResolvedValue('JEST');
 
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
-    const files = mock.mock.calls.map((item) => item[0]);
+    const files = mock.mock.calls.map((item) => item[0]).sort();
 
     expect(files).toEqual([
       getFileName('package.json'),
@@ -245,7 +247,7 @@ describe('runCreate', () => {
       getFileName('jest.config.json'),
       getFileName('src/main.spec.ts'),
       getFileName('.husky/pre-push'),
-    ]);
+    ].sort());
   });
 
   it('Созданы базовые файлы + необходимые файды для multilang', async () => {
@@ -253,7 +255,7 @@ describe('runCreate', () => {
     jest.spyOn(QMultiLangDocs, 'questionMultiLangDocs').mockResolvedValue(true);
 
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
-    const files = mock.mock.calls.map((item) => item[0]);
+    const files = mock.mock.calls.map((item) => item[0]).sort();
 
     expect(files).toEqual([
       getFileName('package.json'),
@@ -268,7 +270,7 @@ describe('runCreate', () => {
       getFileName('docs/CHANGELOG-RU.md'),
       getFileName('docs/README-EN.md'),
       getFileName('docs/CHANGELOG-EN.md'),
-    ]);
+    ].sort());
   });
 
   it('Созданы базовые файлы + license', async () => {
@@ -276,7 +278,7 @@ describe('runCreate', () => {
     jest.spyOn(QLicense, 'questionLicense').mockResolvedValue('MIT');
 
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
-    const files = mock.mock.calls.map((item) => item[0]);
+    const files = mock.mock.calls.map((item) => item[0]).sort();
 
     expect(files).toEqual([
       getFileName('package.json'),
@@ -288,7 +290,7 @@ describe('runCreate', () => {
       getFileName('CHANGELOG.md'),
       getFileName('src/main.ts'),
       getFileName('LICENSE'),
-    ]);
+    ].sort());
   });
 
   it('Созданы все файла для полного конплекта', async () => {
@@ -302,7 +304,7 @@ describe('runCreate', () => {
     jest.spyOn(QLicense, 'questionLicense').mockResolvedValue('MIT');
 
     await runCreate({ rootDir: DIR_TEST, lang: 'ru' });
-    const files: unknown[] = mock.mock.calls.map((item) => item[0]);
+    const files: unknown[] = mock.mock.calls.map((item) => item[0]).sort();
 
     expect(files).toEqual([
       getFileName('package.json'),
@@ -326,6 +328,8 @@ describe('runCreate', () => {
       getFileName('src/main.spec.ts'),
       getFileName('.husky/pre-push'),
       getFileName('LICENSE'),
-    ]);
+    ].sort());
   });
+
+
 });

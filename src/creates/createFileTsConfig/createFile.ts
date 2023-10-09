@@ -9,15 +9,15 @@ import { generator } from './generator';
 export function createFile(prettierConfig: PrettierConfig) {
   const state = defineState();
 
-  const render = (outDir: string) => {
+  const render = async (outDir: string) => {
     const context = generator(state);
     const path = `${outDir}/${FILE_NAME}`;
 
-    const data = format(context, {
+    const data = await format(context, {
       parser: 'json',
     });
 
-    return writeFile(path, data, {
+    return await writeFile(path, data, {
       encoding: 'utf8',
       ...prettierConfig,
     });
