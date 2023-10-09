@@ -2,6 +2,18 @@
 
 # SKELETON-LIB-CLI
 
+### # v0.4.0 (2023-10-9)
+
+FEATURES:
+
+- [x] Update node 16 => 18
+- [x] Update typescript 4.9 => 5.x
+- [x] Update system packages
+
+CI
+
+- [x] Update packages builds
+
 ### # v0.3.0 (2023-03-14)
 
 FEATURES:
